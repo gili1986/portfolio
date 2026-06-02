@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NFTrade — Case Study · Gilad Cohen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7;--bg-2:#f0eee7;
+    --ink:#0a0a0b;--line:#0a0a0b14;--line-strong:#0a0a0b24;
+    --fg:#0a0a0b;--fg-dim:#7a7770;--fg-mid:#3a3a3c;
+    --accent:#5b3df5;--warm:#d24a1a;--good:#2d8e4a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 40px;position:relative}
+  @media (max-width:720px){.wrap{padding:0 16px}}
+
+  .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(#0a0a0b0a 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);opacity:0.5}
+
+  /* ── Nav ── */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background:linear-gradient(180deg,#fafaf7cc 0%,#fafaf780 70%,transparent);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+  nav.top.scrolled{border-bottom-color:var(--line);background:#fafaf7ee}
+  nav.top .row{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
+  nav.top .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+  nav.top .brand .dot{width:32px;height:24px;display:inline-block}
+  nav.top .brand .dot svg{width:100%;height:100%;display:block}
+  nav.top .links{display:flex;gap:32px}
+  nav.top .links a{color:var(--fg-dim);text-decoration:none;font-size:13px;transition:color .2s;position:relative}
+  nav.top .links a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  nav.top .links a:hover{color:var(--fg)}
+  nav.top .links a:hover::after{transform:scaleX(1)}
+  nav.top .clock{color:var(--fg-dim)}
+  @media (max-width:720px){nav.top .links{display:none}}
+
+  /* ── Hero ── */
+  .hero{padding:0;position:relative;z-index:1;overflow:hidden}
+  .hero-wrap{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;gap:0}
+
+  .hero-text{padding:144px 48px 64px 0}
+  .hero .crumb{display:flex;align-items:center;gap:16px;color:var(--fg-dim);margin-bottom:64px}
+  .hero .crumb .pulse{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px #2d8e4a14}
+  .hero .crumb a{color:var(--fg-dim);text-decoration:none;transition:color .2s}
+  .hero .crumb a:hover{color:var(--fg)}
+  .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,96px);line-height:0.9;letter-spacing:-0.04em;color:var(--fg);max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .sub{margin-top:40px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--fg-mid)}
+  .hero .sub em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .hero-visual{display:flex;align-items:flex-end;margin-right:-40px;overflow:hidden}
+  .hero-visual img{width:100%;object-fit:contain;object-position:bottom right;display:block}
+  .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:0;padding:32px 0 64px;border-top:1px solid var(--line)}
+  @media(max-width:960px){
+    .hero-wrap{grid-template-columns:1fr;min-height:auto}
+    .hero-text{padding:120px 0 40px}
+    .hero-visual{margin-right:-16px;margin-left:-16px;height:70vw;align-self:auto}
+    .hero-visual img{object-position:center}
+    .meta-row{grid-template-columns:repeat(2,1fr);gap:24px;padding-bottom:48px}
+  }
+
+  @media (max-width:720px){.meta-row{grid-template-columns:repeat(2,1fr);gap:16px 24px}}
+  .meta-row .cell .mono{display:block;color:var(--fg-dim);margin-bottom:8px}
+  .meta-row .cell strong{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:22px;letter-spacing:-0.02em;color:var(--fg);display:block}
+
+  /* ── Cover ── */
+  .cover{margin-top:96px;position:relative;z-index:1}
+  .cover-frame{max-width:860px;margin:0 auto;position:relative;aspect-ratio:2928/1720}
+  .macbook-frame{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;display:block;mix-blend-mode:multiply}
+  .macbook-screen{position:absolute;top:6.5%;left:12.5%;width:75%;height:79.3%;overflow:hidden;background:#fff;z-index:1}
+  .screen-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top;display:block;z-index:0}
+  .screen-nav{position:absolute;top:0;left:0;width:100%;height:9.82%;object-fit:cover;object-position:left top;display:block;z-index:2;background:#fff}
+  .screen-cards-col{position:absolute;top:0;right:32px;width:36%;height:100%;overflow:hidden;z-index:1}
+  .screen-trending-img{position:absolute;bottom:0;left:0;width:100%;height:34.67%;object-fit:cover;object-position:left top;display:block;z-index:2}
+  .screen-cards-track{display:flex;flex-direction:column;animation:cards-scroll 16.8s linear infinite}
+  .screen-cards-track img{width:100%;height:auto;display:block;flex-shrink:0}
+  @keyframes cards-scroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+  .cover-cap{max-width:860px;margin:14px auto 0;display:flex;justify-content:space-between;color:var(--fg-dim)}
+
+  /* ── Sections ── */
+  section{position:relative;z-index:1;padding:120px 0;border-top:1px solid var(--line)}
+  .sect-label{display:grid;grid-template-columns:120px 1fr;gap:48px;align-items:start;margin-bottom:64px}
+  .sect-label .num{color:var(--fg-dim)}
+  .sect-label h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4.6vw,64px);line-height:0.96;letter-spacing:-0.035em;color:var(--fg);max-width:18ch}
+  .sect-label h2 em{font-style:normal;color:var(--accent)}
+  .sect-label .lede{margin-top:16px;color:var(--fg-mid);font-size:17px;max-width:52ch;line-height:1.55}
+  @media (max-width:720px){.sect-label{grid-template-columns:1fr;gap:16px}}
+
+  /* ── Narrative ── */
+  .narr{display:grid;grid-template-columns:120px 1fr;gap:48px}
+  @media (max-width:720px){.narr{grid-template-columns:1fr;gap:16px}}
+  .narr .lbl{color:var(--fg-dim);position:sticky;top:90px;align-self:start}
+  .narr p{color:var(--fg-mid);font-size:17px;line-height:1.65;max-width:60ch;margin-bottom:16px}
+  .narr p em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .narr .pull{margin:32px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.25;letter-spacing:-0.02em;color:var(--fg);max-width:30ch}
+  .narr .pull em{font-style:normal;color:var(--accent)}
+
+  /* ── Two-col diagnosis ── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
+  @media (max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
+  .two-col .col h3 em{font-style:normal;color:var(--accent)}
+  .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
+  .two-col .col .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .two-col .col .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
+
+  /* ── Context 2-col + logo card ── */
+  .context-grid{display:grid;grid-template-columns:1fr 344px;gap:80px;align-items:start}
+  .context-aside{position:sticky;top:120px}
+  .logo-card{background:#fff;border:1px solid var(--line-strong);border-radius:16px;padding:48px 56px 40px;display:flex;flex-direction:column;align-items:center;gap:32px}
+  .logo-lockup{display:flex;align-items:center;gap:10px}
+  #lottieIcon{width:44px;height:44px;flex-shrink:0;transform:translate(-16px,-8px) scale(1.1255)}
+  #lottieIcon svg{overflow:visible!important}
+  #lottieIcon g[clip-path]{clip-path:none!important}
+  .nft-wordmark{height:34px;width:auto;display:block}
+  .logo-tagline{color:var(--fg-dim);font-size:11px;text-align:center;line-height:1.6;letter-spacing:0.01em}
+  @media(max-width:960px){.context-grid{grid-template-columns:1fr}.context-aside{position:static}}
+
+  /* ── Scrollytelling screens ── */
+  /* Pattern: left text steps scroll normally, right image panel is sticky.
+     IntersectionObserver fires when each step crosses the viewport center. */
+
+  .scrolly-wrap{
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:80px;
+    max-width:1270px;
+    margin:0 auto;
+    padding:0 40px;
+    align-items:start;
+  }
+
+  /* Each step is tall enough to fill the viewport — creates scroll space */
+  .scrolly-step{
+    min-height:90vh;
+    display:flex;
+    align-items:center;
+  }
+  .scrolly-step:first-child{padding-top:5vh}
+  .scrolly-step:last-child{padding-bottom:10vh}
+
+  .step-text{max-width:340px}
+  .step-num{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--fg-dim);display:block;margin-bottom:24px;
+  }
+  .step-text h3{
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:400;
+    font-size:clamp(32px,3.6vw,52px);letter-spacing:-0.03em;
+    line-height:1.1;margin-bottom:16px;color:var(--fg);
+  }
+  .step-text h3 em{font-style:normal;color:var(--accent)}
+  .step-text p{
+    color:var(--fg-mid);font-size:16px;line-height:1.65;margin-bottom:0;
+  }
+  .step-cap{
+    display:flex;flex-direction:column;gap:4px;
+    padding-top:16px;margin-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .step-cap .mono{color:var(--fg-dim)}
+
+  /* Sticky visual panel — stays fixed while steps scroll past */
+  .scrolly-visual{
+    position:sticky;top:0;
+    height:100vh;
+    display:flex;flex-direction:column;
+    justify-content:center;
+    gap:12px;
+  }
+
+  /* Counter */
+  .screen-counter{
+    display:flex;align-items:center;gap:12px;
+  }
+  .counter-track{
+    flex:1;height:1px;background:var(--line-strong);
+    position:relative;overflow:hidden;
+  }
+  .counter-fill{
+    position:absolute;top:0;left:0;height:100%;
+    background:var(--fg);
+    transition:width .5s cubic-bezier(.25,.8,.25,1);
+  }
+  .counter-num{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--fg-dim);white-space:nowrap;
+  }
+
+  /* Slides stacked — crossfade via opacity, grid keeps natural aspect-ratio height */
+  .screen-slides{
+    display:grid;
+  }
+  .screen-slide{
+    grid-area:1/1;
+    display:flex;flex-direction:column;
+    opacity:0;pointer-events:none;
+    transition:opacity .55s cubic-bezier(.25,.8,.25,1);
+  }
+  .screen-slide.active{opacity:1;pointer-events:auto}
+
+  .screen-fig{
+    border:1px solid var(--line-strong);
+    border-radius:10px;overflow:hidden;
+    background:#fff;width:100%;
+    position:relative;padding-top:24px;
+  }
+  /* Browser chrome bar */
+  .screen-fig::before{
+    content:'';
+    position:absolute;top:0;left:0;right:0;
+    height:24px;z-index:2;
+    background:var(--bg);
+    background-image:
+      radial-gradient(circle, #fc605b 4.5px, transparent 5px),
+      radial-gradient(circle, #fdbc40 4.5px, transparent 5px),
+      radial-gradient(circle, #35c849 4.5px, transparent 5px);
+    background-size:9px 9px, 9px 9px, 9px 9px;
+    background-position:14px center, 28px center, 42px center;
+    background-repeat:no-repeat;
+    border-bottom:1px solid var(--line-strong);
+  }
+  .screen-fig.dark-fig::before{
+    background-color:#1c1c1e;
+    background-image:
+      radial-gradient(circle, #fc605b 4.5px, transparent 5px),
+      radial-gradient(circle, #fdbc40 4.5px, transparent 5px),
+      radial-gradient(circle, #35c849 4.5px, transparent 5px);
+    background-size:9px 9px, 9px 9px, 9px 9px;
+    background-position:14px center, 28px center, 42px center;
+    background-repeat:no-repeat;
+  }
+  .screen-fig.dark-fig{background:#0a0a0b}
+  .screen-fig img{width:100%;height:auto;display:block}
+  .screen-fig-cap{
+    display:flex;justify-content:space-between;
+    margin-top:10px;color:var(--fg-dim);
+  }
+
+  .step-mobile-fig{display:none;margin-bottom:24px}
+
+  /* Mobile: revert to vertical stack */
+  @media (max-width:900px){
+    .scrolly-wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+    .scrolly-steps{order:1}
+    .scrolly-visual{display:none}
+    .step-mobile-fig{display:block}
+    .scrolly-step{min-height:auto;padding:48px 0;flex-direction:column;align-items:stretch}
+    .scrolly-step:first-child{padding-top:0}
+    .scrolly-step:last-child{padding-bottom:0}
+    .step-text{max-width:none}
+  }
+
+  /* ── Placeholder for missing screens ── */
+  .fig-placeholder{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:12px;padding:32px;text-align:center;
+    background:var(--bg-2);
+  }
+  .fig-placeholder .ph-tag{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--fg-dim);padding:4px 10px;
+    border:1px solid var(--line-strong);border-radius:99px;
+  }
+  .fig-placeholder .ph-label{
+    font-family:'Bricolage Grotesque',sans-serif;font-size:16px;
+    font-weight:400;color:var(--fg-mid);
+    max-width:24ch;line-height:1.35;letter-spacing:-0.01em;
+  }
+  .fig-placeholder .ph-note{
+    font-size:13px;color:var(--fg-dim);max-width:30ch;line-height:1.5;
+  }
+
+  /* ── Flows strip ── */
+  .flow-modals-wrap{margin-top:40px;overflow:hidden;mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%)}
+  .flow-modals-track{display:flex;width:max-content;animation:modals-scroll 38s linear infinite}
+  .flow-modals-img{width:1400px;height:auto;display:block;flex-shrink:0}
+  @media(max-width:720px){.flow-modals-img{width:820px}}
+  @keyframes modals-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ── Video ── */
+  .video-outer{max-width:900px;margin:0 auto}
+  .video-card{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;background:#000;aspect-ratio:16/9}
+  .video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
+  .video-card:hover img{opacity:.8}
+  .video-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .video-play-btn{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s}
+  .video-card:hover .video-play-btn{transform:scale(1.1);background:#fff}
+  .video-play-btn svg{width:20px;height:20px;margin-left:3px;fill:var(--fg)}
+  .video-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-attr{margin-top:12px;color:var(--fg-dim);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;text-align:center}
+
+  /* ── Mobile filmstrip ── */
+  .phone-strip-wrap{position:relative;margin-top:40px}
+  .phone-strip-wrap::after{content:'';position:absolute;top:0;right:0;bottom:40px;width:100px;background:linear-gradient(to left,var(--bg),transparent);pointer-events:none;z-index:2}
+  .phone-strip{display:flex;gap:16px;overflow-x:auto;padding-bottom:0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .phone-strip::-webkit-scrollbar{display:none}
+  .phone-strip-item{flex:0 0 220px}
+  .phone{aspect-ratio:9/19;border-radius:28px;overflow:hidden;background:#fff;border:1px solid var(--line-strong);box-shadow:0 24px 48px -16px #0a0a0b18;position:relative}
+  .phone img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .phone .fig-placeholder{background:#f5f4f0;border-radius:28px}
+  .phone-cap{margin-top:16px}
+  .phone-cap .mono{color:var(--fg-dim);display:block;margin-bottom:4px}
+  .phone-cap p{color:var(--fg-mid);font-size:13px;line-height:1.45;max-width:24ch}
+
+  /* ── Design system grid ── */
+  .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;max-width:1152px;margin-left:auto;margin-right:auto}
+  .ds-card{background:#fff;border:1px solid var(--line-strong);border-radius:14px;overflow:hidden}
+  .ds-card-vis{height:160px;background:#f0ede6;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+  .ds-card-body{padding:16px 24px 24px;border-top:1px solid var(--line)}
+  .ds-card-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:15px;letter-spacing:-0.02em;color:var(--fg);margin:0 0 5px}
+  .ds-card-desc{font-size:12px;line-height:1.55;color:var(--fg-dim);margin:0}
+  /* Color vis */
+  .ds-color-strip{display:flex;gap:6px;width:100%}
+  .ds-color-swatch{flex:1;height:44px;border-radius:8px}
+  .ds-color-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:5px 10px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--fg-dim)}
+  .ds-color-chip-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  /* Typography vis */
+  .ds-type-big{font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(40px,4vw,56px);letter-spacing:-0.04em;color:#001028;line-height:1}
+  .ds-type-weights{display:flex;gap:16px;margin-top:10px}
+  .ds-type-wlabel{font-size:12px;color:var(--fg-dim)}
+  .ds-type-wlabel.w-bold{font-weight:700;color:var(--fg)}
+  .ds-type-wlabel.w-semi{font-weight:600;color:var(--fg-mid)}
+  /* Spacing vis */
+  .ds-space-rows{display:flex;flex-direction:column;gap:7px;width:100%}
+  .ds-space-row{display:flex;align-items:center;gap:10px}
+  .ds-space-bar{height:9px;border-radius:2px;background:#c8cfd8;flex-shrink:0}
+  .ds-space-px{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--fg-dim);white-space:nowrap}
+  /* Components vis */
+  .ds-comp-btn{background:#0099fa;color:#fff;border-radius:6px;padding:7px 16px;font-family:'Inter',sans-serif;font-weight:600;font-size:11px}
+  .ds-comp-badge{background:#0099fa14;color:#0099fa;border:1px solid #0099fa30;border-radius:100px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;margin-left:8px}
+  .ds-comp-input{width:100%;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:7px 10px;font-size:11px;color:var(--fg-dim);display:flex;align-items:center;gap:5px;box-sizing:border-box}
+  .ds-comp-cursor{width:1px;height:12px;background:#0099fa;display:inline-block;animation:blink 1s step-start infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  /* NFT card vis */
+  .ds-nft-card{width:100px;background:#fff;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;box-shadow:0 4px 16px #0099fa14}
+  .ds-nft-thumb{height:68px;background:linear-gradient(135deg,#0099fa22 0%,#0099fa44 100%);display:flex;align-items:center;justify-content:center}
+  .ds-nft-body{padding:8px}
+  .ds-nft-name{font-family:'Inter',sans-serif;font-weight:600;font-size:9px;color:#001028;margin-bottom:4px}
+  .ds-nft-price{display:flex;justify-content:space-between;align-items:center}
+  .ds-nft-eth{font-family:'JetBrains Mono',monospace;font-size:8px;color:#0099fa}
+  .ds-nft-usd{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--fg-dim)}
+  /* Grid vis */
+  .ds-grid-cols{display:flex;gap:4px;align-items:flex-end;width:100%;height:90px}
+  .ds-grid-bar{flex:1;border-radius:3px 3px 0 0;background:#c8cfd8}
+  .ds-grid-bar.hi{background:#0099fa55}
+  @media(max-width:900px){.ds-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.ds-grid{grid-template-columns:1fr}}
+
+  /* ── Outcome stats ── */
+  .outcome{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
+  @media (max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
+  .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
+  .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
+  .outcome .stat .v em{font-style:normal;color:var(--accent)}
+  .outcome .stat p{font-size:13px;color:var(--fg-mid);margin-top:8px;max-width:22ch}
+
+  /* ── Footer ── */
+  footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
+  footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:14ch}
+  footer h5 em{font-style:normal;color:var(--accent)}
+  footer .links{display:flex;gap:24px}
+  footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
+  footer .links a:hover{color:var(--fg);border-color:var(--fg)}
+  footer .meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--fg-dim)}
+
+  /* ── Reveal ── */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.1s}
+  .reveal.d2{transition-delay:.2s}
+  .reveal.d3{transition-delay:.3s}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div id="site-nav"></div>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-wrap">
+      <div class="hero-text">
+        <div class="crumb reveal">
+          <span class="pulse"></span>
+          <span class="mono"><a href="index.html">Index</a> &nbsp;/&nbsp; Case 01 &nbsp;/&nbsp; NFTrade</span>
+        </div>
+
+        <h1 class="reveal d1">A multi-chain NFT exchange, <em>rebuilt</em> from the floor up.</h1>
+
+        <p class="sub reveal d2">A full <em>redesign</em> of NFTrade — the cross-chain marketplace where users discover, buy, sell, swap and trade NFTs across seven networks. New brand language, new system, new flows for advanced trading and peer-to-peer swaps.</p>
+      </div>
+
+      <div class="hero-visual reveal d2">
+        <img src="assets/nftrade-hero.png" alt="NFTrade mobile app screens" />
+      </div>
+    </div>
+
+    <div class="meta-row reveal d3">
+      <div class="cell"><span class="mono">Role</span><strong>Product Designer</strong></div>
+      <div class="cell"><span class="mono">Year</span><strong>2022 — '23</strong></div>
+      <div class="cell"><span class="mono">Team</span><strong>1 designer · PM · eng · marketing</strong></div>
+      <div class="cell"><span class="mono">Scope</span><strong>System · brand · product · marketing</strong></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── COVER ── -->
+<section class="cover" style="border:none;padding-top:0">
+  <div class="wrap">
+    <div class="cover-frame reveal">
+      <img class="macbook-frame" src="assets/nftrade-macbook-frame.png" alt="" aria-hidden="true" />
+      <div class="macbook-screen">
+        <img class="screen-hero-img" src="assets/nftrade-hero-left.png" alt="NFTrade home page" />
+        <img class="screen-nav" src="assets/nftrade-nav-bar.png" alt="" aria-hidden="true" />
+        <div class="screen-cards-col">
+          <div class="screen-cards-track">
+            <img src="assets/nftrade-cards-loop.png" alt="" />
+            <img src="assets/nftrade-cards-loop.png" alt="" aria-hidden="true" />
+          </div>
+        </div>
+        <img class="screen-trending-img" src="assets/nftrade-trending-bar.png" alt="" aria-hidden="true" />
+      </div>
+    </div>
+    <div class="cover-cap reveal d1">
+      <span class="mono">Fig. 01 — Home, redesigned</span>
+      <span class="mono">MacBook Pro · 1440 × 900</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 01 CONTEXT ── -->
+<section id="context">
+  <div class="wrap">
+    <div class="context-grid">
+      <div>
+        <div class="sect-label reveal">
+          <span class="num mono">01 / Context</span>
+          <div>
+            <h2>What <em>NFTrade</em> is, and what it had to become.</h2>
+            <p class="lede">NFTrade is a cross-chain NFT marketplace operating across Ethereum, Avalanche, Polygon, BNB and others — letting collectors trade, swap and farm without leaving the platform.</p>
+          </div>
+        </div>
+        <div class="narr reveal d1">
+          <span class="lbl mono">The brief</span>
+          <div>
+            <p>The product had grown organically across two market cycles. Features had been bolted on — <em>swaps, order books, staking, multi-chain checkout</em> — without a unifying system. New users couldn't tell what kind of marketplace it was. Power users tolerated friction the team knew was hurting volume.</p>
+            <p>The mandate was wide: rebrand, redesign, restructure flows, and ship a system the team could keep building on. <em>One designer, one PM, full stack.</em></p>
+            <div class="pull">A platform that does <em>everything</em> needs an interface that doesn't feel like it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="context-aside reveal d2">
+        <div class="logo-card">
+          <div class="logo-lockup">
+            <img src="assets/nftrade-wordmark.svg" alt="NFTrade" class="nft-wordmark" />
+            <div id="lottieIcon"></div>
+          </div>
+          <p class="logo-tagline mono">Multi-chain NFT marketplace<br>Brand identity — 2022</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 DIAGNOSIS ── -->
+<section id="problem">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">02 / Diagnosis</span>
+      <div>
+        <h2>The product was <em>capable</em>, the experience wasn't.</h2>
+        <p class="lede">Before any pixels moved I sat with PM and engineering, watched real sessions, and audited every screen. A pattern showed up fast.</p>
+      </div>
+    </div>
+    <div class="two-col reveal d1">
+      <div class="col">
+        <h3>What was <em>broken</em></h3>
+        <p>Three different visual languages co-existed. Buttons appeared in four shapes. Mobile was a shrunk desktop. Cart, swaps and order book each lived in their own logic.</p>
+        <p>Users couldn't predict what would happen next. Trust was leaking out at every checkout step.</p>
+        <div class="tag-row">
+          <span class="tag">Inconsistent type</span>
+          <span class="tag">Fragmented patterns</span>
+          <span class="tag">Mobile parity</span>
+          <span class="tag">Unclear hierarchy</span>
+        </div>
+      </div>
+      <div class="col">
+        <h3>The <em>approach</em></h3>
+        <p>Build the system first, then redraw the surfaces. Every screen had to share the same scale, same spacing, same six-color palette. Mobile wasn't an afterthought — it was the second-class citizen we promoted.</p>
+        <p>Brand-wise: keep the trust of crypto users (clarity, density, speed) but give the marketplace a calm, gallery-like front door.</p>
+        <div class="tag-row">
+          <span class="tag">System-first</span>
+          <span class="tag">Mobile parity</span>
+          <span class="tag">Hierarchy</span>
+          <span class="tag">Density when earned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 SCREENS ── -->
+<section id="screens">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">03 / Surfaces</span>
+      <div>
+        <h2>Selected screens — <em>desktop</em>.</h2>
+        <p class="lede">Seven surfaces that span the redesign — from the core product to the brand's public voice. Each one took multiple rounds; what's shown is the shipped state.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrolly-wrap">
+
+    <!-- LEFT: text steps — each ~90vh tall, scroll normally -->
+    <div class="scrolly-steps">
+
+      <div class="scrolly-step" data-idx="0">
+        <div class="step-mobile-fig">
+          <div class="screen-fig"><img src="assets/nftrade-home-page.png" alt="NFTrade home page" /></div>
+          <div class="screen-fig-cap"><span class="mono">/home</span><span class="mono">Hero · trending · collections</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.1 — Home</span>
+          <h3>The <em>front door</em>.</h3>
+          <p>An editorial hero with rotating featured collections, then a quiet pivot into trending data. Calm at first glance, deep on second.</p>
+          <div class="step-cap">
+            <span class="mono">/home</span>
+            <span class="mono">Hero · trending · collections</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="1">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/nftrade-marketplace-dark.png" alt="NFTrade marketplace dark mode" /></div>
+          <div class="screen-fig-cap"><span class="mono">/marketplace</span><span class="mono">Dark · grid · filters</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.2 — Marketplace</span>
+          <h3>Browse, <em>filtered</em>.</h3>
+          <p>The marketplace grid ships in both light and dark — shown here in dark mode. Filters left, results dense but breathable. Same layout, different energy.</p>
+          <div class="step-cap">
+            <span class="mono">/marketplace</span>
+            <span class="mono">Dark · grid · filters</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="2">
+        <div class="step-mobile-fig">
+          <div class="screen-fig"><img src="assets/nftrade-collection-page.png" alt="NFTrade collection page" /></div>
+          <div class="screen-fig-cap"><span class="mono">/collection/:id</span><span class="mono">Stats · Activity · Items</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.3 — Collection page</span>
+          <h3>One collection, <em>all signals</em>.</h3>
+          <p>Every collection on every chain gets the same surface — cover, creator, and live stats in one view. Floor price, total volume, top sale, and owner count always visible. Items, Activity, and Stats tabs let casual browsers and serious traders use the same page differently.</p>
+          <div class="step-cap">
+            <span class="mono">/collection/:id</span>
+            <span class="mono">Stats · Activity · Items</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="3">
+        <div class="step-mobile-fig">
+          <div class="screen-fig"><img src="assets/nftrade-nft-page.png" alt="NFT detail page" /></div>
+          <div class="screen-fig-cap"><span class="mono">/asset/:id</span><span class="mono">Buy · offer · swap</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.4 — NFT detail</span>
+          <h3>Buy, offer, <em>swap</em> — same surface.</h3>
+          <p>One screen unifies three actions that used to live apart. Offers, listings and swap proposals stack into a single panel; price history sits below.</p>
+          <div class="step-cap">
+            <span class="mono">/asset/:id</span>
+            <span class="mono">Buy · offer · swap</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="4">
+        <div class="step-mobile-fig">
+          <div class="screen-fig"><img src="assets/nftrade-swap.png" alt="NFTrade P2P swap" /></div>
+          <div class="screen-fig-cap"><span class="mono">/marketplace?swap=1</span><span class="mono">Propose · Counter · Confirm</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.5 — P2P Swap</span>
+          <h3>No cash? <em>Trade direct</em>.</h3>
+          <p>Propose any trade — your NFTs for theirs — without touching a floor price. Your wallet on the left, the marketplace in the center, your offer at the bottom. A flow OpenSea didn't have when NFTrade shipped it.</p>
+          <div class="step-cap">
+            <span class="mono">/marketplace?swap=1</span>
+            <span class="mono">Propose · Counter · Confirm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="5">
+        <div class="step-mobile-fig">
+          <div class="screen-fig"><img src="assets/nftrade-advanced.png" alt="Advanced trading — order book" /></div>
+          <div class="screen-fig-cap"><span class="mono">/collection/:id?mode=advanced</span><span class="mono">Limit · market · live tape</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.6 — Advanced</span>
+          <h3>An <em>order book</em> for floors.</h3>
+          <p>For collectors who treat collections like markets — limit/market orders, open positions and live trades, all on one surface.</p>
+          <div class="step-cap">
+            <span class="mono">/collection/:id?mode=advanced</span>
+            <span class="mono">Limit · market · live tape</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="6">
+        <div class="step-mobile-fig">
+          <div class="screen-fig"><img src="assets/nftrade-blog.png" alt="NFTrade Blog page" /></div>
+          <div class="screen-fig-cap"><span class="mono">/blog</span><span class="mono">Content · Announcements · Brand</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">3.7 — Blog</span>
+          <h3>Marketing design, <em>same system</em>.</h3>
+          <p>The brief extended beyond the product. Blog page, social posts, partnership announcements — all running from the same tokens. In crypto, community communication is half the product; every touchpoint had to carry the same weight as the interface.</p>
+          <div class="step-cap">
+            <span class="mono">/blog</span>
+            <span class="mono">Content · Announcements · Brand</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: sticky image panel -->
+    <div class="scrolly-visual">
+      <div class="screen-slides">
+
+        <div class="screen-slide active" data-idx="0">
+          <div class="screen-fig">
+            <img src="assets/nftrade-home-page.png" alt="NFTrade home page" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/home</span><span class="mono">Hero · trending · collections</span></div>
+        </div>
+
+        <div class="screen-slide" data-idx="1">
+          <div class="screen-fig dark-fig">
+            <img src="assets/nftrade-marketplace-dark.png" alt="NFTrade marketplace dark mode" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/marketplace</span><span class="mono">Dark · grid · filters</span></div>
+        </div>
+
+        <div class="screen-slide" data-idx="2">
+          <div class="screen-fig">
+            <img src="assets/nftrade-collection-page.png" alt="NFTrade collection page" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/collection/:id</span><span class="mono">Stats · Activity · Items</span></div>
+        </div>
+
+        <div class="screen-slide" data-idx="3">
+          <div class="screen-fig">
+            <img src="assets/nftrade-nft-page.png" alt="NFT detail page" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/asset/:id</span><span class="mono">Buy · offer · swap</span></div>
+        </div>
+
+        <div class="screen-slide" data-idx="4">
+          <div class="screen-fig">
+            <img src="assets/nftrade-swap.png" alt="NFTrade P2P swap" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/marketplace?swap=1</span><span class="mono">Propose · Counter · Confirm</span></div>
+        </div>
+
+        <div class="screen-slide" data-idx="5">
+          <div class="screen-fig">
+            <img src="assets/nftrade-advanced.png" alt="Advanced trading — order book" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/collection/:id?mode=advanced</span><span class="mono">Limit · market · live tape</span></div>
+        </div>
+
+        <div class="screen-slide" data-idx="6">
+          <div class="screen-fig">
+            <img src="assets/nftrade-blog.png" alt="NFTrade Blog page" />
+          </div>
+          <div class="screen-fig-cap"><span class="mono">/blog</span><span class="mono">Content · Announcements · Brand</span></div>
+        </div>
+
+      </div>
+      <div class="screen-counter">
+        <div class="counter-track"><div class="counter-fill" id="counterFill" style="width:16.6%"></div></div>
+        <span class="counter-num" id="counterNum">01 / 06</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 04 FLOWS ── -->
+<section id="flows">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">04 / Flows</span>
+      <div>
+        <h2>The moments that <em>build trust</em>.</h2>
+        <p class="lede">Blockchain flows don't behave like Web2 checkouts — gas costs money, wallet signatures are final, and confirmations arrive on the chain's schedule. The design goal was to make each step feel like a guardrail, not an obstacle.</p>
+      </div>
+    </div>
+
+    <div class="narr reveal d1">
+      <span class="lbl mono">The challenge</span>
+      <div>
+        <p>Every confirmation on a DeFi platform carries real weight. Users come with Web2 intuitions but face Web3 mechanics — irreversible actions, protocol-level approvals, and state that lives outside the UI. The goal was to <em>surface exactly what matters at each step</em> and suppress everything that doesn't: keep the user oriented, reduce anxiety, and make every modal feel like a natural checkpoint rather than a blocker.</p>
+        <div class="pull">The user isn't just clicking through — <em>they're signing a contract</em>. Each modal had to earn that signature.</div>
+      </div>
+    </div>
+
+    <div class="flow-modals-wrap reveal d2">
+      <div class="flow-modals-track">
+        <img src="assets/nftrade-modals.png" alt="NFTrade modal system — various states" class="flow-modals-img" />
+        <img src="assets/nftrade-modals.png" alt="" class="flow-modals-img" aria-hidden="true" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 SYSTEM ── -->
+<section id="system">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">05 / System</span>
+      <div>
+        <h2>The bones — <em>tokens, type, grid</em>.</h2>
+        <p class="lede">Every screen above is rendered from the same primitives. A short look at the system the team kept building on after I shipped.</p>
+      </div>
+    </div>
+
+    <div class="ds-grid">
+
+      <!-- Color tokens -->
+      <div class="ds-card reveal">
+        <div class="ds-card-vis" style="flex-direction:column">
+          <div class="ds-color-strip">
+            <div class="ds-color-swatch" style="background:#0099fa"></div>
+            <div class="ds-color-swatch" style="background:#001028"></div>
+            <div class="ds-color-swatch" style="background:#F5F9FE;border:1px solid #D2DCEA"></div>
+            <div class="ds-color-swatch" style="background:#24c872"></div>
+            <div class="ds-color-swatch" style="background:#e55050"></div>
+          </div>
+          <div class="ds-color-chip">
+            <div class="ds-color-chip-dot" style="background:#0099fa"></div>
+            --brand · #0099FA
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Color system</h4>
+          <p class="ds-card-desc">5 semantic tokens — brand, ink, surface, success, error — light-mode first.</p>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="ds-card reveal d1">
+        <div class="ds-card-vis" style="flex-direction:column">
+          <div class="ds-type-big">Inter</div>
+          <div class="ds-type-weights">
+            <span class="ds-type-wlabel w-bold">Bold</span>
+            <span class="ds-type-wlabel w-semi">Semi Bold</span>
+            <span class="ds-type-wlabel">Regular</span>
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Typography</h4>
+          <p class="ds-card-desc">Inter for all UI copy. JetBrains Mono for prices, addresses, and data labels.</p>
+        </div>
+      </div>
+
+      <!-- Spacing -->
+      <div class="ds-card reveal d2">
+        <div class="ds-card-vis">
+          <div class="ds-space-rows">
+            <div class="ds-space-row"><div class="ds-space-bar" style="width:18px"></div><span class="ds-space-px">4px</span></div>
+            <div class="ds-space-row"><div class="ds-space-bar" style="width:36px"></div><span class="ds-space-px">8px</span></div>
+            <div class="ds-space-row"><div class="ds-space-bar" style="width:72px"></div><span class="ds-space-px">16px</span></div>
+            <div class="ds-space-row"><div class="ds-space-bar" style="width:108px"></div><span class="ds-space-px">24px</span></div>
+            <div class="ds-space-row"><div class="ds-space-bar" style="width:144px"></div><span class="ds-space-px">32px</span></div>
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Spacing &amp; Radius</h4>
+          <p class="ds-card-desc">8pt base grid. Every gap, margin, and padding is a multiple of 4px.</p>
+        </div>
+      </div>
+
+      <!-- Components -->
+      <div class="ds-card reveal">
+        <div class="ds-card-vis" style="flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center">
+            <div class="ds-comp-btn">Buy now</div>
+            <div class="ds-comp-badge">0.42 ETH</div>
+          </div>
+          <div class="ds-comp-input">
+            <span>Search NFTs, collections…</span>
+            <span class="ds-comp-cursor"></span>
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Components</h4>
+          <p class="ds-card-desc">Buttons, inputs, filters, and price badges built on a shared token system.</p>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="ds-card reveal d1">
+        <div class="ds-card-vis" style="align-items:flex-end;padding-bottom:0;padding-top:16px">
+          <div class="ds-grid-cols">
+            <div class="ds-grid-bar" style="height:50%"></div>
+            <div class="ds-grid-bar hi" style="height:70%"></div>
+            <div class="ds-grid-bar" style="height:90%"></div>
+            <div class="ds-grid-bar" style="height:60%"></div>
+            <div class="ds-grid-bar hi" style="height:100%"></div>
+            <div class="ds-grid-bar" style="height:80%"></div>
+            <div class="ds-grid-bar" style="height:65%"></div>
+            <div class="ds-grid-bar hi" style="height:85%"></div>
+            <div class="ds-grid-bar" style="height:45%"></div>
+            <div class="ds-grid-bar" style="height:75%"></div>
+            <div class="ds-grid-bar hi" style="height:55%"></div>
+            <div class="ds-grid-bar" style="height:40%"></div>
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Grid system</h4>
+          <p class="ds-card-desc">12-column grid, 24px gutters. Responsive from 1440px desktop down to 320px.</p>
+        </div>
+      </div>
+
+      <!-- NFT Card pattern -->
+      <div class="ds-card reveal d2">
+        <div class="ds-card-vis" style="gap:12px">
+          <div class="ds-nft-card">
+            <div class="ds-nft-thumb">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#0099fa" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="14" cy="14" r="5" fill="#0099fa44"/></svg>
+            </div>
+            <div class="ds-nft-body">
+              <div class="ds-nft-name">CryptoPunk #3142</div>
+              <div class="ds-nft-price">
+                <span class="ds-nft-eth">0.42 ETH</span>
+                <span class="ds-nft-usd">$780</span>
+              </div>
+            </div>
+          </div>
+          <div class="ds-nft-card" style="opacity:.55;transform:scale(.92) translateY(6px)">
+            <div class="ds-nft-thumb" style="background:linear-gradient(135deg,#24c87222,#24c87244)">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="8" y="8" width="12" height="12" rx="3" stroke="#24c872" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="#24c87266"/></svg>
+            </div>
+            <div class="ds-nft-body">
+              <div class="ds-nft-name">Azuki #887</div>
+              <div class="ds-nft-price">
+                <span class="ds-nft-eth" style="color:#24c872">1.2 ETH</span>
+                <span class="ds-nft-usd">$2,200</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">NFT card pattern</h4>
+          <p class="ds-card-desc">Consistent card anatomy: thumb, name, network badge, price in ETH + USD.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 VIDEO ── -->
+<section id="video">
+  <div class="wrap">
+    <div class="video-outer reveal">
+      <div class="video-card" id="videoCard">
+        <img src="https://img.youtube.com/vi/vareR0nZjuw/maxresdefault.jpg" alt="NFTrade platform walkthrough" id="videoThumb" />
+        <div class="video-overlay" id="videoOverlay">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <p class="video-attr">Platform walkthrough — not produced by designer</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 REFLECTION ── -->
+<section id="outcome">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">07 / Reflection</span>
+      <div>
+        <h2>What changed, and <em>what I learned</em>.</h2>
+        <p class="lede">Numbers are directional — figures from PM, not audited. The lessons are the part I'd carry to the next product.</p>
+      </div>
+    </div>
+
+    <div class="narr reveal d1">
+      <span class="lbl mono">After ship</span>
+      <div>
+        <p>The redesign rolled out in waves over a quarter. The system held — engineering shipped two new surfaces (Staking, Resources) without a designer in the loop, both consistent with everything that came before.</p>
+        <p>The thing I'd carry forward: <em>the brief was "redesign," but the work was a system.</em> Every shipped screen is a downstream consequence of decisions made in the tokens, the grid and the type scale. Get those three right and the surfaces almost draw themselves.</p>
+      </div>
+    </div>
+
+    <div class="outcome reveal d2">
+      <div class="stat"><span class="mono">Listings flow</span><div class="v"><em>−42%</em></div><p>Steps to list an NFT, before vs after</p></div>
+      <div class="stat"><span class="mono">Mobile sessions</span><div class="v"><em>+2.1×</em></div><p>Avg session length on mobile, post-launch</p></div>
+      <div class="stat"><span class="mono">Swap usage</span><div class="v"><em>+3.4×</em></div><p>Monthly swap proposals after redesign</p></div>
+      <div class="stat"><span class="mono">Components</span><div class="v">86</div><p>Tokenised components in the shipped library</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <h5>Next case — <em>YieldShield</em>.</h5>
+      <div class="links">
+        <a href="index.html">Back to index</a>
+        <a href="YieldShield.html">Next →</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="mono">© 2026 Gilad Cohen — All work shown with permission of clients.</span>
+      <span class="mono">Case 01 / 04</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
+<script>
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── Scrollytelling screens — IntersectionObserver ──
+  // Each .scrolly-step is ~90vh tall and scrolls normally.
+  // When a step crosses the viewport center, its image slide crossfades in.
+  // No scroll math, no snapping — CSS position:sticky handles the image panel.
+  (function(){
+    const steps  = Array.from(document.querySelectorAll('.scrolly-step'));
+    const slides = Array.from(document.querySelectorAll('.screen-slide'));
+    const fill   = document.getElementById('counterFill');
+    const num    = document.getElementById('counterNum');
+    if(!steps.length || !slides.length) return;
+
+    const N = slides.length;
+
+    function setActive(idx){
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      if(fill) fill.style.width = ((idx + 1) / N * 100) + '%';
+      if(num)  num.textContent  = String(idx + 1).padStart(2,'0') + ' / ' + String(N).padStart(2,'0');
+    }
+
+    // rootMargin '-40% 0px -40% 0px' = 20% detection window at viewport center.
+    // Each step (~90vh) crosses this window one at a time — no overlap.
+    const screenIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          setActive(parseInt(e.target.dataset.idx, 10));
+        }
+      });
+    }, {
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0
+    });
+
+    steps.forEach(s => screenIO.observe(s));
+    setActive(0);
+  })();
+
+  // ── Lottie logo animation ──
+  (function(){
+    var el = document.getElementById('lottieIcon');
+    if(!el) return;
+    var anim = lottie.loadAnimation({
+      container: el,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: {"v":"5.9.0","fr":29.9700012207031,"ip":0,"op":223,"w":500,"h":500,"nm":"Comp 3","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":3,"nm":"Null 1","sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-249,364,0],"ix":2,"l":2},"a":{"a":0,"k":[0,0,0],"ix":1,"l":2},"s":{"a":0,"k":[204,204,100],"ix":6,"l":2}},"ao":0,"ip":0,"op":290.000011811942,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"1-02 Outlines","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":1,"k":[{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0]},"t":18,"s":[0]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.167],"y":[0]},"t":39,"s":[360]},{"i":{"x":[0.833],"y":[1]},"o":{"x":[0.167],"y":[0]},"t":159,"s":[360]},{"t":176.000005946702,"s":[0]}],"ix":10},"p":{"a":1,"k":[{"i":{"x":0.575,"y":0.74},"o":{"x":0.287,"y":0.002},"t":18,"s":[241.82,-71.25,0],"to":[35.5,-76.75,0],"ti":[92.5,-1.25,0]},{"i":{"x":0.998,"y":0},"o":{"x":0.167,"y":0},"t":38,"s":[262.82,-36.75,0],"to":[-0.043,-0.097,0],"ti":[-0.269,0.409,0]},{"i":{"x":0.699,"y":0.8},"o":{"x":0.653,"y":0.227},"t":159,"s":[262.82,-36.75,0],"to":[95.769,-4.409,0],"ti":[29.674,-74.89,0]},{"t":176.000005946702,"s":[241.82,-71.25,0]}],"ix":2,"l":2},"a":{"a":0,"k":[7.5,6.5,0],"ix":1,"l":2},"s":{"a":0,"k":[261.924,261.924,100],"ix":6,"l":2}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[0.54,0.25],[0,0],[0.16,-0.07],[0,0],[-0.3,0.52],[0,0],[-0.24,-0.41]],"o":[[0,0],[0.29,0.52],[0,0],[-0.16,-0.07],[0,0],[-0.54,0.24],[0,0],[0.24,-0.41],[0,0]],"v":[[0.592,-6.074],[7.083,5.456],[6.303,6.326],[0.312,3.637],[-0.178,3.637],[-6.307,6.337],[-7.077,5.456],[-0.458,-6.083],[0.602,-6.083]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":1,"k":[{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":36.53,"s":[0.537254929543,0.572549045086,0.694117665291,1]},{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":59,"s":[0,0.600000023842,0.980392158031,1]},{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":171,"s":[0,0.600000023842,0.980392158031,1]},{"t":182,"s":[0.537254929543,0.572549045086,0.694117665291,1]}],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[7.165,6.391],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":300.00001221925,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"2-03 Outlines","parent":1,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"t":37,"s":[241.807,-20.5,0],"to":[0,-2.667,0],"ti":[0,2.667,0]},{"i":{"x":0.667,"y":0.667},"o":{"x":0.167,"y":0.167},"t":41,"s":[241.807,-36.5,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.833,"y":1},"o":{"x":0.167,"y":0},"t":174,"s":[241.807,-36.5,0],"to":[0,2.667,0],"ti":[0,-2.667,0]},{"t":178.000006028164,"s":[241.807,-20.5,0]}],"ix":2,"l":2},"a":{"a":0,"k":[7.5,12.8,0],"ix":1,"l":2},"s":{"a":1,"k":[{"i":{"x":[0.667,0.667,0.667],"y":[1,0.599,1]},"o":{"x":[0.333,0.333,0.333],"y":[0,0,0]},"t":35,"s":[261.924,215.048,100]},{"i":{"x":[0.667,0.667,0.667],"y":[1,1,1]},"o":{"x":[0.333,0.333,0.333],"y":[0,0.34,0]},"t":39,"s":[261.924,249.197,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.333,0.333,0.333],"y":[0,0,0]},"t":44,"s":[261.924,299.532,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":47,"s":[261.924,261.924,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":172,"s":[261.924,261.924,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":174,"s":[261.924,199.422,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.333,0.333,0.333],"y":[0,0,0]},"t":180,"s":[261.924,179.89,100]},{"t":183.000006231818,"s":[261.924,215.048,100]}],"ix":6,"l":2}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0.24,0.41],[0,0],[-0.54,-0.25],[0,0],[-0.16,0.07],[0,0],[0.3,-0.52],[0,0]],"o":[[0,0],[-0.29,-0.52],[0,0],[0.16,0.07],[0,0],[0.54,-0.24],[0,0],[-0.24,0.41]],"v":[[-0.597,6.083],[-7.087,-5.447],[-6.307,-6.316],[-0.317,-3.626],[0.173,-3.626],[6.313,-6.337],[7.083,-5.456],[0.463,6.083]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":1,"k":[{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":36,"s":[0.537254929543,0.572549045086,0.694117665291,1]},{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":47,"s":[0.57647061348,0.772549033165,0.996078431606,1]},{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":171,"s":[0.57647061348,0.772549033165,0.996078431606,1]},{"t":182,"s":[0.537254929543,0.572549045086,0.694117665291,1]}],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[7.169,6.391],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":300.00001221925,"st":0,"bm":0},{"ddd":0,"ind":4,"ty":4,"nm":"3-04 Outlines","parent":1,"sr":1,"ks":{"o":{"a":1,"k":[{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":18,"s":[100]},{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":32,"s":[0]},{"i":{"x":[0.833],"y":[0.833]},"o":{"x":[0.167],"y":[0.167]},"t":175,"s":[0]},{"t":181.000006150356,"s":[100]}],"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[241.875,-55.688,0],"ix":2,"l":2},"a":{"a":0,"k":[7.5,3.5,0],"ix":1,"l":2},"s":{"a":0,"k":[259.652,259.652,100],"ix":6,"l":2}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-0.462,-0.2],[0,0],[-0.309,0.136],[0,0],[0.457,0.202],[0,0],[0.14,-0.06],[0,0]],"o":[[0,0],[0.311,0.135],[0,0],[0.457,-0.202],[0,0],[-0.139,-0.061],[0,0],[-0.462,0.2]],"v":[[-6.79,0.554],[-0.419,3.308],[0.555,3.305],[6.793,0.553],[6.793,-0.492],[0.287,-3.362],[-0.15,-3.364],[-6.79,-0.493]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.388235324037,0.407843167174,0.560784313725,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[7.136,3.408],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":300.00001221925,"st":0,"bm":0}],"markers":[]}
+    });
+    anim.addEventListener('DOMLoaded', function(){
+      var svg = el.querySelector('svg');
+      if(!svg) return;
+      svg.setAttribute('viewBox', '140 150 175 175');
+      svg.removeAttribute('width');
+      svg.removeAttribute('height');
+      var clipped = svg.querySelector('[clip-path]');
+      if(clipped) clipped.removeAttribute('clip-path');
+    });
+  })();
+
+  // ── Video click-to-play ──
+  (function(){
+    var card = document.getElementById('videoCard');
+    if(!card) return;
+    card.addEventListener('click', function(){
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/vareR0nZjuw?autoplay=1&rel=0&modestbranding=1';
+      iframe.allow = 'autoplay; fullscreen';
+      iframe.allowFullscreen = true;
+      document.getElementById('videoThumb').style.display = 'none';
+      document.getElementById('videoOverlay').style.display = 'none';
+      card.appendChild(iframe);
+    });
+  })();
+
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

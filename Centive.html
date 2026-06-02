@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Centive — Case Study · Gilad Cohen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7;--bg-2:#f0eee7;
+    --ink:#0a0a0b;--line:#0a0a0b14;--line-strong:#0a0a0b24;
+    --fg:#0a0a0b;--fg-dim:#7a7770;--fg-mid:#3a3a3c;
+    --accent:#5b3df5;--warm:#d24a1a;--good:#2d8e4a;
+    --cv-product:#00ab81;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 40px;position:relative}
+  @media(max-width:720px){.wrap{padding:0 16px}}
+
+  .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(#0a0a0b0a 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);opacity:0.5}
+
+  /* ── Nav ── */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background:linear-gradient(180deg,#fafaf7cc 0%,#fafaf780 70%,transparent);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+  nav.top.scrolled{border-bottom-color:var(--line);background:#fafaf7ee}
+  nav.top .row{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
+  nav.top .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+  nav.top .brand .dot{width:32px;height:24px;display:inline-block}
+  nav.top .brand .dot svg{width:100%;height:100%;display:block}
+  nav.top .links{display:flex;gap:32px}
+  nav.top .links a{color:var(--fg-dim);text-decoration:none;font-size:13px;transition:color .2s;position:relative}
+  nav.top .links a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  nav.top .links a:hover{color:var(--fg)}
+  nav.top .links a:hover::after{transform:scaleX(1)}
+  nav.top .clock{color:var(--fg-dim)}
+  @media(max-width:720px){nav.top .links{display:none}}
+
+  /* ── Hero ── */
+  .hero{padding:0;position:relative;z-index:1;overflow:hidden}
+  .hero-wrap{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;gap:0}
+  .hero-text{padding:144px 48px 64px 0}
+  .hero .crumb{display:flex;align-items:center;gap:16px;color:var(--fg-dim);margin-bottom:64px}
+  .hero .crumb .pulse{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px #2d8e4a14}
+  .hero .crumb a{color:var(--fg-dim);text-decoration:none;transition:color .2s}
+  .hero .crumb a:hover{color:var(--fg)}
+  .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,96px);line-height:0.9;letter-spacing:-0.04em;color:var(--fg);max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .sub{margin-top:40px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--fg-mid)}
+  .hero .sub em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .hero-visual{display:flex;align-items:center;justify-content:flex-end;overflow:hidden;padding-top:72px;padding-bottom:40px}
+  .hero-visual .macbook-img{
+    width:100%;height:auto;
+    display:block;
+    border-radius:12px;
+  }
+  @media(max-width:960px){
+    .hero-wrap{grid-template-columns:1fr}
+    .hero-text{padding:120px 0 40px}
+    .hero-visual{display:none}
+  }
+  .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 64px;border-top:1px solid var(--line)}
+  @media(max-width:720px){.meta-row{grid-template-columns:repeat(2,1fr);gap:16px 24px}}
+  .meta-row .cell .mono{display:block;color:var(--fg-dim);margin-bottom:8px}
+  .meta-row .cell strong{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:22px;letter-spacing:-0.02em;color:var(--fg);display:block}
+
+  /* ── Cover ── */
+  .cover{margin-top:0;position:relative;z-index:1}
+  .cover-frame{position:relative;width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--line-strong)}
+  .cover-frame img{width:100%;height:auto;display:block}
+  .cover-macbook{border:none;background:transparent;margin:0 -40px;width:calc(100% + 80px)}
+  .cover-macbook img{width:100%;display:block}
+  @media(max-width:720px){.cover-macbook{margin:0 -16px;width:calc(100% + 32px)}}
+
+  /* ── MacBook video screen ── */
+  .cover-macbook-vid{position:relative;aspect-ratio:3/2;isolation:isolate}
+  .cover-macbook-vid .screen-bg{
+    position:absolute;left:26%;top:16%;width:48%;height:47%;
+    background:#000;z-index:0;
+  }
+  .cover-macbook-vid .macbook-screen{
+    position:absolute;left:26%;top:16%;width:48%;height:47%;
+    object-fit:cover;z-index:1;border-radius:1px;
+  }
+  .cover-macbook-vid .macbook-overlay{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:fill;z-index:2;
+    mix-blend-mode:screen;
+  }
+  .cover-cap{margin-top:16px;display:flex;justify-content:space-between;color:var(--fg-dim)}
+
+
+  /* ── Sections ── */
+  section{position:relative;z-index:1;padding:120px 0;border-top:1px solid var(--line)}
+  .sect-label{display:grid;grid-template-columns:120px 1fr;gap:48px;align-items:start;margin-bottom:64px}
+  .sect-label .num{color:var(--fg-dim)}
+  .sect-label h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4.6vw,64px);line-height:0.96;letter-spacing:-0.035em;color:var(--fg);max-width:18ch}
+  .sect-label h2 em{font-style:normal;color:var(--accent)}
+  .sect-label .lede{margin-top:16px;color:var(--fg-mid);font-size:17px;max-width:52ch;line-height:1.55}
+  @media(max-width:720px){.sect-label{grid-template-columns:1fr;gap:16px}}
+
+  /* ── Narrative ── */
+  .narr{display:grid;grid-template-columns:120px 1fr;gap:48px}
+  @media(max-width:720px){.narr{grid-template-columns:1fr;gap:16px}}
+  .narr .lbl{color:var(--fg-dim);position:sticky;top:90px;align-self:start}
+  .narr p{color:var(--fg-mid);font-size:17px;line-height:1.65;max-width:60ch;margin-bottom:16px}
+  .narr p em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .narr .pull{margin:32px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.25;letter-spacing:-0.02em;color:var(--fg);max-width:30ch}
+  .narr .pull em{font-style:normal;color:var(--accent)}
+
+  /* ── Two-col ── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
+  @media(max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
+  .two-col .col h3 em{font-style:normal;color:var(--accent)}
+  .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
+  .two-col .col .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .two-col .col .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
+
+  /* ── Context grid + brand card ── */
+  .context-grid{display:grid;grid-template-columns:1fr 320px;gap:80px;align-items:start}
+  .context-aside{position:sticky;top:120px}
+  @media(max-width:960px){.context-grid{grid-template-columns:1fr}.context-aside{position:static}}
+  .brand-card{background:#101414;background-image:radial-gradient(circle,rgba(0,171,129,0.45) 1px,transparent 1px);background-size:22px 22px;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:20px}
+  .brand-card .cv-logo-img{height:52px;width:auto;display:block;opacity:0.9}
+  .brand-card .cv-divider{width:100%;height:1px;background:rgba(255,255,255,0.07)}
+  .brand-card .cv-tagline{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);text-align:center;line-height:1.9}
+  .brand-card .cv-scope{display:flex;flex-direction:column;gap:8px;width:100%;padding-top:4px}
+  .brand-card .cv-scope-item{display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4)}
+  .brand-card .cv-scope-item .dot{width:5px;height:5px;border-radius:50%;background:var(--cv-product);opacity:.7}
+  .brand-card .cv-scope-item span:last-child{color:rgba(255,255,255,0.2)}
+  .brand-card .cv-badge{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--cv-product);border:1px solid rgba(0,171,129,0.2);border-radius:99px;padding:5px 14px;margin-top:4px}
+
+  /* ── Three disciplines ── */
+  .scope-row{display:flex;gap:0;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;margin-top:40px}
+  .scope-item{flex:1;padding:24px;border-right:1px solid var(--line-strong)}
+  .scope-item:last-child{border-right:none}
+  .scope-item .s-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);display:block;margin-bottom:10px}
+  .scope-item .s-name{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;letter-spacing:-0.02em;color:var(--fg);display:block;margin-bottom:6px}
+  .scope-item .s-desc{font-size:13px;color:var(--fg-dim);line-height:1.5;max-width:22ch}
+  @media(max-width:720px){.scope-row{flex-direction:column}.scope-item{border-right:none;border-bottom:1px solid var(--line-strong)}.scope-item:last-child{border-bottom:none}}
+
+  /* ── More screens grid ── */
+  .more-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+  .mobile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px;align-items:start;max-width:80%;margin-left:auto;margin-right:auto}
+  .mobile-card{border-radius:16px;overflow:hidden;border:1px solid var(--line-strong)}
+  .mobile-card img{width:100%;display:block}
+  @media(max-width:900px){.mobile-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:540px){.mobile-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+  .more-grid-cap{display:flex;justify-content:space-between;margin-top:10px;color:var(--fg-dim)}
+  @media(max-width:720px){.more-grid{grid-template-columns:1fr}}
+
+  /* ── HOW IT WORKS ── */
+  .hiw{
+    background:var(--bg);border-top:1px solid var(--line);
+    padding:120px 0;position:relative;z-index:1;overflow:hidden
+  }
+  .hiw-bg{display:none}
+  .hiw-network{display:none}
+
+  .hiw-steps{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+    opacity:0;transform:translateY(24px);
+    transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .hiw-steps.in{opacity:1;transform:none}
+
+  .hiw-step{
+    grid-column:span 2;
+    background:transparent;
+    border-radius:12px;
+    padding:16px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* 3+2 layout — left-aligned bottom row */
+  .hiw-step:nth-child(4){grid-column:1 / span 2}
+  .hiw-step:nth-child(5){grid-column:3 / span 2}
+
+  .hiw-progress{display:none}
+  .hiw-progress-fill{display:none}
+
+  .hiw-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:16px;display:block}
+  .hiw-step h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:20px;letter-spacing:-0.025em;color:var(--fg);margin-bottom:8px;line-height:1.15}
+  .hiw-step p{font-size:14px;line-height:1.65;color:var(--fg-mid);max-width:30ch}
+
+  @media(max-width:1000px){
+    .hiw-steps{grid-template-columns:repeat(2,1fr)}
+    .hiw-step{grid-column:span 1 !important}
+  }
+  @media(max-width:600px){
+    .hiw-steps{grid-template-columns:1fr}
+    .hiw-step{grid-column:span 1 !important}
+  }
+
+  /* ── Lottie containers ── */
+  .hiw-lottie-wrap{
+    width:100%;
+    aspect-ratio:440/396;
+    background:#101414;
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    margin-bottom:16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hiw-lottie{width:100%;height:100%}
+  .hiw-lottie-wrap::after{
+    content:'';position:absolute;inset:0;border-radius:10px;
+    background-image:radial-gradient(circle,rgba(0,171,129,0.3) 1px,transparent 1px);
+    background-size:22px 22px;
+    pointer-events:none;z-index:2;
+  }
+
+  /* ── Scrollytelling ── */
+  .scrolly-wrap{display:grid;grid-template-columns:360px 1fr;gap:80px;max-width:1270px;margin:0 auto;padding:0 40px;align-items:start}
+  .scrolly-step{min-height:90vh;display:flex;align-items:center}
+  .scrolly-step:first-child{padding-top:5vh}
+  .scrolly-step:last-child{padding-bottom:10vh}
+  .step-text{max-width:340px}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);display:block;margin-bottom:24px}
+  .step-text h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(32px,3.6vw,52px);letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;color:var(--fg)}
+  .step-text h3 em{font-style:normal;color:var(--accent)}
+  .step-text p{color:var(--fg-mid);font-size:16px;line-height:1.65;margin-bottom:14px}
+  .step-cap{display:flex;flex-direction:column;gap:4px;padding-top:16px;margin-top:24px;border-top:1px solid var(--line)}
+  .step-cap .mono{color:var(--fg-dim)}
+  .scrolly-visual{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:16px}
+  .screen-counter{display:flex;align-items:center;gap:16px;width:90%;margin:0 0 0 auto}
+  .counter-track{flex:1;height:1px;background:var(--line-strong);position:relative;overflow:hidden}
+  .counter-fill{position:absolute;top:0;left:0;height:100%;background:var(--fg);transition:width .5s cubic-bezier(.25,.8,.25,1)}
+  .counter-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);white-space:nowrap}
+  .screen-slides{display:grid;width:90%;margin:0 0 0 auto}
+  .screen-slide{grid-area:1/1;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .55s cubic-bezier(.25,.8,.25,1)}
+  .screen-slide.active{opacity:1;pointer-events:auto}
+  .screen-fig{border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;background:#fff;width:100%;position:relative;padding-top:24px}
+  .screen-fig::before{content:'';position:absolute;top:0;left:0;right:0;height:24px;z-index:2;background:#1a1a1a;background-image:radial-gradient(circle,#fc605b 4.5px,transparent 5px),radial-gradient(circle,#fdbc40 4.5px,transparent 5px),radial-gradient(circle,#35c849 4.5px,transparent 5px);background-size:9px 9px,9px 9px,9px 9px;background-position:14px center,28px center,42px center;background-repeat:no-repeat;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .screen-fig.dark-fig{background:#101414}
+  .screen-fig img{width:100%;height:auto;display:block}
+  .screen-fig-cap{display:flex;justify-content:space-between;margin-top:10px;color:var(--fg-dim)}
+  .step-mobile-fig{display:none;margin-bottom:24px}
+  @media(max-width:900px){
+    .scrolly-wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+    .scrolly-visual{display:none}
+    .step-mobile-fig{display:block}
+    .scrolly-step{min-height:auto;padding:48px 0;flex-direction:column;align-items:stretch}
+    .scrolly-step:first-child{padding-top:0}
+    .scrolly-step:last-child{padding-bottom:0}
+    .step-text{max-width:none}
+  }
+  @media(max-width:720px){.scrolly-wrap{padding:0 16px}}
+
+  /* ── Outcome ── */
+  .outcome{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
+  @media(max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
+  .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
+  .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
+  .outcome .stat .v em{font-style:normal;color:var(--accent)}
+  .outcome .stat p{font-size:13px;color:var(--fg-mid);margin-top:8px;max-width:22ch}
+
+  /* ── Footer ── */
+  footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
+  footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:14ch}
+  footer h5 em{font-style:normal;color:var(--accent)}
+  footer .links{display:flex;gap:24px}
+  footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
+  footer .links a:hover{color:var(--fg);border-color:var(--fg)}
+  footer .meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--fg-dim)}
+  footer .next-link{display:inline-flex;align-items:center;gap:12px;padding:16px 24px;border:1px solid var(--line-strong);border-radius:99px;text-decoration:none;color:var(--fg);font-size:14px;margin-top:32px;transition:background .3s,color .3s,border-color .3s}
+  footer .next-link:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  footer .next-link .arr{transition:transform .3s}
+  footer .next-link:hover .arr{transform:translateX(4px) rotate(-45deg)}
+
+  /* ── Reveal ── */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.1s}
+  .reveal.d2{transition-delay:.2s}
+  .reveal.d3{transition-delay:.3s}
+
+  @media(max-width:720px){
+    section{padding:72px 0}
+    .hero-text{padding:120px 0 40px}
+    .hero-visual{display:none}
+    .hiw{padding:72px 0}
+    .narr .lbl{position:static}
+  }
+  @media(max-width:600px){
+    .hiw-step{border-right:none}
+  }
+
+  /* ── Reading progress ── */
+  .reading-progress{
+    position:fixed;top:0;left:0;height:2px;
+    background:var(--accent);z-index:200;width:0;
+    transition:width .08s linear;
+    pointer-events:none;
+  }
+
+  /* ── Focus styles ── */
+  a:focus-visible,button:focus-visible{
+    outline:2px solid var(--accent);outline-offset:3px;border-radius:2px
+  }
+
+  /* ── Reduced motion ── */
+  @media(prefers-reduced-motion:reduce){
+    .reveal{transition:none;opacity:1;transform:none}
+    .hiw-steps{transition:none;opacity:1;transform:none}
+    .hiw-progress-fill{transition:none}
+    .screen-slide{transition:none}
+    .counter-fill{transition:none}
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="reading-progress" id="readingProgress"></div>
+<div class="grid-bg"></div>
+<div id="site-nav"></div>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-wrap">
+      <div class="hero-text">
+        <div class="crumb reveal">
+          <span class="pulse"></span>
+          <span class="mono"><a href="index.html">Index</a> &nbsp;/&nbsp; Case 03 &nbsp;/&nbsp; Centive</span>
+        </div>
+        <h1 class="reveal d1">Brand, website, and product for a <em>DePIN</em> network.</h1>
+        <p class="sub reveal d2">Centive is the monitoring and verification layer for distributed compute. I owned the full design scope — <em>brand identity</em>, marketing website, and the <em>operator dashboard</em> — all from zero.</p>
+      </div>
+
+      <div class="hero-visual reveal d2">
+        <img src="assets/centive/hero section website.png" alt="Centive marketing website hero section" fetchpriority="high" class="macbook-img" />
+      </div>
+    </div>
+
+    <div class="meta-row reveal d3">
+      <div class="cell"><span class="mono">Role</span><strong>Lead Designer</strong></div>
+      <div class="cell"><span class="mono">Year</span><strong>2024</strong></div>
+      <div class="cell"><span class="mono">Deliverables</span><strong>Brand · Website · Product</strong></div>
+      <div class="cell"><span class="mono">Scope</span><strong>0 → 1 · Solo designer</strong></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── COVER ── -->
+<section class="cover" style="border:none;padding-top:0">
+  <div class="wrap">
+    <div class="cover-frame cover-macbook cover-macbook-vid reveal">
+      <div class="screen-bg"></div>
+      <video class="macbook-screen" autoplay muted loop playsinline>
+        <source src="assets/centive/centive%20hero%20video.mov" type="video/quicktime">
+        <source src="assets/centive/centive%20hero%20video.mov" type="video/mp4">
+      </video>
+      <img src="assets/centive/MacBook-Pro-16.png?v=2" alt="Centive operator dashboard on MacBook Pro 16" class="macbook-overlay" />
+    </div>
+    <div class="cover-cap reveal d1">
+      <span class="mono">Fig. 01 — Network overview · Main dashboard</span>
+      <span class="mono">MacBook Pro 16 · 2024</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 01 CONTEXT ── -->
+<section id="context">
+  <div class="wrap">
+    <div class="context-grid">
+      <div>
+        <div class="sect-label reveal">
+          <span class="num mono">02 / Context</span>
+          <div>
+            <h2>One project. Three <em>design disciplines</em>.</h2>
+            <p class="lede">Centive is a monitoring and verification layer for DePIN — Decentralized Physical Infrastructure Networks. The founding team came with a protocol and no visual presence. I built the brand, the marketing site, and the full product from the ground up.</p>
+          </div>
+        </div>
+        <div class="narr reveal d1">
+          <span class="lbl mono">The brief</span>
+          <div>
+            <p>The founding team had the protocol architecture — staking, verifier consensus, slashing, payouts. What they didn't have was anything visual: <em>no brand, no website, no product screens, no information architecture.</em></p>
+            <p>I came in as the solo designer and owned all three layers. <em>Brand first</em> — logo, color, type, the visual language that would carry across every surface. Then the <em>marketing website</em> — landing page for validators, node operators, and investors. Then the <em>operator dashboard</em> — the real product, shipped in parallel with the engineering build.</p>
+            <div class="pull">When everything starts from zero, <em>brand decisions are product decisions</em>.</div>
+            <p>The challenge was coherence across very different surfaces — a marketing page that has to convince, and a dense ops dashboard that has to perform. The design system was the thread that held them together.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="context-aside reveal d2">
+        <div class="brand-card">
+          <img src="assets/centive/logo.svg" alt="Centive" class="cv-logo-img" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 DIAGNOSIS ── -->
+<section id="problem">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">03 / Diagnosis</span>
+      <div>
+        <h2>Technical infrastructure, <em>human-readable</em> interface.</h2>
+        <p class="lede">The protocol had five distinct phases. Each one needed UX clarity — or the whole system would feel opaque to the people running it.</p>
+      </div>
+    </div>
+    <div class="two-col reveal d1">
+      <div class="col">
+        <h3>The <em>tension</em></h3>
+        <p>Operators needed density — real-time metrics, test configs, incident history, consensus state. At the same time, the product had to work for first-time node operators who weren't crypto-native infrastructure engineers.</p>
+        <p>Too sparse and power users would hit dead ends. Too technical and onboarding would drop off before the first node came online.</p>
+        <div class="tag-row">
+          <span class="tag">Density vs. clarity</span>
+          <span class="tag">Technical audience</span>
+          <span class="tag">Real-time data</span>
+          <span class="tag">Trust signals</span>
+        </div>
+      </div>
+      <div class="col">
+        <h3>The <em>approach</em></h3>
+        <p>Dark, data-dense UI that felt like a professional ops tool — not a crypto dashboard with gradient cards. Every metric earned its screen real estate. Incident flows designed as step-by-step state machines. Test creation as a guided form, not a config file.</p>
+        <p>The design system anchored everything: a single green for health and activity, red only for failures, mono type for all data values.</p>
+        <div class="tag-row">
+          <span class="tag">Ops-tool aesthetic</span>
+          <span class="tag">State-machine flows</span>
+          <span class="tag">Design system</span>
+          <span class="tag">Progressive disclosure</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="hiw" id="howitworks">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">04 / How It Works</span>
+      <div>
+        <h2>Five phases. One <em>continuous loop</em>.</h2>
+        <p class="lede">Centive's protocol runs as an automated cycle — stake in, monitor continuously, vote in secret, penalize failures, distribute rewards. The dashboard gives operators visibility into every phase.</p>
+      </div>
+    </div>
+
+    <div class="hiw-steps" id="hiwSteps">
+
+      <div class="hiw-step" data-step="01">
+        <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
+        <span class="hiw-num">01 — Stake &amp; Join</span>
+        <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-1"></div></div>
+        <h3>Commit capital, join the network</h3>
+        <p>Node operators stake PRZ tokens to enter the network. The optimistic mechanism allows instant participation — penalties only apply if failures are detected.</p>
+      </div>
+
+      <div class="hiw-step" data-step="02">
+        <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
+        <span class="hiw-num">02 — Monitor</span>
+        <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-2"></div></div>
+        <h3>Continuous health testing</h3>
+        <p>APM agents and end-to-end tests continuously evaluate every node — uptime, latency, GPU utilization, job completion rate. All surfaced in real time.</p>
+      </div>
+
+      <div class="hiw-step" data-step="03">
+        <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
+        <span class="hiw-num">03 — Secret Vote</span>
+        <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-3"></div></div>
+        <h3>Secret consensus voting</h3>
+        <p>When a test fails, distributed verifiers cast hidden votes. The commit-reveal scheme prevents collusion — no verifier knows others' votes until all are revealed.</p>
+      </div>
+
+      <div class="hiw-step" data-step="04">
+        <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
+        <span class="hiw-num">04 — Slash</span>
+        <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-4"></div></div>
+        <h3>Automated penalties</h3>
+        <p>If consensus confirms a failure, the protocol slashes the offending node's staked PRZ automatically. On-chain, no human moderator, no appeal queue.</p>
+      </div>
+
+      <div class="hiw-step" data-step="05">
+        <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
+        <span class="hiw-num">05 — Payout</span>
+        <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-5"></div></div>
+        <h3>Performance-based rewards</h3>
+        <p>Nodes that pass all tests receive their proportional rewards. Validators who voted correctly also earn — the incentive loop runs without any manual intervention.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 SCREENS ── -->
+<section id="screens">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">05 / Surfaces</span>
+      <div>
+        <h2>Six screens that carry the <em>whole system</em>.</h2>
+        <p class="lede">The product spans network monitoring, node health, incident management, and test infrastructure. Each screen designed to give operators exactly what they need — no more, no less.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrolly-wrap">
+    <div class="scrolly-steps">
+
+      <div class="scrolly-step" data-idx="0">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/centive/overview.png" alt="Centive network overview" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/overview</span><span class="mono">Network-wide view</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">5.1 — Network Overview</span>
+          <h3>The whole network, <em>one screen</em>.</h3>
+          <p>The network overview gives operators a bird's-eye view — active nodes, total compute, available capacity, and live test success rates. Designed as the first screen operators open at the start of a shift.</p>
+          <p>The dual charts (Nodes and Compute) give a temporal view of capacity trends without requiring any filtering or configuration.</p>
+          <div class="step-cap">
+            <span class="mono">/overview</span>
+            <span class="mono">Network health · Capacity · Live stats</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="1">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/centive/node overview.png" alt="Centive node overview" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/overview/:id</span><span class="mono">Node health</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">5.2 — Node Overview</span>
+          <h3>Everything about your node, <em>at a glance</em>.</h3>
+          <p>The node overview is the operator's home screen — uptime counter, availability %, response time, GPU metrics, job success rate, and a live events heatmap. All reading from the same data source, updating every minute.</p>
+          <p>The Network Rank widget surfaces where the node stands relative to the full network — a competitive signal without a separate leaderboard page.</p>
+          <div class="step-cap">
+            <span class="mono">/overview/:id</span>
+            <span class="mono">Node health · Live data · GPU metrics</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="2">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/centive/nodes.png" alt="Centive nodes table" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/nodes</span><span class="mono">Node management</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">5.3 — Nodes Table</span>
+          <h3>568 nodes, <em>scannable in seconds</em>.</h3>
+          <p>The nodes table surfaces every node in the network with GPU model, location, uptime, last checked, and reputation score in a single dense row. Sortable, filterable, and built to handle scale.</p>
+          <p>Top-row stats — Total Nodes, Active Nodes, Total Compute, Available — give operators a network pulse before they look at any individual row.</p>
+          <div class="step-cap">
+            <span class="mono">/nodes</span>
+            <span class="mono">Fleet management · GPU · Reputation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="3">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/centive/incidents.png" alt="Centive incidents list" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/incidents</span><span class="mono">Incident management</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">5.4 — Incidents</span>
+          <h3>Every failure, <em>tracked and classified</em>.</h3>
+          <p>The incidents screen consolidates all network failures into a single view — severity, root cause, duration, status, and reporter in a scannable table. The top-row stats give network-wide context instantly.</p>
+          <p>The heatmap above the table maps incident frequency over time — letting operators spot recurring patterns before they become systemic issues.</p>
+          <div class="step-cap">
+            <span class="mono">/incidents</span>
+            <span class="mono">Network failures · Severity · History</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="4">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/centive/Incident Overview.png" alt="Centive incident detail" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/incidents/:id</span><span class="mono">Consensus detail</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">5.5 — Incident Detail</span>
+          <h3>The consensus flow, <em>made visible</em>.</h3>
+          <p>Each incident detail page maps the full lifecycle — detection, commit voting, reveal votes, consensus reached — as a step-by-step progress UI. Operators can see exactly where the protocol stands at any moment.</p>
+          <p>The consensus outcome is shown upfront so operators understand the stakes before digging into the evidence. No burying the lede.</p>
+          <div class="step-cap">
+            <span class="mono">/incidents/:id</span>
+            <span class="mono">Consensus state · Activity log</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="5">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/centive/Test Page.png" alt="Centive test detail" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/tests/:id</span><span class="mono">Test detail</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">5.6 — Test Detail</span>
+          <h3>Every test run, <em>fully auditable</em>.</h3>
+          <p>The test detail page gives operators full visibility into an individual health check — success rate, node online count, verifier nodes, pass/fail counts, and a live histogram of test runs over time.</p>
+          <p>Ongoing incidents and a node audit log sit below the fold, so operators can trace any anomaly from test result back to root cause in a single screen.</p>
+          <div class="step-cap">
+            <span class="mono">/tests/:id</span>
+            <span class="mono">Test history · Audit log · Incidents</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT sticky visual -->
+    <div class="scrolly-visual">
+      <div class="screen-counter">
+        <span class="mono" style="color:var(--accent)">Centive</span>
+        <div class="counter-track"><div class="counter-fill" id="counterFill"></div></div>
+        <span class="counter-num" id="counterNum">1 / 6</span>
+      </div>
+
+      <div class="screen-slides">
+        <div class="screen-slide active" data-slide="0">
+          <div class="screen-fig dark-fig"><img src="assets/centive/overview.png" alt="Centive network overview" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/overview — Network-wide view</span><span class="mono">1440px</span></div>
+        </div>
+        <div class="screen-slide" data-slide="1">
+          <div class="screen-fig dark-fig"><img src="assets/centive/node overview.png" alt="Centive node overview" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/overview — Node ZnF1FZ</span><span class="mono">1440px</span></div>
+        </div>
+        <div class="screen-slide" data-slide="2">
+          <div class="screen-fig dark-fig"><img src="assets/centive/nodes.png" alt="Centive nodes table" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/nodes — 568 nodes across the network</span><span class="mono">1440px</span></div>
+        </div>
+        <div class="screen-slide" data-slide="3">
+          <div class="screen-fig dark-fig"><img src="assets/centive/incidents.png" alt="Centive incidents" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/incidents — 2,829 results</span><span class="mono">1440px</span></div>
+        </div>
+        <div class="screen-slide" data-slide="4">
+          <div class="screen-fig dark-fig"><img src="assets/centive/Incident Overview.png" alt="Centive incident detail" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/incidents/:id — Consensus</span><span class="mono">1440px</span></div>
+        </div>
+        <div class="screen-slide" data-slide="5">
+          <div class="screen-fig dark-fig"><img src="assets/centive/Test Page.png" alt="Centive test detail" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/tests/:id — Test detail &amp; history</span><span class="mono">1440px</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 MOBILE ── -->
+<section id="mobile-screens">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">06 / Mobile</span>
+      <div>
+        <h2>Responsive down to <em>every pixel</em>.</h2>
+        <p class="lede">The full product — website and dashboard — designed mobile-first. Same information density, adapted for touch.</p>
+      </div>
+    </div>
+    <div class="mobile-grid reveal d1">
+      <div class="mobile-card">
+        <img src="assets/centive/mobile screens/iPhone SE - 3.png" alt="Centive mobile hero" loading="lazy" />
+      </div>
+      <div class="mobile-card">
+        <img src="assets/centive/mobile screens/Android - 26.png" alt="Centive benefits mobile" loading="lazy" />
+      </div>
+      <div class="mobile-card">
+        <img src="assets/centive/mobile screens/Android - 27.png" alt="Centive use cases mobile" loading="lazy" />
+      </div>
+      <div class="mobile-card">
+        <img src="assets/centive/mobile screens/Android - 29.png" alt="Centive get started mobile" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 OUTCOMES ── -->
+<section id="outcomes">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">07 / Outcomes</span>
+      <div>
+        <h2>Brand, site, and product — <em>all live</em>.</h2>
+        <p class="lede">Centive launched with a complete visual identity, a marketing website, and a fully functional operator dashboard. Three deliverables, one designer, shipped in parallel with the engineering team.</p>
+      </div>
+    </div>
+    <div class="outcome reveal d1">
+      <div class="stat">
+        <span class="mono">Deliverables</span>
+        <div class="v">3</div>
+        <p>Brand identity, marketing site, and full operator dashboard — all from zero</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Product screens</span>
+        <div class="v">12<em>+</em></div>
+        <p>Node overview to staking — every surface of the operator journey</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Design system</span>
+        <div class="v">1</div>
+        <p>Single system spanning brand, marketing, and product — keeps all three coherent</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Solo designer</span>
+        <div class="v">0<em>→1</em></div>
+        <p>Full scope delivered in parallel with the engineering build</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Next project</div>
+        <h5>MinerFun — <em>Web3</em> gaming, zero to one.</h5>
+        <a href="MinerFun.html" class="next-link">
+          View MinerFun
+          <span class="arr">↗</span>
+        </a>
+      </div>
+      <div class="links">
+        <a href="index.html#work">All work</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+    <div class="meta">
+      <span>© 2026 Gilad Cohen</span>
+      <span class="mono">Case 03 / 04 — Centive · 2024</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const hiwObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); hiwObserver.unobserve(e.target); } });
+  }, {threshold:0.2});
+  const hiwEl = document.getElementById('hiwSteps');
+  if(hiwEl) hiwObserver.observe(hiwEl);
+
+  const slides = document.querySelectorAll('.screen-slide');
+  const steps  = document.querySelectorAll('.scrolly-step');
+  const fill   = document.getElementById('counterFill');
+  const num    = document.getElementById('counterNum');
+  const total  = slides.length;
+
+  function activate(idx){
+    slides.forEach((s,i) => s.classList.toggle('active', i===idx));
+    if(fill) fill.style.width = ((idx+1)/total*100)+'%';
+    if(num)  num.textContent  = `${idx+1} / ${total}`;
+  }
+
+  const stepObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) activate(+e.target.dataset.idx); });
+  }, {threshold:0.5, rootMargin:'-20% 0px -20% 0px'});
+  steps.forEach(s => stepObs.observe(s));
+</script>
+
+<script src="assets/lottie.min.js"></script>
+<script src="assets/centive-animations.js"></script>
+<script>
+  const LOTTIE_ANIMS = [
+    { id: 'lottie-1', key: 'anim1' },
+    { id: 'lottie-2', key: 'anim2' },
+    { id: 'lottie-3', key: 'anim3' },
+    { id: 'lottie-4', key: 'anim4' },
+    { id: 'lottie-5', key: 'anim5' },
+  ];
+
+  LOTTIE_ANIMS.forEach(({ id, key }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    lottie.loadAnimation({
+      container: el,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: window.CENTIVE_ANIMS[key],
+    });
+  });
+</script>
+<script src="nav.js"></script>
+
+<script>
+  // ── Reading progress bar ──
+  const progressBar = document.getElementById('readingProgress');
+  if(progressBar){
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }, { passive: true });
+  }
+
+</script>
+
+<script>
+</script>
+</body>
+</html>
