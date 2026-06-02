@@ -124,7 +124,7 @@
   .context-grid{display:grid;grid-template-columns:1fr 320px;gap:80px;align-items:start}
   .context-aside{position:sticky;top:120px}
   @media(max-width:960px){.context-grid{grid-template-columns:1fr}.context-aside{position:static}}
-  .brand-card{background:#101414;background-image:radial-gradient(circle,rgba(0,171,129,0.45) 1px,transparent 1px);background-size:22px 22px;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:20px}
+  .brand-card{background:#101414;background-image:url('assets/centive/bg.png');background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:20px}
   .brand-card .cv-logo-img{height:52px;width:auto;display:block;opacity:0.9}
   .brand-card .cv-divider{width:100%;height:1px;background:rgba(255,255,255,0.07)}
   .brand-card .cv-tagline{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);text-align:center;line-height:1.9}
@@ -152,6 +152,28 @@
   @media(max-width:540px){.mobile-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
   .more-grid-cap{display:flex;justify-content:space-between;margin-top:10px;color:var(--fg-dim)}
   @media(max-width:720px){.more-grid{grid-template-columns:1fr}}
+
+  /* ── Brand identity section ── */
+  .brand-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start;max-width:90%}
+  @media(max-width:900px){.brand-layout{grid-template-columns:1fr;gap:32px}}
+  .brand-logo-panel{background:#0a0f0e;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:24px;border:1px solid rgba(0,171,129,0.15)}
+  .brand-logo-dark{padding:40px 32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#060b0a}
+  .brand-logo-light{padding:40px 32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#ffffff}
+  .brand-logo-dark img,.brand-logo-light img{height:40px;width:auto;display:block}
+  .brand-logo-light img{filter:invert(1) brightness(0)}
+  .brand-palette{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:48px}
+  @media(max-width:720px){.brand-palette{grid-template-columns:repeat(2,1fr)}}
+  .palette-item{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+  .palette-swatch{height:72px}
+  .palette-meta{padding:14px 12px;background:var(--bg)}
+  .palette-meta .p-name{display:block;font-size:12px;font-weight:500;color:var(--fg);margin-bottom:4px}
+  .palette-meta .p-hex{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-dim);text-transform:uppercase;letter-spacing:0.06em}
+
+  /* ── Website screenshot ── */
+  .website-fig{margin-top:48px;border-radius:12px;overflow:hidden;border:1px solid var(--line-strong);position:relative;padding-top:28px}
+  .website-fig::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;z-index:2;background:#1c1c1e;background-image:radial-gradient(circle,#fc605b 4.5px,transparent 5px),radial-gradient(circle,#fdbc40 4.5px,transparent 5px),radial-gradient(circle,#35c849 4.5px,transparent 5px);background-size:9px 9px,9px 9px,9px 9px;background-position:14px center,28px center,42px center;background-repeat:no-repeat;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .website-fig img{width:100%;display:block}
+  .website-fig-cap{margin-top:12px;display:flex;justify-content:space-between;color:var(--fg-dim)}
 
   /* ── HOW IT WORKS ── */
   .hiw{
@@ -203,7 +225,7 @@
   .hiw-lottie-wrap{
     width:100%;
     aspect-ratio:440/396;
-    background:#101414;
+    background:#101414 url('assets/centive/bg.png') center/cover;
     border:1px solid var(--line-strong);
     border-radius:10px;
     margin-bottom:16px;
@@ -211,12 +233,6 @@
     overflow:hidden;
   }
   .hiw-lottie{width:100%;height:100%}
-  .hiw-lottie-wrap::after{
-    content:'';position:absolute;inset:0;border-radius:10px;
-    background-image:radial-gradient(circle,rgba(0,171,129,0.3) 1px,transparent 1px);
-    background-size:22px 22px;
-    pointer-events:none;z-index:2;
-  }
 
   /* ── Scrollytelling ── */
   .scrolly-wrap{display:grid;grid-template-columns:360px 1fr;gap:80px;max-width:1270px;margin:0 auto;padding:0 40px;align-items:start}
@@ -377,7 +393,7 @@
     <div class="context-grid">
       <div>
         <div class="sect-label reveal">
-          <span class="num mono">02 / Context</span>
+          <span class="num mono">01 / Context</span>
           <div>
             <h2>One project. Three <em>design disciplines</em>.</h2>
             <p class="lede">Centive is a monitoring and verification layer for DePIN — Decentralized Physical Infrastructure Networks. The founding team came with a protocol and no visual presence. I built the brand, the marketing site, and the full product from the ground up.</p>
@@ -407,7 +423,7 @@
 <section id="problem">
   <div class="wrap">
     <div class="sect-label reveal">
-      <span class="num mono">03 / Diagnosis</span>
+      <span class="num mono">02 / Approach</span>
       <div>
         <h2>Technical infrastructure, <em>human-readable</em> interface.</h2>
         <p class="lede">The protocol had five distinct phases. Each one needed UX clarity — or the whole system would feel opaque to the people running it.</p>
@@ -444,7 +460,7 @@
 <section class="hiw" id="howitworks">
   <div class="wrap">
     <div class="sect-label reveal">
-      <span class="num mono">04 / How It Works</span>
+      <span class="num mono">03 / How It Works</span>
       <div>
         <h2>Five phases. One <em>continuous loop</em>.</h2>
         <p class="lede">Centive's protocol runs as an automated cycle — stake in, monitor continuously, vote in secret, penalize failures, distribute rewards. The dashboard gives operators visibility into every phase.</p>
@@ -501,7 +517,7 @@
 <section id="screens">
   <div class="wrap">
     <div class="sect-label reveal">
-      <span class="num mono">05 / Surfaces</span>
+      <span class="num mono">04 / Surfaces</span>
       <div>
         <h2>Six screens that carry the <em>whole system</em>.</h2>
         <p class="lede">The product spans network monitoring, node health, incident management, and test infrastructure. Each screen designed to give operators exactly what they need — no more, no less.</p>
@@ -658,7 +674,7 @@
 <section id="mobile-screens">
   <div class="wrap">
     <div class="sect-label reveal">
-      <span class="num mono">06 / Mobile</span>
+      <span class="num mono">05 / Mobile</span>
       <div>
         <h2>Responsive down to <em>every pixel</em>.</h2>
         <p class="lede">The full product — website and dashboard — designed mobile-first. Same information density, adapted for touch.</p>
@@ -678,6 +694,56 @@
         <img src="assets/centive/mobile screens/Android - 29.png" alt="Centive get started mobile" loading="lazy" />
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── 06 BRAND ── -->
+<section id="brand">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">06 / Brand</span>
+      <div>
+        <h2>An identity built for <em>infrastructure</em>.</h2>
+        <p class="lede">Starting from zero — name, logo, color, type. The brief was precision without coldness: a network that's serious about performance but not intimidating to operators.</p>
+      </div>
+    </div>
+
+    <div class="brand-layout reveal d1">
+      <div>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The mark combines a stylized <em style="font-style:normal;color:var(--fg)">C</em> with a network node grid — the same dot pattern used across the product UI — creating visual continuity from logo to interface.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The green accent <em style="font-style:normal;color:#03FF77">#03FF77</em> was chosen to signal liveness and health — the same color used in the dashboard for online nodes and passing tests.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid)">Typography pairs <em style="font-style:normal;color:var(--fg)">Montserrat</em> (headings, Bold) with <em style="font-style:normal;color:var(--fg)">Lato</em> (body, Regular) — geometric confidence at the top, neutral legibility at any density level below.</p>
+      </div>
+      <div>
+        <div class="brand-logo-panel">
+          <div class="brand-logo-dark">
+            <img src="assets/centive/logo.svg" alt="Centive logo on dark" />
+          </div>
+          <div class="brand-logo-light">
+            <img src="assets/centive/logo.svg" alt="Centive logo on light" />
+          </div>
+        </div>
+        <div class="brand-palette" style="margin-top:16px">
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#03FF77"></div>
+            <div class="palette-meta"><span class="p-name">Centive Green</span><span class="p-hex">#03FF77</span></div>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#252826"></div>
+            <div class="palette-meta"><span class="p-name">Surface Dark</span><span class="p-hex">#252826</span></div>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#49504B"></div>
+            <div class="palette-meta"><span class="p-name">Surface Mid</span><span class="p-hex">#49504B</span></div>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#FBFFFC;border-bottom:1px solid #e8e8e8"></div>
+            <div class="palette-meta"><span class="p-name">Off-White</span><span class="p-hex">#FBFFFC</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -810,6 +876,27 @@
 </script>
 
 <script>
+  // Remove the solid background rect from each Lottie SVG
+  // so bg.png shows through while icon containers stay opaque
+  function patchLottieBg(container) {
+    const svg = container.querySelector('svg');
+    if (!svg) return;
+    // The main bg is the first large path with fill rgb(4,7,5)
+    svg.querySelectorAll('path').forEach(p => {
+      const fill = p.getAttribute('fill');
+      if (fill === 'rgb(4,7,5)' || fill === 'rgb(4, 7, 5)') {
+        p.setAttribute('fill-opacity', '0');
+      }
+    });
+  }
+  // Run after Lottie renders (needs small delay)
+  setTimeout(() => {
+    document.querySelectorAll('.hiw-lottie').forEach(patchLottieBg);
+  }, 800);
+  // Also patch on scroll in case animation wasn't loaded yet
+  window.addEventListener('scroll', function patchOnScroll() {
+    document.querySelectorAll('.hiw-lottie').forEach(patchLottieBg);
+  }, { once: true, passive: true });
 </script>
 </body>
 </html>
