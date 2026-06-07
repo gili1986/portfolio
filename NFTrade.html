@@ -313,7 +313,7 @@
   /* ── Design system grid ── */
   .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;max-width:1152px;margin-left:auto;margin-right:auto}
   .ds-card{background:#fff;border:1px solid var(--line-strong);border-radius:14px;overflow:hidden}
-  .ds-card-vis{height:160px;background:#f0ede6;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+  .ds-card-vis{height:160px;background:#F5F9FE;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
   .ds-card-body{padding:16px 24px 24px;border-top:1px solid var(--line)}
   .ds-card-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:15px;letter-spacing:-0.02em;color:var(--fg);margin:0 0 5px}
   .ds-card-desc{font-size:12px;line-height:1.55;color:var(--fg-dim);margin:0}
@@ -322,6 +322,9 @@
   .ds-color-swatch{flex:1;height:44px;border-radius:8px}
   .ds-color-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:5px 10px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--fg-dim)}
   .ds-color-chip-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .ds-pal-card{display:flex;flex-direction:column;flex:1;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .ds-pal-swatch{height:88px;flex-shrink:0}
+  .ds-pal-hex{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.03em;color:var(--fg-dim);padding:6px;background:#fff;white-space:nowrap;text-align:center}
   /* Typography vis */
   .ds-type-big{font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(40px,4vw,56px);letter-spacing:-0.04em;color:#001028;line-height:1}
   .ds-type-weights{display:flex;gap:16px;margin-top:10px}
@@ -329,10 +332,10 @@
   .ds-type-wlabel.w-bold{font-weight:700;color:var(--fg)}
   .ds-type-wlabel.w-semi{font-weight:600;color:var(--fg-mid)}
   /* Spacing vis */
-  .ds-space-rows{display:flex;flex-direction:column;gap:7px;width:100%}
-  .ds-space-row{display:flex;align-items:center;gap:10px}
-  .ds-space-bar{height:9px;border-radius:2px;background:#c8cfd8;flex-shrink:0}
-  .ds-space-px{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--fg-dim);white-space:nowrap}
+  .ds-space-rows{display:flex;flex-direction:column;gap:10px;width:100%}
+  .ds-space-row{display:flex;align-items:center;gap:12px}
+  .ds-space-bar{height:12px;border-radius:3px;background:#c8cfd8;flex-shrink:0}
+  .ds-space-px{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-dim);white-space:nowrap}
   /* Components vis */
   .ds-comp-btn{background:#0099fa;color:#fff;border-radius:6px;padding:7px 16px;font-family:'Inter',sans-serif;font-weight:600;font-size:11px}
   .ds-comp-badge{background:#0099fa14;color:#0099fa;border:1px solid #0099fa30;border-radius:100px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;margin-left:8px}
@@ -357,6 +360,7 @@
   /* ── Outcome stats ── */
   .outcome{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
   @media (max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
+  @media(max-width:720px){footer{padding:56px 0 32px}footer .meta{flex-direction:column;gap:8px}}
   .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
   .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
   .outcome .stat .v em{font-style:normal;color:var(--accent)}
@@ -365,12 +369,16 @@
   /* ── Footer ── */
   footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
   footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
-  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:14ch}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:none}
   footer h5 em{font-style:normal;color:var(--accent)}
   footer .links{display:flex;gap:24px}
   footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
   footer .links a:hover{color:var(--fg);border-color:var(--fg)}
   footer .meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--fg-dim)}
+  footer .next-link{display:inline-flex;align-items:center;gap:12px;padding:16px 24px;border:1px solid var(--line-strong);border-radius:99px;text-decoration:none;color:var(--fg);font-size:14px;margin-top:32px;transition:background .3s,color .3s,border-color .3s}
+  footer .next-link:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  footer .next-link .arr{transition:transform .3s}
+  footer .next-link:hover .arr{transform:translateX(4px) rotate(-45deg)}
 
   /* ── Reveal ── */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
@@ -396,9 +404,9 @@
           <span class="mono"><a href="index.html">Index</a> &nbsp;/&nbsp; Case 01 &nbsp;/&nbsp; NFTrade</span>
         </div>
 
-        <h1 class="reveal d1">A multi-chain NFT exchange, <em>rebuilt</em> from the floor up.</h1>
+        <h1 class="reveal d1">A multi-chain NFT exchange, <em>rebuilt</em> from the floor&nbsp;up.</h1>
 
-        <p class="sub reveal d2">A full <em>redesign</em> of NFTrade — the cross-chain marketplace where users discover, buy, sell, swap and trade NFTs across seven networks. New brand language, new system, new flows for advanced trading and peer-to-peer swaps.</p>
+        <p class="sub reveal d2">A full <em>redesign</em> of NFTrade, the cross-chain marketplace where users discover, buy, sell, swap and trade NFTs across seven networks. New brand language, new system, new flows for advanced trading and peer-to-peer swaps.</p>
       </div>
 
       <div class="hero-visual reveal d2">
@@ -408,7 +416,7 @@
 
     <div class="meta-row reveal d3">
       <div class="cell"><span class="mono">Role</span><strong>Product Designer</strong></div>
-      <div class="cell"><span class="mono">Year</span><strong>2022 — '23</strong></div>
+      <div class="cell"><span class="mono">Year</span><strong>2022 – '23</strong></div>
       <div class="cell"><span class="mono">Team</span><strong>1 designer · PM · eng · marketing</strong></div>
       <div class="cell"><span class="mono">Scope</span><strong>System · brand · product · marketing</strong></div>
     </div>
@@ -433,7 +441,7 @@
       </div>
     </div>
     <div class="cover-cap reveal d1">
-      <span class="mono">Fig. 01 — Home, redesigned</span>
+      <span class="mono">Fig. 01 – Home, redesigned</span>
       <span class="mono">MacBook Pro · 1440 × 900</span>
     </div>
   </div>
@@ -447,14 +455,14 @@
         <div class="sect-label reveal">
           <span class="num mono">01 / Context</span>
           <div>
-            <h2>What <em>NFTrade</em> is, and what it had to become.</h2>
-            <p class="lede">NFTrade is a cross-chain NFT marketplace operating across Ethereum, Avalanche, Polygon, BNB and others — letting collectors trade, swap and farm without leaving the platform.</p>
+            <h2>What <em>NFTrade</em> is, and what it had to&nbsp;become.</h2>
+            <p class="lede">NFTrade is a cross-chain NFT marketplace operating across Ethereum, Avalanche, Polygon, BNB and others, letting collectors trade, swap and farm without leaving the platform.</p>
           </div>
         </div>
         <div class="narr reveal d1">
           <span class="lbl mono">The brief</span>
           <div>
-            <p>The product had grown organically across two market cycles. Features had been bolted on — <em>swaps, order books, staking, multi-chain checkout</em> — without a unifying system. New users couldn't tell what kind of marketplace it was. Power users tolerated friction the team knew was hurting volume.</p>
+            <p>The product had grown organically across two market cycles. Features had been bolted on (<em>swaps, order books, staking, multi-chain checkout</em>) without a unifying system. New users couldn't tell what kind of marketplace it was. Power users tolerated friction the team knew was hurting volume.</p>
             <p>The mandate was wide: rebrand, redesign, restructure flows, and ship a system the team could keep building on. <em>One designer, one PM, full stack.</em></p>
             <div class="pull">A platform that does <em>everything</em> needs an interface that doesn't feel like it.</div>
           </div>
@@ -467,7 +475,7 @@
             <img src="assets/nftrade-wordmark.svg" alt="NFTrade" class="nft-wordmark" />
             <div id="lottieIcon"></div>
           </div>
-          <p class="logo-tagline mono">Multi-chain NFT marketplace<br>Brand identity — 2022</p>
+          <p class="logo-tagline mono">Multi-chain NFT marketplace<br>Brand identity · 2022</p>
         </div>
       </div>
     </div>
@@ -480,7 +488,7 @@
     <div class="sect-label reveal">
       <span class="num mono">02 / Diagnosis</span>
       <div>
-        <h2>The product was <em>capable</em>, the experience wasn't.</h2>
+        <h2>The product was <em>capable</em>, the experience&nbsp;wasn't.</h2>
         <p class="lede">Before any pixels moved I sat with PM and engineering, watched real sessions, and audited every screen. A pattern showed up fast.</p>
       </div>
     </div>
@@ -498,7 +506,7 @@
       </div>
       <div class="col">
         <h3>The <em>approach</em></h3>
-        <p>Build the system first, then redraw the surfaces. Every screen had to share the same scale, same spacing, same six-color palette. Mobile wasn't an afterthought — it was the second-class citizen we promoted.</p>
+        <p>Build the system first, then redraw the surfaces. Every screen had to share the same scale, same spacing, same six-color palette. Mobile wasn't an afterthought. It was the second-class citizen we promoted.</p>
         <p>Brand-wise: keep the trust of crypto users (clarity, density, speed) but give the marketplace a calm, gallery-like front door.</p>
         <div class="tag-row">
           <span class="tag">System-first</span>
@@ -517,8 +525,8 @@
     <div class="sect-label reveal">
       <span class="num mono">03 / Surfaces</span>
       <div>
-        <h2>Selected screens — <em>desktop</em>.</h2>
-        <p class="lede">Seven surfaces that span the redesign — from the core product to the brand's public voice. Each one took multiple rounds; what's shown is the shipped state.</p>
+        <h2>Selected screens, <em>desktop</em>.</h2>
+        <p class="lede">Seven surfaces that span the redesign, from the core product to the brand's public voice. Each one took multiple rounds; what's shown is the shipped state.</p>
       </div>
     </div>
   </div>
@@ -534,7 +542,7 @@
           <div class="screen-fig-cap"><span class="mono">/home</span><span class="mono">Hero · trending · collections</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.1 — Home</span>
+          <span class="step-num">3.1 – Home</span>
           <h3>The <em>front door</em>.</h3>
           <p>An editorial hero with rotating featured collections, then a quiet pivot into trending data. Calm at first glance, deep on second.</p>
           <div class="step-cap">
@@ -550,9 +558,9 @@
           <div class="screen-fig-cap"><span class="mono">/marketplace</span><span class="mono">Dark · grid · filters</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.2 — Marketplace</span>
+          <span class="step-num">3.2 – Marketplace</span>
           <h3>Browse, <em>filtered</em>.</h3>
-          <p>The marketplace grid ships in both light and dark — shown here in dark mode. Filters left, results dense but breathable. Same layout, different energy.</p>
+          <p>The marketplace grid ships in both light and dark, shown here in dark mode. Filters left, results dense but breathable. Same layout, different energy.</p>
           <div class="step-cap">
             <span class="mono">/marketplace</span>
             <span class="mono">Dark · grid · filters</span>
@@ -566,9 +574,9 @@
           <div class="screen-fig-cap"><span class="mono">/collection/:id</span><span class="mono">Stats · Activity · Items</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.3 — Collection page</span>
+          <span class="step-num">3.3 – Collection page</span>
           <h3>One collection, <em>all signals</em>.</h3>
-          <p>Every collection on every chain gets the same surface — cover, creator, and live stats in one view. Floor price, total volume, top sale, and owner count always visible. Items, Activity, and Stats tabs let casual browsers and serious traders use the same page differently.</p>
+          <p>Every collection on every chain gets the same surface: cover, creator, and live stats in one view. Floor price, total volume, top sale, and owner count always visible. Items, Activity, and Stats tabs let casual browsers and serious traders use the same page differently.</p>
           <div class="step-cap">
             <span class="mono">/collection/:id</span>
             <span class="mono">Stats · Activity · Items</span>
@@ -582,8 +590,8 @@
           <div class="screen-fig-cap"><span class="mono">/asset/:id</span><span class="mono">Buy · offer · swap</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.4 — NFT detail</span>
-          <h3>Buy, offer, <em>swap</em> — same surface.</h3>
+          <span class="step-num">3.4 – NFT detail</span>
+          <h3>Buy, offer, <em>swap</em>. Same surface.</h3>
           <p>One screen unifies three actions that used to live apart. Offers, listings and swap proposals stack into a single panel; price history sits below.</p>
           <div class="step-cap">
             <span class="mono">/asset/:id</span>
@@ -598,9 +606,9 @@
           <div class="screen-fig-cap"><span class="mono">/marketplace?swap=1</span><span class="mono">Propose · Counter · Confirm</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.5 — P2P Swap</span>
+          <span class="step-num">3.5 – P2P Swap</span>
           <h3>No cash? <em>Trade direct</em>.</h3>
-          <p>Propose any trade — your NFTs for theirs — without touching a floor price. Your wallet on the left, the marketplace in the center, your offer at the bottom. A flow OpenSea didn't have when NFTrade shipped it.</p>
+          <p>Propose any trade (your NFTs for theirs) without touching a floor price. Your wallet on the left, the marketplace in the center, your offer at the bottom. A flow OpenSea didn't have when NFTrade shipped it.</p>
           <div class="step-cap">
             <span class="mono">/marketplace?swap=1</span>
             <span class="mono">Propose · Counter · Confirm</span>
@@ -614,9 +622,9 @@
           <div class="screen-fig-cap"><span class="mono">/collection/:id?mode=advanced</span><span class="mono">Limit · market · live tape</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.6 — Advanced</span>
+          <span class="step-num">3.6 – Advanced</span>
           <h3>An <em>order book</em> for floors.</h3>
-          <p>For collectors who treat collections like markets — limit/market orders, open positions and live trades, all on one surface.</p>
+          <p>For collectors who treat collections like markets: limit/market orders, open positions and live trades, all on one surface.</p>
           <div class="step-cap">
             <span class="mono">/collection/:id?mode=advanced</span>
             <span class="mono">Limit · market · live tape</span>
@@ -630,9 +638,9 @@
           <div class="screen-fig-cap"><span class="mono">/blog</span><span class="mono">Content · Announcements · Brand</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.7 — Blog</span>
+          <span class="step-num">3.7 – Blog</span>
           <h3>Marketing design, <em>same system</em>.</h3>
-          <p>The brief extended beyond the product. Blog page, social posts, partnership announcements — all running from the same tokens. In crypto, community communication is half the product; every touchpoint had to carry the same weight as the interface.</p>
+          <p>The brief extended beyond the product. Blog page, social posts, partnership announcements, all running from the same tokens. In crypto, community communication is half the product; every touchpoint had to carry the same weight as the interface.</p>
           <div class="step-cap">
             <span class="mono">/blog</span>
             <span class="mono">Content · Announcements · Brand</span>
@@ -644,6 +652,12 @@
 
     <!-- RIGHT: sticky image panel -->
     <div class="scrolly-visual">
+      <div class="screen-counter">
+        <span class="mono" style="color:var(--fg)">NFTrade</span>
+        <div class="counter-track"><div class="counter-fill" id="counterFill" style="width:16.6%"></div></div>
+        <span class="counter-num" id="counterNum">01 / 06</span>
+      </div>
+
       <div class="screen-slides">
 
         <div class="screen-slide active" data-idx="0">
@@ -696,10 +710,6 @@
         </div>
 
       </div>
-      <div class="screen-counter">
-        <div class="counter-track"><div class="counter-fill" id="counterFill" style="width:16.6%"></div></div>
-        <span class="counter-num" id="counterNum">01 / 06</span>
-      </div>
     </div>
 
   </div>
@@ -711,16 +721,16 @@
     <div class="sect-label reveal">
       <span class="num mono">04 / Flows</span>
       <div>
-        <h2>The moments that <em>build trust</em>.</h2>
-        <p class="lede">Blockchain flows don't behave like Web2 checkouts — gas costs money, wallet signatures are final, and confirmations arrive on the chain's schedule. The design goal was to make each step feel like a guardrail, not an obstacle.</p>
+        <h2>The moments that <em>build&nbsp;trust</em>.</h2>
+        <p class="lede">Blockchain flows don't behave like Web2 checkouts. Gas costs money, wallet signatures are final, and confirmations arrive on the chain's schedule. The design goal was to make each step feel like a guardrail, not an obstacle.</p>
       </div>
     </div>
 
     <div class="narr reveal d1">
       <span class="lbl mono">The challenge</span>
       <div>
-        <p>Every confirmation on a DeFi platform carries real weight. Users come with Web2 intuitions but face Web3 mechanics — irreversible actions, protocol-level approvals, and state that lives outside the UI. The goal was to <em>surface exactly what matters at each step</em> and suppress everything that doesn't: keep the user oriented, reduce anxiety, and make every modal feel like a natural checkpoint rather than a blocker.</p>
-        <div class="pull">The user isn't just clicking through — <em>they're signing a contract</em>. Each modal had to earn that signature.</div>
+        <p>Every confirmation on a DeFi platform carries real weight. Users come with Web2 intuitions but face Web3 mechanics: irreversible actions, protocol-level approvals, and state that lives outside the UI. The goal was to <em>surface exactly what matters at each step</em> and suppress everything that doesn't: keep the user oriented, reduce anxiety, and make every modal feel like a natural checkpoint rather than a blocker.</p>
+        <div class="pull">The user isn't just clicking through. <em>They're signing a contract.</em> Each modal had to earn that signature.</div>
       </div>
     </div>
 
@@ -739,7 +749,7 @@
     <div class="sect-label reveal">
       <span class="num mono">05 / System</span>
       <div>
-        <h2>The bones — <em>tokens, type, grid</em>.</h2>
+        <h2>The bones: <em>tokens, type,&nbsp;grid</em>.</h2>
         <p class="lede">Every screen above is rendered from the same primitives. A short look at the system the team kept building on after I shipped.</p>
       </div>
     </div>
@@ -748,22 +758,16 @@
 
       <!-- Color tokens -->
       <div class="ds-card reveal">
-        <div class="ds-card-vis" style="flex-direction:column">
-          <div class="ds-color-strip">
-            <div class="ds-color-swatch" style="background:#0099fa"></div>
-            <div class="ds-color-swatch" style="background:#001028"></div>
-            <div class="ds-color-swatch" style="background:#F5F9FE;border:1px solid #D2DCEA"></div>
-            <div class="ds-color-swatch" style="background:#24c872"></div>
-            <div class="ds-color-swatch" style="background:#e55050"></div>
-          </div>
-          <div class="ds-color-chip">
-            <div class="ds-color-chip-dot" style="background:#0099fa"></div>
-            --brand · #0099FA
-          </div>
+        <div class="ds-card-vis" style="gap:8px;padding:16px">
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#0099fa"></div><span class="ds-pal-hex">#0099FA</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#001028"></div><span class="ds-pal-hex">#001028</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#F5F9FE"></div><span class="ds-pal-hex">#F5F9FE</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#24c872"></div><span class="ds-pal-hex">#24C872</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#e55050"></div><span class="ds-pal-hex">#E55050</span></div>
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">Color system</h4>
-          <p class="ds-card-desc">5 semantic tokens — brand, ink, surface, success, error — light-mode first.</p>
+          <p class="ds-card-desc">5 semantic tokens: brand, ink, surface, success, error. Light-mode first.</p>
         </div>
       </div>
 
@@ -802,15 +806,8 @@
 
       <!-- Components -->
       <div class="ds-card reveal">
-        <div class="ds-card-vis" style="flex-direction:column;gap:10px">
-          <div style="display:flex;align-items:center">
-            <div class="ds-comp-btn">Buy now</div>
-            <div class="ds-comp-badge">0.42 ETH</div>
-          </div>
-          <div class="ds-comp-input">
-            <span>Search NFTs, collections…</span>
-            <span class="ds-comp-cursor"></span>
-          </div>
+        <div class="ds-card-vis" style="background:#F5F9FE">
+          <img src="assets/components.png" alt="NFTrade components" style="height:70%;width:auto;display:block;object-fit:contain" />
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">Components</h4>
@@ -844,31 +841,8 @@
 
       <!-- NFT Card pattern -->
       <div class="ds-card reveal d2">
-        <div class="ds-card-vis" style="gap:12px">
-          <div class="ds-nft-card">
-            <div class="ds-nft-thumb">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#0099fa" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="14" cy="14" r="5" fill="#0099fa44"/></svg>
-            </div>
-            <div class="ds-nft-body">
-              <div class="ds-nft-name">CryptoPunk #3142</div>
-              <div class="ds-nft-price">
-                <span class="ds-nft-eth">0.42 ETH</span>
-                <span class="ds-nft-usd">$780</span>
-              </div>
-            </div>
-          </div>
-          <div class="ds-nft-card" style="opacity:.55;transform:scale(.92) translateY(6px)">
-            <div class="ds-nft-thumb" style="background:linear-gradient(135deg,#24c87222,#24c87244)">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="8" y="8" width="12" height="12" rx="3" stroke="#24c872" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="#24c87266"/></svg>
-            </div>
-            <div class="ds-nft-body">
-              <div class="ds-nft-name">Azuki #887</div>
-              <div class="ds-nft-price">
-                <span class="ds-nft-eth" style="color:#24c872">1.2 ETH</span>
-                <span class="ds-nft-usd">$2,200</span>
-              </div>
-            </div>
-          </div>
+        <div class="ds-card-vis" style="padding:0;background:#F5F9FE;align-items:flex-start;justify-content:center">
+          <img src="assets/nftrade-card.png" alt="NFTrade card" style="height:calc(100% - 8px);width:auto;display:block;object-fit:contain;object-position:top;margin-bottom:8px" />
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">NFT card pattern</h4>
@@ -903,23 +877,23 @@
     <div class="sect-label reveal">
       <span class="num mono">07 / Reflection</span>
       <div>
-        <h2>What changed, and <em>what I learned</em>.</h2>
-        <p class="lede">Numbers are directional — figures from PM, not audited. The lessons are the part I'd carry to the next product.</p>
+        <h2>What changed, and <em>what I&nbsp;learned</em>.</h2>
+        <p class="lede">Numbers are directional. Figures from PM, not audited. The lessons are the part I'd carry to the next product.</p>
       </div>
     </div>
 
     <div class="narr reveal d1">
       <span class="lbl mono">After ship</span>
       <div>
-        <p>The redesign rolled out in waves over a quarter. The system held — engineering shipped two new surfaces (Staking, Resources) without a designer in the loop, both consistent with everything that came before.</p>
+        <p>The redesign rolled out in waves over a quarter. The system held. Engineering shipped two new surfaces (Staking, Resources) without a designer in the loop, both consistent with everything that came before.</p>
         <p>The thing I'd carry forward: <em>the brief was "redesign," but the work was a system.</em> Every shipped screen is a downstream consequence of decisions made in the tokens, the grid and the type scale. Get those three right and the surfaces almost draw themselves.</p>
       </div>
     </div>
 
     <div class="outcome reveal d2">
-      <div class="stat"><span class="mono">Listings flow</span><div class="v"><em>−42%</em></div><p>Steps to list an NFT, before vs after</p></div>
-      <div class="stat"><span class="mono">Mobile sessions</span><div class="v"><em>+2.1×</em></div><p>Avg session length on mobile, post-launch</p></div>
-      <div class="stat"><span class="mono">Swap usage</span><div class="v"><em>+3.4×</em></div><p>Monthly swap proposals after redesign</p></div>
+      <div class="stat"><span class="mono">Listings flow</span><div class="v"><em>−</em>42%</div><p>Steps to list an NFT, before vs after</p></div>
+      <div class="stat"><span class="mono">Mobile sessions</span><div class="v"><em>+</em>2.1×</div><p>Avg session length on mobile, post-launch</p></div>
+      <div class="stat"><span class="mono">Swap usage</span><div class="v"><em>+</em>3.4×</div><p>Monthly swap proposals after redesign</p></div>
       <div class="stat"><span class="mono">Components</span><div class="v">86</div><p>Tokenised components in the shipped library</p></div>
     </div>
   </div>
@@ -929,16 +903,20 @@
 <footer>
   <div class="wrap">
     <div class="row">
-      <h5>Next case — <em>YieldShield</em>.</h5>
+      <div>
+        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Next case</div>
+        <h5>YieldShield: <em>DeFi</em> dashboard,<br>AI + data viz.</h5>
+        <a href="YieldShield.html" class="next-link">View YieldShield <span class="arr">↗</span></a>
+      </div>
       <div class="links">
-        <a href="index.html">Back to index</a>
-        <a href="YieldShield.html">Next →</a>
+        <a href="index.html#work">All work</a>
+        <a href="index.html#about">About</a>
         <a href="index.html#contact">Contact</a>
       </div>
     </div>
     <div class="meta">
-      <span class="mono">© 2026 Gilad Cohen — All work shown with permission of clients.</span>
-      <span class="mono">Case 01 / 04</span>
+      <span>© 2026 Gilad Cohen</span>
+      <span class="mono">Case 01 / 04 – NFTrade · 2022–2023</span>
     </div>
   </div>
 </footer>
@@ -1027,6 +1005,6 @@
 
 </script>
 
-<script src="nav.js"></script>
+<script src="nav.js?v=2"></script>
 </body>
 </html>

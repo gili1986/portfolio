@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MinerFun — Case Study · Gilad Cohen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7;--bg-2:#f0eee7;
+    --ink:#0a0a0b;--line:#0a0a0b14;--line-strong:#0a0a0b24;
+    --fg:#0a0a0b;--fg-dim:#7a7770;--fg-mid:#3a3a3c;
+    --accent:#5b3df5;--warm:#d24a1a;--good:#2d8e4a;
+    --mf-gold:#B8860B;
+    --mf-purple:#1a1640;
+    --mf-violet:#7B5CF0;
+    --mf-mid:#3E3B8E;
+    --mf-dark-fig:#1e1b4b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 40px;position:relative}
+  @media(max-width:720px){.wrap{padding:0 16px}}
+
+  .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(#0a0a0b0a 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);opacity:0.5}
+
+  /* ── Nav ── */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background:linear-gradient(180deg,#fafaf7cc 0%,#fafaf780 70%,transparent);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+  nav.top.scrolled{border-bottom-color:var(--line);background:#fafaf7ee}
+  nav.top .row{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
+  nav.top .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+  nav.top .brand .dot{width:32px;height:24px;display:inline-block}
+  nav.top .brand .dot svg{width:100%;height:100%;display:block}
+  nav.top .links{display:flex;gap:32px}
+  nav.top .links a{color:var(--fg-dim);text-decoration:none;font-size:13px;transition:color .2s;position:relative}
+  nav.top .links a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  nav.top .links a:hover{color:var(--fg)}
+  nav.top .links a:hover::after{transform:scaleX(1)}
+  nav.top .clock{color:var(--fg-dim)}
+  @media(max-width:720px){nav.top .links{display:none}}
+
+  /* ── Hero ── */
+  .hero{padding:0;position:relative;z-index:1;overflow:hidden}
+  .hero-wrap{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;gap:0}
+  .hero-text{padding:144px 48px 64px 0}
+  .hero .crumb{display:flex;align-items:center;gap:16px;color:var(--fg-dim);margin-bottom:64px}
+  .hero .crumb .pulse{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px #2d8e4a14}
+  .hero .crumb a{color:var(--fg-dim);text-decoration:none;transition:color .2s}
+  .hero .crumb a:hover{color:var(--fg)}
+  .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,96px);line-height:0.9;letter-spacing:-0.04em;color:var(--fg);max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .sub{margin-top:40px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--fg-mid)}
+  .hero .sub em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .hero-visual{display:flex;align-items:center;justify-content:flex-end;overflow:hidden;padding-top:72px;padding-bottom:40px}
+  .hero-visual img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line-strong)}
+  @media(max-width:960px){
+    .hero-wrap{grid-template-columns:1fr}
+    .hero-text{padding:120px 0 40px}
+    .hero-visual{display:none}
+  }
+  .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 64px;border-top:1px solid var(--line)}
+  @media(max-width:720px){.meta-row{grid-template-columns:repeat(2,1fr);gap:16px 24px}}
+  .meta-row .cell .mono{display:block;color:var(--fg-dim);margin-bottom:8px}
+  .meta-row .cell strong{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:22px;letter-spacing:-0.02em;color:var(--fg);display:block}
+
+  /* ── Cover ── */
+  .cover{margin-top:0;position:relative;z-index:1}
+  .cover-frame{position:relative;width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--line-strong)}
+  .cover-frame img{width:100%;height:auto;display:block}
+  .cover-cap{margin-top:16px;display:flex;justify-content:space-between;color:var(--fg-dim)}
+
+  /* ── Sections ── */
+  section{position:relative;z-index:1;padding:120px 0;border-top:1px solid var(--line)}
+  .sect-label{display:grid;grid-template-columns:120px 1fr;gap:48px;align-items:start;margin-bottom:64px}
+  .sect-label .num{color:var(--fg-dim)}
+  .sect-label h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4.6vw,64px);line-height:0.96;letter-spacing:-0.035em;color:var(--fg);max-width:18ch}
+  .sect-label h2 em{font-style:normal;color:var(--accent)}
+  .sect-label .lede{margin-top:16px;color:var(--fg-mid);font-size:17px;max-width:52ch;line-height:1.55}
+  @media(max-width:720px){.sect-label{grid-template-columns:1fr;gap:16px}}
+
+  /* ── Narrative ── */
+  .narr{display:grid;grid-template-columns:120px 1fr;gap:48px}
+  @media(max-width:720px){.narr{grid-template-columns:1fr;gap:16px}}
+  .narr .lbl{color:var(--fg-dim);position:sticky;top:90px;align-self:start}
+  .narr p{color:var(--fg-mid);font-size:17px;line-height:1.65;max-width:60ch;margin-bottom:16px}
+  .narr p em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .narr .pull{margin:32px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.25;letter-spacing:-0.02em;color:var(--fg);max-width:30ch}
+  .narr div>.pull:first-child{margin-top:0;border-top:none;padding-top:0}
+  .narr .pull em{font-style:normal;color:var(--accent)}
+
+  /* ── Two-col ── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
+  @media(max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
+  .two-col .col h3 em{font-style:normal;color:var(--accent)}
+  .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
+  .two-col .col .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .two-col .col .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
+
+  /* ── Context grid + brand card ── */
+  .context-grid{display:grid;grid-template-columns:1fr 300px;gap:80px;align-items:start}
+  .context-aside{position:sticky;top:120px}
+  @media(max-width:960px){.context-grid{grid-template-columns:1fr}.context-aside{position:static}}
+
+  .mf-brand-card{
+    display:flex;flex-direction:column;align-items:flex-start;gap:16px;
+    background:#fff;border:1px solid var(--line-strong);border-radius:16px;padding:28px;
+  }
+  .mf-brand-card .mf-logo-img{
+    height:auto;width:100%;max-height:40px;object-fit:contain;object-position:left;display:block;
+    image-rendering:pixelated;image-rendering:crisp-edges;
+  }
+  .mf-brand-card .mf-div{display:none}
+  .mf-brand-card .mf-tagline{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--fg-dim);line-height:1.8;
+  }
+  .mf-brand-card .mf-scope{display:flex;flex-direction:column;gap:8px;width:100%}
+  .mf-brand-card .mf-scope-item{
+    display:flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--fg);
+  }
+  .mf-brand-card .mf-dot{flex-shrink:0;width:5px;height:5px;border-radius:50%;background:var(--good)}
+  .mf-brand-card .mf-badge{
+    font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--mf-gold);
+    border:1px solid rgba(245,197,66,0.4);border-radius:99px;padding:4px 12px;
+  }
+
+  /* ── HOW IT WORKS (no Lottie, plain cards) ── */
+  .hiw{background:var(--bg);border-top:1px solid var(--line);padding:120px 0;position:relative;z-index:1}
+  .hiw-steps{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+    opacity:0;transform:translateY(24px);
+    transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .hiw-steps.in{opacity:1;transform:none}
+  .hiw-step{background:#ffffff;border-radius:16px;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+  .hiw-screen{width:100%;flex-shrink:0}
+  .hiw-screen img{width:100%;height:auto;display:block}
+  .hiw-info{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .hiw-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);display:block}
+  .hiw-step h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:17px;letter-spacing:-0.02em;color:var(--fg);line-height:1.2}
+  .hiw-step p{font-size:13px;line-height:1.65;color:var(--fg-mid)}
+  .hiw-step.launch-step{border-color:rgba(245,197,66,0.2)}
+  .hiw-step.launch-step .hiw-num{color:var(--mf-gold)}
+  @media(max-width:1100px){.hiw-steps{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:700px){.hiw-steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.hiw-steps{grid-template-columns:1fr}}
+
+  /* ── Scrollytelling ── */
+  .desktop-screens-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1270px;margin:48px auto 0;padding:0 40px}
+  @media(max-width:720px){.desktop-screens-grid{grid-template-columns:1fr;padding:0 16px}}
+  .scrolly-wrap{display:grid;grid-template-columns:360px 1fr;gap:80px;max-width:1270px;margin:0 auto;padding:0 40px;align-items:start}
+  .scrolly-step{min-height:90vh;display:flex;align-items:center}
+  .scrolly-step:first-child{padding-top:5vh}
+  .scrolly-step:last-child{padding-bottom:10vh}
+  .step-text{max-width:340px}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);display:block;margin-bottom:24px}
+  .step-text h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(32px,3.6vw,52px);letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;color:var(--fg)}
+  .step-text h3 em{font-style:normal;color:var(--accent)}
+  .step-text p{color:var(--fg-mid);font-size:16px;line-height:1.65;margin-bottom:14px}
+  .step-cap{display:flex;flex-direction:column;gap:4px;padding-top:16px;margin-top:24px;border-top:1px solid var(--line)}
+  .step-cap .mono{color:var(--fg-dim)}
+  .scrolly-visual{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:16px}
+  .screen-counter{display:flex;align-items:center;gap:16px;width:90%;margin:0 0 0 auto}
+  .counter-track{flex:1;height:1px;background:var(--line-strong);position:relative;overflow:hidden}
+  .counter-fill{position:absolute;top:0;left:0;height:100%;background:var(--fg);transition:width .5s cubic-bezier(.25,.8,.25,1)}
+  .counter-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);white-space:nowrap}
+  .screen-slides{display:grid;width:90%;margin:0 0 0 auto}
+  .screen-slide{grid-area:1/1;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .55s cubic-bezier(.25,.8,.25,1)}
+  .screen-slide.active{opacity:1;pointer-events:auto}
+  .screen-fig{border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;background:#fff;width:100%;position:relative;padding-top:24px}
+  .screen-fig::before{content:'';position:absolute;top:0;left:0;right:0;height:24px;z-index:2;background:#1a1a1a;background-image:radial-gradient(circle,#fc605b 4.5px,transparent 5px),radial-gradient(circle,#fdbc40 4.5px,transparent 5px),radial-gradient(circle,#35c849 4.5px,transparent 5px);background-size:9px 9px,9px 9px,9px 9px;background-position:14px center,28px center,42px center;background-repeat:no-repeat;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .screen-fig.dark-fig{background:var(--mf-dark-fig)}
+  .screen-fig img{width:100%;height:auto;display:block}
+  .screen-fig-cap{display:flex;justify-content:space-between;margin-top:10px;color:var(--fg-dim)}
+  .step-mobile-fig{display:none;margin-bottom:24px}
+  @media(max-width:900px){
+    .scrolly-wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+    .scrolly-visual{display:none}
+    .step-mobile-fig{display:block}
+    .scrolly-step{min-height:auto;padding:48px 0;flex-direction:column;align-items:stretch}
+    .scrolly-step:first-child{padding-top:0}
+    .scrolly-step:last-child{padding-bottom:0}
+    .step-text{max-width:none}
+  }
+  @media(max-width:720px){.scrolly-wrap{padding:0 16px}}
+
+  /* ── Modal grid ── */
+  .mf-modals-wrap{margin-top:40px;overflow:hidden}
+  .mf-modals-track{display:flex;width:max-content;animation:mf-modals-scroll 40s linear infinite}
+  .mf-modals-img{height:536px;width:auto;display:block;flex-shrink:0}
+  @media(max-width:720px){.mf-modals-img{height:292px}}
+  @keyframes mf-modals-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ── Room strip ── */
+  .room-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  @media(max-width:600px){.room-strip{grid-template-columns:repeat(2,1fr)}}
+  .room-item{
+    background:#ffffff;border:1px solid var(--line-strong);
+    border-radius:12px;padding:16px 16px 16px;
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    position:relative;
+  }
+  .room-img{
+    flex:1;display:flex;align-items:center;justify-content:center;width:100%;
+  }
+  .room-item img{
+    width:var(--room-w, 100%);height:auto;display:block;
+    image-rendering:pixelated;image-rendering:crisp-edges;
+    margin:0 auto;
+  }
+  .room-item .r-name{
+    font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;
+    letter-spacing:0.06em;color:var(--fg);text-align:right;
+  }
+  .room-item .r-tier{
+    font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;
+    letter-spacing:0.04em;color:var(--fg-dim);text-align:left;
+  }
+  .room-label{
+    width:100%;display:flex;justify-content:space-between;align-items:baseline;
+    padding-top:12px;gap:8px;
+  }
+  .room-item.special{}
+  .room-item.special .r-tier{
+    color:var(--mf-gold);
+  }
+
+  /* ── Mobile grid ── */
+  .mobile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px;align-items:start}
+  .mobile-card{border-radius:16px;overflow:hidden;border:1px solid var(--line-strong)}
+  .mobile-card img{width:100%;display:block}
+  @media(max-width:900px){.mobile-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:540px){.mobile-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+
+  /* ── Brand ── */
+  .brand-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start}
+  @media(min-width:901px){.brand-layout{grid-template-columns:1fr 0.8fr}}
+  @media(max-width:900px){.brand-layout{grid-template-columns:1fr;gap:32px}}
+  .mf-logo-panel{background:var(--mf-purple);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:16px;border:1px solid rgba(123,92,240,0.2)}
+  .mf-logo-dark{padding:40px 32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#0d0b24}
+  .mf-logo-light{padding:40px 32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#fafaf7}
+  .mf-logo-dark img,.mf-logo-light img{height:36px;width:auto;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+  .brand-palette{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:48px}
+  @media(max-width:720px){.brand-palette{grid-template-columns:repeat(4,1fr);gap:6px}}
+  .palette-item{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+  .palette-swatch{height:96px}
+  .palette-meta{padding:14px 12px;background:var(--bg)}
+  .palette-meta .p-name{display:block;font-size:12px;font-weight:500;color:var(--fg);margin-bottom:4px}
+  .palette-meta .p-hex{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-dim);text-transform:uppercase;letter-spacing:0.06em}
+
+  /* ── Outcome ── */
+  .outcome{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
+  @media(max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
+  @media(max-width:720px){footer{padding:56px 0 32px}footer .meta{flex-direction:column;gap:8px}}
+  .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
+  .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
+  .outcome .stat .v em{font-style:normal;color:var(--accent)}
+  .outcome .stat p{font-size:13px;color:var(--fg-mid);margin-top:8px;max-width:22ch}
+
+  /* ── Footer ── */
+  footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
+  footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:none}
+  footer h5 em{font-style:normal;color:var(--accent)}
+  footer .links{display:flex;gap:24px}
+  footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
+  footer .links a:hover{color:var(--fg);border-color:var(--fg)}
+  footer .meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--fg-dim)}
+  footer .next-link{display:inline-flex;align-items:center;gap:12px;padding:16px 24px;border:1px solid var(--line-strong);border-radius:99px;text-decoration:none;color:var(--fg);font-size:14px;margin-top:32px;transition:background .3s,color .3s,border-color .3s}
+  footer .next-link:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  footer .next-link .arr{transition:transform .3s}
+  footer .next-link:hover .arr{transform:translateX(4px) rotate(-45deg)}
+
+  /* ── Reveal ── */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.1s}
+  .reveal.d2{transition-delay:.2s}
+  .reveal.d3{transition-delay:.3s}
+
+  /* ── Cover constrain (desktop only) ── */
+  .cover-constrain{max-width:80%;margin-left:auto;margin-right:auto}
+  @media(max-width:720px){.cover-constrain{max-width:100%!important}}
+
+  /* ── Reading progress ── */
+  .reading-progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:200;width:0;transition:width .08s linear;pointer-events:none}
+
+  /* ── Focus ── */
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+  /* ── Reduced motion ── */
+  @media(prefers-reduced-motion:reduce){
+    .reveal{transition:none;opacity:1;transform:none}
+    .hiw-steps{transition:none;opacity:1;transform:none}
+    .screen-slide{transition:none}
+    .counter-fill{transition:none}
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important}
+  }
+
+  /* ── Desktop scale down 20% (desktop only, never mobile) ── */
+  @media(min-width:721px){
+    .anim-constrain{max-width:88%;margin-left:auto;margin-right:auto}
+  }
+
+  /* ── Rooms section – desktop scale down 20% ── */
+  @media(min-width:721px){
+    #rooms{padding:96px 0}
+    #rooms .room-strip{max-width:80%;margin-left:auto;margin-right:auto;gap:12px}
+    #rooms .room-item{padding:16px}
+  }
+
+  /* ── Responsive ── */
+  @media(max-width:720px){
+    section{padding:72px 0}
+    .hero-text{padding:120px 0 40px}
+    .hiw{padding:72px 0}
+    .narr .lbl{position:static}
+    .meta-row{padding-bottom:48px}
+  }
+</style>
+</head>
+<body>
+
+<div class="reading-progress" id="readingProgress"></div>
+<div class="grid-bg"></div>
+<div id="site-nav"></div>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-wrap">
+      <div class="hero-text">
+        <div class="crumb reveal">
+          <span class="pulse"></span>
+          <span class="mono"><a href="index.html">Index</a> &nbsp;/&nbsp; Case 04 &nbsp;/&nbsp; MinerFun</span>
+        </div>
+        <h1 class="reveal d1">A Web3 mining game, built from&nbsp;<em>zero</em>.</h1>
+        <p class="sub reveal d2">MinerFun is a play-to-earn launchpad where players build virtual mining empires and earn daily crypto rewards. I owned the full design scope (<em>game UI</em>, marketing site, and <em>launchpad</em>) from a blank canvas.</p>
+      </div>
+
+      <div class="hero-visual reveal d2">
+        <div style="width:110%;border-radius:8px;overflow:hidden;border:1px solid rgba(123,92,240,0.25);box-shadow:0 40px 80px -20px rgba(27,22,96,0.35);position:relative;background:#0d0b24">
+          <img src="assets/minerfun/bg.png" alt="" style="width:100%;height:auto;display:block;opacity:0.9" />
+          <img src="assets/minerfun/logo-anim-transparent.png" alt="MinerFun logo animation" fetchpriority="high" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72%;height:auto;display:block;image-rendering:pixelated;" />
+        </div>
+      </div>
+    </div>
+
+    <div class="meta-row reveal d3">
+      <div class="cell"><span class="mono">Role</span><strong>Lead Designer</strong></div>
+      <div class="cell"><span class="mono">Year</span><strong>2024–2025</strong></div>
+      <div class="cell"><span class="mono">Deliverables</span><strong>Game · Site · Launchpad</strong></div>
+      <div class="cell"><span class="mono">Scope</span><strong>0 → 1 · Solo designer</strong></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── COVER ── -->
+<section class="cover" style="border:none;padding-top:120px">
+  <div class="wrap">
+    <div class="reveal cover-constrain" style="display:block;max-width:66%">
+      <video autoplay muted loop playsinline style="width:100%;height:auto;display:block">
+        <source src="assets/minerfun/desktop video/desktop-video-finel.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="cover-cap reveal d1 cover-constrain" style="margin-top:16px;flex-wrap:wrap;gap:8px;max-width:66%">
+      <span class="mono">Fig. 01 – Pixel art motion design</span>
+      <span class="mono">All in-product animations designed &amp; produced in-house · 2024</span>
+    </div>
+    <div class="reveal d2 cover-constrain" style="margin-top:16px;max-width:66%;display:flex;justify-content:flex-end">
+      <a href="https://bsc.minerf.com/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg);border-bottom:1px solid var(--fg);padding-bottom:2px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='1'">Visit live site <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 01 CONTEXT ── -->
+<section id="context">
+  <div class="wrap">
+    <div class="context-grid">
+      <div>
+        <div class="sect-label reveal">
+          <span class="num mono">01 / Context</span>
+          <div>
+            <h2>One platform. Two audiences, one <em>visual&nbsp;language</em>.</h2>
+            <p class="lede">MinerFun is a play-to-earn mining game launchpad where players earn daily tokens by managing virtual mining rooms, and projects can list their own coin on the platform.</p>
+          </div>
+        </div>
+        <div class="narr reveal d1">
+          <span class="lbl mono">The brief</span>
+          <div>
+            <p>The founding team had the mechanics: NFT rooms, miner tokens, daily yields, a halving model. What they didn't have was anything visual: <em>no brand, no website, no game UI, no user flows.</em></p>
+            <p>I came in as the solo designer and owned it all. <em>Brand first</em>: the pixel art visual language that would carry across every surface. Then the <em>marketing site</em>, a launchpad homepage for players and project creators. Then the <em>game itself</em>: the isometric room view, the miner catalog, the facilities dashboard, every transaction modal.</p>
+            <div class="pull">The hardest part wasn't the UI. It was making <em>blockchain feel like a game</em>.</div>
+            <p>Web3 products carry inherent anxiety: every click costs real money, every transaction requires trust. The design challenge was to wrap all of that inside a game skin so complete that players stopped thinking about wallets and started thinking about their mining empire.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="context-aside reveal d2">
+        <div class="mf-brand-card">
+          <img src="assets/minerfun/logo.png" alt="MinerFun" class="mf-logo-img" />
+          <div class="mf-div"></div>
+          <div class="mf-scope">
+            <div class="mf-scope-item"><div class="mf-dot"></div><span>Game UI</span></div>
+            <div class="mf-scope-item"><div class="mf-dot"></div><span>Marketing site</span></div>
+            <div class="mf-scope-item"><div class="mf-dot"></div><span>Launchpad</span></div>
+            <div class="mf-scope-item"><div class="mf-dot"></div><span>Transaction flows</span></div>
+            <div class="mf-scope-item"><div class="mf-dot"></div><span>Isometric room NFTs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 02 APPROACH ── -->
+<section id="approach">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">02 / Approach</span>
+      <div>
+        <h2>Pixel art as a <em>UX decision</em>, not&nbsp;decoration.</h2>
+        <p class="lede">The retro aesthetic wasn't a style choice. It was the answer to the core design problem: how do you make people spend real ETH on virtual rooms without flinching?</p>
+      </div>
+    </div>
+    <div class="two-col reveal d1">
+      <div class="col">
+        <h3>The <em>tension</em></h3>
+        <p>Play-to-earn is fundamentally a financial product wearing a game costume. Every "fun" action (buy a room, place a miner, claim rewards) is a real blockchain transaction with real money on the line. The typical DeFi response is warnings, disclaimers, and clinical UI. That kills engagement before it starts.</p>
+        <p>The challenge: design every surface so the game feeling stays dominant, while the financial reality is present but never paralyzing. Players should feel like miners, not investors.</p>
+        <div class="tag-row">
+          <span class="tag">Crypto anxiety</span>
+          <span class="tag">Transaction trust</span>
+          <span class="tag">Retention vs. caution</span>
+          <span class="tag">Two-sided platform</span>
+        </div>
+      </div>
+      <div class="col">
+        <h3>The <em>approach</em></h3>
+        <p>Pixel art as the tent-pole decision. Retro aesthetic does several things simultaneously: it signals "game" immediately. Players know they're in game-world, not DeFi. It makes the isometric rooms feel like something you built rather than something you bought. And it turns transaction states into arcade moments.</p>
+        <p>One visual language, applied with total consistency, from the landing hero to the "Waiting for Confirmation" loading bar. No breaks in the fiction. If it looks like a game everywhere, it feels like a game everywhere.</p>
+        <div class="tag-row">
+          <span class="tag">Pixel art system</span>
+          <span class="tag">Isometric rooms</span>
+          <span class="tag">Game-skin UX</span>
+          <span class="tag">Consistent fiction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 03 HOW IT WORKS ── -->
+<section class="hiw" id="howitworks">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">03 / How It Works</span>
+      <div>
+        <h2>Four steps to your <em>mining empire</em>.</h2>
+        <p class="lede">The player journey is a four-step loop, from wallet connect to daily earnings. A fifth path exists for project creators who want to list their coin on the launchpad.</p>
+      </div>
+    </div>
+
+    <div class="hiw-steps" id="hiwSteps">
+
+      <div class="hiw-step">
+        <div class="hiw-screen">
+          <img src="assets/minerfun/How%20It%20Works/connect.png" alt="Connect wallet screen" loading="lazy" />
+        </div>
+        <div class="hiw-info">
+          <span class="hiw-num">01 – Connect</span>
+          <h3>Connect your wallet</h3>
+          <p>One-click connect. The platform detects your address and surfaces any existing rooms and miners automatically.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-screen">
+          <img src="assets/minerfun/How%20It%20Works/choose.png" alt="Choose project screen" loading="lazy" />
+        </div>
+        <div class="hiw-info">
+          <span class="hiw-num">02 – Choose</span>
+          <h3>Choose a mining project</h3>
+          <p>Browse live projects on the launchpad. Each shows real-time hashrate, token symbol, and on-chain stats.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-screen">
+          <img src="assets/minerfun/How%20It%20Works/build.png" alt="Buy room screen" loading="lazy" />
+        </div>
+        <div class="hiw-info">
+          <span class="hiw-num">03 – Build</span>
+          <h3>Buy your first room</h3>
+          <p>Purchase a starter room: a Bedroom with 4 slots, free starter miner included. An NFT rendered as isometric pixel art in your dashboard.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-screen">
+          <img src="assets/minerfun/How%20It%20Works/mine.png" alt="Mining screen" loading="lazy" />
+        </div>
+        <div class="hiw-info">
+          <span class="hiw-num">04 – Mine</span>
+          <h3>Place miners, earn daily</h3>
+          <p>Fill your room's slots with named miners. Hashrate drives your daily $MYNE yield. Upgrade rooms to unlock more capacity.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step launch-step">
+        <div class="hiw-screen">
+          <img src="assets/minerfun/How%20It%20Works/launch.png" alt="Launch coin screen" loading="lazy" />
+        </div>
+        <div class="hiw-info">
+          <span class="hiw-num">05 – Launch</span>
+          <h3>Launch your own coin</h3>
+          <p>For project creators: submit your pixel-style mining game to the launchpad. Get listed. Players buy in and start mining your token.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 04 SURFACES ── -->
+<section id="screens">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">04 / Surfaces</span>
+      <div>
+        <h2>Every screen, <em>a game moment</em>.</h2>
+        <p class="lede">Four key surfaces: the project page, the game room, the empty state onboarding moment, and the empire-wide facilities table.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrolly-wrap">
+    <div class="scrolly-steps">
+
+      <div class="scrolly-step" data-idx="0">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/The%20Game.png" alt="The game room" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/game/facilities/:id</span><span class="mono">The game</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.1 – The Game</span>
+          <h3>Your room. Your <em>mining empire</em>.</h3>
+          <p>The isometric room is the product's heart. Players see their miners placed in a physical space, not a row in a table or a number in a dashboard. The stats bar above shows live hashrate, daily $MYNE yield, and blocks until halving.</p>
+          <p>Room tiers (Bedroom → Pro Room → Data Center) give players a progression path that turns retention into spatial ambition.</p>
+          <div class="step-cap">
+            <span class="mono">/game/facilities/:id — Active room</span>
+            <span class="mono">Isometric view · Live stats · Claim</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="1">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/Project%20Page.png" alt="Project page" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/coin/:id</span><span class="mono">Project page</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.2 – Project Page</span>
+          <h3>DeFi data, <em>dressed as a game</em>.</h3>
+          <p>Each coin gets its own page: a project sidebar with creator info, launch date, token symbol and social links, plus a full TradingView chart for the live token price.</p>
+          <p>The stats bar (My Hashrate, Current Miners, Power Output, Total Mined) gives players instant context on their position in this project's network.</p>
+          <div class="step-cap">
+            <span class="mono">/coin/:id — MINERF project</span>
+            <span class="mono">Chart · Stats · Play Game</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="2">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/Empty%20State.png" alt="Empty state" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/game/facilities</span><span class="mono">Empty state</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.3 – Empty State</span>
+          <h3>The hardest UX moment: <em>first purchase</em>.</h3>
+          <p>New players land here with no rooms yet, nothing to look at. The empty state keeps it completely direct: "YOU DON'T HAVE A ROOM YET" in pixel type, a single Buy Room CTA. Project context stays visible in the sidebar.</p>
+          <p>No decorative padding, no explanatory copy blocks. The friction is the purchase. The UI stays out of the way.</p>
+          <div class="step-cap">
+            <span class="mono">/game/facilities — No rooms yet</span>
+            <span class="mono">Empty state · First purchase</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="3">
+        <div class="step-mobile-fig">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/Facilities%20Table.png" alt="Facilities table" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/game/facilities — table view</span><span class="mono">Facilities table</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.4 – Facilities Table</span>
+          <h3>Every facility, <em>at a glance</em>.</h3>
+          <p>As players expand across multiple rooms, they need a command view. The facilities table shows each room's address, mining rate per day, hashrate, blocks until halving, and percentage share of total network hashrate.</p>
+          <p>The empire view gives serious players the data density they need without abandoning the game aesthetic.</p>
+          <div class="step-cap">
+            <span class="mono">/game/facilities — All rooms</span>
+            <span class="mono">Table · Hashrate · % share</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT — sticky visual -->
+    <div class="scrolly-visual">
+      <div class="screen-counter">
+        <span class="mono" style="color:var(--fg)">MinerFun</span>
+        <div class="counter-track"><div class="counter-fill" id="counterFill"></div></div>
+        <span class="counter-num" id="counterNum">1 / 4</span>
+      </div>
+
+      <div class="screen-slides">
+        <div class="screen-slide active" data-slide="0">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/The%20Game.png" alt="The game room" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/game/facilities/:id</span><span class="mono">The game</span></div>
+        </div>
+        <div class="screen-slide" data-slide="1">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/Project%20Page.png" alt="Project page" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/coin/:id</span><span class="mono">Project page</span></div>
+        </div>
+        <div class="screen-slide" data-slide="2">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/Empty%20State.png" alt="Empty state" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/game/facilities</span><span class="mono">Empty state</span></div>
+        </div>
+        <div class="screen-slide" data-slide="3">
+          <div class="screen-fig dark-fig"><img src="assets/minerfun/desktop%20screens/Facilities%20Table.png" alt="Facilities table" loading="lazy" /></div>
+          <div class="screen-fig-cap"><span class="mono">/game/facilities — table view</span><span class="mono">Facilities table</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 05 MODALS ── -->
+<section id="modals">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">05 / Modals</span>
+      <div>
+        <h2>Every transaction, <em>a game moment</em>.</h2>
+        <p class="lede">Six transaction flows: buy room, buy miner, upgrade, launch a coin, waiting for confirmation, confirmed. Each modal carries the pixel-art visual language into the blockchain layer, turning friction into familiarity.</p>
+      </div>
+    </div>
+
+    <div class="mf-modals-wrap reveal d1">
+      <div class="mf-modals-track">
+        <img src="assets/minerfun/modals/modals.png" alt="MinerFun modal system" class="mf-modals-img" />
+        <img src="assets/minerfun/modals/modals.png" alt="" class="mf-modals-img" aria-hidden="true" />
+      </div>
+    </div>
+
+    <div class="narr reveal" style="margin-top:96px">
+      <span class="lbl mono">Design note</span>
+      <div>
+        <div class="pull">Every modal speaks the same visual language as the game: pixel type, gold CTAs, dark purple surfaces. The blockchain layer disappears; what's left feels like an in-game action, not a financial transaction.</div>
+        <p>The "Waiting for Confirmation" state uses a retro loading bar instead of a spinner. Blockchain latency becomes an arcade moment. The miner names (<em>SporkBox, CoreDrill, HashForge, QuantumRig, OmegeNode</em>) were designed as collectible characters, not hardware specs. Players acquire them, not just purchase them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── 06 ROOMS ── -->
+<section id="rooms">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">06 / Rooms</span>
+      <div>
+        <h2>The space you&nbsp;<em>own</em>.</h2>
+        <p class="lede">Each room is an NFT, a hand-crafted isometric pixel art space that players buy, populate with miners, and upgrade over time. The rooms are the product's physical metaphor: your mining operation, rendered as a place.</p>
+      </div>
+    </div>
+
+    <div class="room-strip reveal d1">
+      <div class="room-item" style="--room-w:62%">
+        <div class="room-img"><img src="assets/minerfun/rooms/1.png" alt="Room tier 1" /></div>
+        <div class="room-label"><span class="r-tier">Tier 1 · Starter</span><span class="r-name">Bedroom</span></div>
+      </div>
+      <div class="room-item" style="--room-w:72%">
+        <div class="room-img"><img src="assets/minerfun/rooms/2.png" alt="Room tier 2" /></div>
+        <div class="room-label"><span class="r-tier">Tier 2 · Pro</span><span class="r-name">Lounge</span></div>
+      </div>
+      <div class="room-item" style="--room-w:91%">
+        <div class="room-img"><img src="assets/minerfun/rooms/3.png" alt="Room tier 3" /></div>
+        <div class="room-label"><span class="r-tier">Tier 3 · Pro</span><span class="r-name">Urban</span></div>
+      </div>
+      <div class="room-item" style="--room-w:100%">
+        <div class="room-img"><img src="assets/minerfun/rooms/4.png" alt="Room tier 4" /></div>
+        <div class="room-label"><span class="r-tier">Tier 4 · Elite</span><span class="r-name">Data Center</span></div>
+      </div>
+      <div class="room-item" style="--room-w:100%">
+        <div class="room-img"><img src="assets/minerfun/rooms/5.png" alt="Room tier 5" /></div>
+        <div class="room-label"><span class="r-tier">Tier 5 · Legendary</span><span class="r-name">Vault</span></div>
+      </div>
+      <div class="room-item special" style="--room-w:100%">
+        <div class="room-img"><img src="assets/minerfun/rooms/7 special.png" alt="Custom branded room" /></div>
+        <div class="room-label"><span class="r-tier">Tier 6 · Brand Collab</span><span class="r-name">Custom</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ── 08 BRAND ── -->
+<section id="brand">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">08 / Brand</span>
+      <div>
+        <h2>Pixel type, <em>two-tone mark</em>.</h2>
+        <p class="lede">The brand started from the visual language of the game. Every color, every typographic choice traces back to the isometric pixel world players inhabit.</p>
+      </div>
+    </div>
+
+    <div class="brand-layout reveal d1">
+      <div>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The wordmark uses a custom pixel font: bold, blocky, unmistakably retro. <em style="font-style:normal;color:var(--fg)">MINER</em> in gold/orange signals reward and energy; <em style="font-style:normal;color:var(--fg)">FUN</em> in violet signals the platform's playful identity. Two words, two roles, two colors. Players and creators in a single mark.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">Deep purple <em style="font-style:normal;color:#7B5CF0">#2B2861</em> anchors the entire visual world. Every screen, room, and modal sits on this ground. Gold <em style="font-style:normal;color:#c49c2a">#F5C542</em> is reserved exclusively for calls-to-action and reward moments: buy, claim, upgrade, launch. The color trains players to trust yellow as the "action" signal.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid)">An animated GIF logo was built for landing page use: letters assembling with a pixel-loading effect, adding kinetic energy to the brand mark without requiring video infrastructure or heavy assets.</p>
+      </div>
+      <div>
+        <div class="mf-logo-panel">
+          <div class="mf-logo-dark">
+            <img src="assets/minerfun/logo.png" alt="MinerFun logo on dark" />
+          </div>
+          <div class="mf-logo-light">
+            <img src="assets/minerfun/logo.png" alt="MinerFun logo on light" />
+          </div>
+        </div>
+        <div class="brand-palette" style="margin-top:16px">
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#F5C542"></div>
+            <div class="palette-meta"><span class="p-name">Game Gold</span><span class="p-hex">#F5C542</span></div>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#7B5CF0"></div>
+            <div class="palette-meta"><span class="p-name">Pixel Violet</span><span class="p-hex">#7B5CF0</span></div>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#2B2861"></div>
+            <div class="palette-meta"><span class="p-name">Empire Purple</span><span class="p-hex">#2B2861</span></div>
+          </div>
+          <div class="palette-item">
+            <div class="palette-swatch" style="background:#3E3B8E"></div>
+            <div class="palette-meta"><span class="p-name">Mid Indigo</span><span class="p-hex">#3E3B8E</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── ANIMATION ASSETS ── -->
+<section id="animation-assets">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">Motion</span>
+      <div>
+        <h2>Every pixel, <em>in&nbsp;motion</em>.</h2>
+        <p class="lede">The visual language didn't stop at screens. Every character, miner, and UI element was animated, built as a living world, not a static interface.</p>
+      </div>
+    </div>
+    <div class="reveal d1 anim-constrain" style="margin-top:48px;border-radius:16px;overflow:hidden;border:1px solid var(--line-strong)">
+      <video autoplay muted loop playsinline style="width:100%;height:auto;display:block;aspect-ratio:3/1;object-fit:contain;background:#0a0a14">
+        <source src="assets/minerfun/Minerfun animation assets.mov" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ── 09 OUTCOMES ── -->
+<section id="outcomes">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">09 / Outcomes</span>
+      <div>
+        <h2>Game, site, and launchpad. <em>All live.</em></h2>
+        <p class="lede">MinerFun shipped with a complete visual identity, a marketing launchpad, a full game UI, and a system of transaction modals, all from zero, solo designer, live on mainnet.</p>
+      </div>
+    </div>
+    <div class="outcome reveal d1">
+      <div class="stat">
+        <span class="mono">Product surfaces</span>
+        <div class="v">4</div>
+        <p>Landing, project page, game view, launchpad form, designed from zero</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Transaction flows</span>
+        <div class="v">6</div>
+        <p>Buy room, buy miner, upgrade, launch coin, confirm, claim. Complete modal system</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Room NFT tiers</span>
+        <div class="v">4<em>+</em></div>
+        <p>Bedroom → Lounge → Urban → Data Center, each as isometric pixel art</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Scope</span>
+        <div class="v">0<em>→1</em></div>
+        <p>Full scope delivered by one designer: brand, game, site, every transaction state</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Back to beginning</div>
+        <h5>NFTrade: <em>Web3</em> marketplace,<br>200k users.</h5>
+        <a href="NFTrade.html" class="next-link">
+          View NFTrade
+          <span class="arr">↗</span>
+        </a>
+      </div>
+      <div class="links">
+        <a href="index.html#work">All work</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+    <div class="meta">
+      <span>© 2026 Gilad Cohen</span>
+      <span class="mono">Case 04 / 04 – MinerFun · 2024–2025</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const hiwObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); hiwObserver.unobserve(e.target); } });
+  }, {threshold:0.2});
+  const hiwEl = document.getElementById('hiwSteps');
+  if(hiwEl) hiwObserver.observe(hiwEl);
+
+  const slides = document.querySelectorAll('.screen-slide');
+  const steps  = document.querySelectorAll('.scrolly-step');
+  const fill   = document.getElementById('counterFill');
+  const num    = document.getElementById('counterNum');
+  const total  = slides.length;
+
+  function activate(idx){
+    slides.forEach((s,i) => s.classList.toggle('active', i===idx));
+    if(fill) fill.style.width = ((idx+1)/total*100)+'%';
+    if(num)  num.textContent  = `${idx+1} / ${total}`;
+  }
+
+  const stepObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) activate(+e.target.dataset.idx); });
+  }, {threshold:0.5, rootMargin:'-20% 0px -20% 0px'});
+  steps.forEach(s => stepObs.observe(s));
+</script>
+
+<script>
+  const progressBar = document.getElementById('readingProgress');
+  if(progressBar){
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }, { passive: true });
+  }
+</script>
+
+
+<script src="nav.js?v=2"></script>
+</body>
+</html>

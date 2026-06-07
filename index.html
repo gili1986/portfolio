@@ -194,7 +194,7 @@
 
   .flagship-row .preview{
     position:absolute;right:96px;top:50%;transform:translateY(-50%) scale(0.92);
-    width:340px;aspect-ratio:2880/2256;
+    width:340px;aspect-ratio:2880/2040;
     border-radius:10px;overflow:hidden;
     opacity:0;pointer-events:none;
     transition:opacity .35s, transform .45s cubic-bezier(.2,.8,.2,1);
@@ -389,8 +389,8 @@
   .contact .socials a{color:var(--fg-dim);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line);padding-bottom:4px;transition:color .2s,border-color .2s}
   .contact .socials a:hover{color:var(--fg);border-color:var(--fg)}
 
-  footer{padding:48px 0;border-top:1px solid var(--line);font-size:13px;color:var(--fg-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
-  footer .mono{font-size:11px}
+  footer{padding:48px 0;border-top:1px solid var(--line);color:var(--fg-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  footer .mono{font-size:11px;align-self:flex-end}
 
   /* ── Responsive overrides ─────────────────────────────── */
   /* Tablet (≤1024) */
@@ -415,8 +415,6 @@
 
     /* Nav */
     nav.top .row{padding-top:16px;padding-bottom:16px}
-    nav.top .brand{font-size:13px;gap:10px}
-    nav.top .brand .dot{width:26px;height:20px}
     nav.top .clock{font-size:10px}
 
     /* Hero typography */
@@ -507,13 +505,12 @@
     .contact .socials{margin-top:40px;gap:18px 24px;font-size:13px}
 
     /* Footer */
-    footer{padding:32px 0;font-size:12px}
+    footer{padding:32px 0}
     footer .wrap{flex-direction:column;align-items:flex-start !important;gap:10px}
   }
 
   /* Small mobile (≤420) — tighten further */
   @media (max-width:420px){
-    nav.top .clock{display:none}
     .hero h1{font-size:clamp(36px,11vw,46px)}
     .hero .meta-row{grid-template-columns:1fr 1fr;gap:16px}
     .hero .meta-row .cell strong{font-size:18px}
@@ -569,11 +566,11 @@
 
         A. Restrained / dated
           <h2>Selected work, <em>2012–2025</em>.</h2>
-          <p class="lede">A focused set of projects across FinTech, Web3, and Gaming. Each opens into a full case study — context, decisions, screens, and outcomes.</p>
+          <p class="lede">A focused set of projects across FinTech, Web3, and Gaming. Each opens into a full case study: context, decisions, screens, and outcomes.</p>
 
         B. Confident / plainspoken
           <h2>Four projects worth <em>talking about</em>.</h2>
-          <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study — the brief, the calls I made, and what shipped. Other projects are listed below.</p>
+          <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study: the brief, the calls I made, and what shipped. Other projects are listed below.</p>
 
         C. Editorial
           <h2>A decade of products, <em>distilled</em>.</h2>
@@ -581,10 +578,10 @@
 
         D. Direct / minimal
           <h2>Selected work.</h2>
-          <p class="lede">Four flagship projects across FinTech, Web3, and Gaming — each with the full story behind it. Additional work listed below.</p>
+          <p class="lede">Four flagship projects across FinTech, Web3, and Gaming, each with the full story behind it. Additional work listed below.</p>
         -->
         <h2>Four projects worth<br/><em>talking about</em>.</h2>
-        <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study — the brief, the calls I made, and what shipped. Other projects are listed below.</p>
+        <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study: the brief, the calls I made, and what shipped. Other projects are listed below.</p>
       </div>
     </div>
 
@@ -598,7 +595,7 @@
         <span class="year">2022</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         <div class="preview v-nft">
-          <img src="assets/nftrade.jpg" alt="NFTrade marketplace" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img src="assets/tumbnails/NFTrade.png" alt="NFTrade marketplace" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </a>
 
@@ -610,7 +607,7 @@
         <span class="year">2023</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         <div class="preview v-yield">
-          <img src="assets/yieldshield.jpg" alt="YieldShield dashboard" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img src="assets/tumbnails/YieldShield.png" alt="YieldShield dashboard" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </a>
 
@@ -622,7 +619,7 @@
         <span class="year">2024</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         <div class="preview" style="background:#000">
-          <img src="assets/centive.jpg" alt="Centive node overview" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img src="assets/tumbnails/Centive.png" alt="Centive node overview" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </a>
 
@@ -634,7 +631,7 @@
         <span class="year">2024</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         <div class="preview v-miner">
-          <img src="assets/minerfun.jpg" alt="MinerFun" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img src="assets/tumbnails/MinerFun.png" alt="MinerFun" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </a>
 
@@ -649,7 +646,7 @@
     <div class="sect-label reveal">
       <div class="num mono">About</div>
       <div>
-        <h2>13+ years, three industries, <em>one obsession</em> — making the moment a product clicks happen sooner.</h2>
+        <h2>13+ years, three industries, <em>one obsession</em>: making the moment a product clicks happen&nbsp;sooner.</h2>
         <p class="lede">A short version of the story, in my own voice. The longer version is the work above.</p>
       </div>
     </div>
@@ -657,14 +654,14 @@
     <div class="grid">
       <div class="col">
         <div class="photo reveal" style="position:relative;overflow:hidden">
-          <img src="assets/portrait.png" alt="Gilad Cohen" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img src="assets/Gilad Cohen - Profile picture.png" alt="Gilad Cohen" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </div>
       <div class="col reveal delay-1">
-        <p>I started in <em>graphic design</em> because typography felt like math you could feel. I ended up in <em>product</em> because shipping is the only honest critique. 13+ years later, I'm still building zero-to-one products — and I still believe the best UI is the one a user doesn't notice.</p>
+        <p>I started in <em>graphic design</em> because a single visual could carry what words took a page to say. I ended up in <em>product</em> because shipping is the only honest critique. 13+ years later, I'm still building zero-to-one products. I still believe the best UI is the one a user doesn't notice.</p>
         <p>I work fast. Not because I cut corners, but because I learned early that <em>velocity is a design quality</em>. A team that can run three experiments a week beats a team that runs one perfect one.</p>
-        <p>Lately I've been folding AI into the way I design — generating variants, prototyping with code, replacing meetings with shared documents the team can argue with. It hasn't replaced craft. It's let me <em>spend more of the day on craft</em>.</p>
-        <p>If you're a founder who needs a designer that thinks in product, ships in code, and writes the spec themselves — I'd love to talk.</p>
+        <p>Lately I've been folding AI into the way I design: generating variants, prototyping with code, replacing meetings with shared documents the team can argue with. It hasn't replaced craft. It's let me <em>spend more of the day on craft</em>.</p>
+        <p>If you're a founder who needs a designer that thinks in product, ships in code, and writes the spec themselves. I'd love to talk.</p>
       </div>
     </div>
 
@@ -683,18 +680,15 @@
     <div class="reveal">
       <div class="mono" style="color:var(--fg-dim);margin-bottom:32px">Get in touch</div>
       <h2>Let's <em>build</em><br/>something together.</h2>
-      <a href="/cdn-cgi/l/email-protection#9dfaf4f1fcf9ddf8e5fcf0edf1f8b3fef2f0" class="email reveal delay-1" style="line-height: 1.55; border-width: 2px">
-        <span class="__cf_email__" data-cfemail="e2858b8e8386a2879a838f928e87cc818d8f">[email&#160;protected]</span>
+      <a href="mailto:gili.syk@gmail.com" class="email reveal delay-1" style="line-height: 1.55; border-width: 2px">
+        gili.syk@gmail.com
         <span class="arr">↗</span>
       </a>
       <div class="socials reveal delay-2">
-        <a href="#">LinkedIn</a>
-        <a href="#">Twitter / X</a>
-        <a href="#">Read.cv</a>
-        <a href="#">Are.na</a>
-        <a href="#">Calendar</a>
+        <a href="https://www.linkedin.com/in/gili-cohen/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.behance.net/gilic" target="_blank" rel="noopener">Behance</a>
       </div>
-      <a href="assets/Gilad-Cohen-Resume.pdf" download class="resume reveal delay-3">
+      <a href="assets/CV/Gilad Cohen - Resume.pdf" download class="resume reveal delay-3">
         Download my resume
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M5 12l7 7 7-7M5 21h14"/></svg>
       </a>
@@ -704,7 +698,7 @@
 
 <footer>
   <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:16px">
-    <span>© 2026 Gilad Cohen — All work shown with permission of clients.</span>
+    <span>© 2026 Gilad Cohen<br>All work shown with permission of clients.</span>
     <span class="mono">Built with Claude · Bricolage Grotesque · DM Sans</span>
   </div>
 </footer>
@@ -850,6 +844,6 @@
   }
 </script>
 
-<script src="nav.js"></script>
+<script src="nav.js?v=2"></script>
 </body>
 </html>

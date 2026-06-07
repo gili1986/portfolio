@@ -40,8 +40,8 @@
   @media (max-width:720px){nav.top .links{display:none}}
 
   /* ── Hero ── */
-  .hero{padding:0;position:relative;z-index:1;overflow:hidden}
-  .hero-wrap{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;align-items:stretch;gap:0;height:100vh}
+  .hero{padding:0;position:relative;z-index:1}
+  .hero-wrap{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;align-items:stretch;gap:0;height:80vh;min-height:580px}
   .hero-wrap .meta-row{grid-column:1/-1;align-self:end;padding-bottom:40px}
   .hero-text{padding:144px 48px 64px 0}
   .hero .crumb{display:flex;align-items:center;gap:16px;color:var(--fg-dim);margin-bottom:64px}
@@ -49,14 +49,14 @@
   .hero .crumb a{color:var(--fg-dim);text-decoration:none;transition:color .2s}
   .hero .crumb a:hover{color:var(--fg)}
   .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,96px);line-height:0.9;letter-spacing:-0.04em;color:var(--fg);max-width:14ch}
-  .hero h1 em{font-style:normal;color:var(--ys-purple)}
+  .hero h1 em{font-style:normal;color:var(--accent)}
   .hero .sub{margin-top:40px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--fg-mid)}
   .hero .sub em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
   .hero-visual{
     display:flex;align-items:stretch;justify-content:center;
     overflow:hidden;
     align-self:stretch;
-    width:85%;
+    width:80%;
     margin-left:auto;
   }
   .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
@@ -73,7 +73,7 @@
   .meta-row .cell strong{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:22px;letter-spacing:-0.02em;color:var(--fg);display:block}
 
   /* ── Cover ── */
-  .cover{margin-top:96px;position:relative;z-index:1}
+  .cover{margin-top:144px;position:relative;z-index:1}
   .cover-fig{height:640px;width:auto;max-width:100%;margin:0 auto;position:relative;aspect-ratio:2458/1857}
   .cover-fig img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block}
   .cover-cap{max-width:860px;margin:14px auto 0;display:flex;justify-content:space-between;color:var(--fg-dim)}
@@ -83,7 +83,7 @@
   .sect-label{display:grid;grid-template-columns:120px 1fr;gap:48px;align-items:start;margin-bottom:64px}
   .sect-label .num{color:var(--fg-dim)}
   .sect-label h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4.6vw,64px);line-height:0.96;letter-spacing:-0.035em;color:var(--fg);max-width:18ch}
-  .sect-label h2 em{font-style:normal;color:var(--ys-purple)}
+  .sect-label h2 em{font-style:normal;color:var(--accent)}
   .sect-label .lede{margin-top:16px;color:var(--fg-mid);font-size:17px;max-width:52ch;line-height:1.55}
   @media (max-width:720px){.sect-label{grid-template-columns:1fr;gap:16px}}
 
@@ -94,13 +94,13 @@
   .narr p{color:var(--fg-mid);font-size:17px;line-height:1.65;max-width:60ch;margin-bottom:16px}
   .narr p em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
   .narr .pull{margin:32px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.25;letter-spacing:-0.02em;color:var(--fg);max-width:30ch}
-  .narr .pull em{font-style:normal;color:var(--ys-purple)}
+  .narr .pull em{font-style:normal;color:var(--accent)}
 
   /* ── Two-col ── */
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
   @media (max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
   .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
-  .two-col .col h3 em{font-style:normal;color:var(--ys-purple)}
+  .two-col .col h3 em{font-style:normal;color:var(--accent)}
   .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
   .two-col .col .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
   .two-col .col .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
@@ -132,7 +132,7 @@
   .step-text{max-width:340px}
   .step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);display:block;margin-bottom:24px}
   .step-text h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(32px,3.6vw,52px);letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;color:var(--fg)}
-  .step-text h3 em{font-style:normal;color:var(--ys-purple)}
+  .step-text h3 em{font-style:normal;color:var(--accent)}
   .step-text p{color:var(--fg-mid);font-size:16px;line-height:1.65}
   .step-cap{display:flex;flex-direction:column;gap:4px;padding-top:16px;margin-top:24px;border-top:1px solid var(--line)}
   .step-cap .mono{color:var(--fg-dim)}
@@ -162,7 +162,7 @@
   }
 
   /* ── Wizard step label (shared) ── */
-  .ws-num{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ys-purple)}
+  .ws-num{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent)}
 
   /* ── Flow grid ── */
   .flow-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-top:48px}
@@ -172,7 +172,7 @@
   .flow-fig img{width:100%;height:auto;display:block}
   .flow-cap{display:flex;flex-direction:column;gap:4px;margin-top:12px}
   .flow-cap-top{display:flex;align-items:baseline;gap:8px}
-  .flow-cap .ws-num{color:var(--ys-purple);font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em}
+  .flow-cap .ws-num{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em}
   .flow-cap .ws-name{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:400;letter-spacing:-0.01em;color:var(--fg);line-height:1.2}
   .flow-cap .ws-desc{font-size:12.5px;color:var(--fg-dim);line-height:1.5;margin-top:2px}
 
@@ -199,7 +199,7 @@
   /* ── Design system grid ── */
   .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;max-width:1152px;margin-left:auto;margin-right:auto}
   .ds-card{background:#fff;border:1px solid var(--line-strong);border-radius:14px;overflow:hidden}
-  .ds-card-vis{height:160px;background:#f4f5f8;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+  .ds-card-vis{height:160px;background:#F6F4FA;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
   .ds-card-body{padding:16px 24px 24px;border-top:1px solid var(--line)}
   .ds-card-title{font-family:'Raleway',sans-serif;font-weight:700;font-size:14px;color:var(--fg);margin:0 0 5px}
   .ds-card-desc{font-size:12px;line-height:1.55;color:var(--fg-dim);margin:0}
@@ -209,6 +209,9 @@
   .ds-color-swatch{flex:1;height:44px;border-radius:8px}
   .ds-color-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:5px 10px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--fg-dim)}
   .ds-color-chip-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .ds-pal-card{display:flex;flex-direction:column;flex:1;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .ds-pal-swatch{height:88px;flex-shrink:0}
+  .ds-pal-hex{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.03em;color:var(--fg-dim);padding:6px;background:#fff;white-space:nowrap;text-align:center}
 
   /* Typography vis */
   .ds-type-big{font-family:'Raleway',sans-serif;font-weight:700;font-size:clamp(40px,4vw,56px);letter-spacing:-0.04em;color:var(--fg);line-height:1}
@@ -218,10 +221,10 @@
   .ds-type-wlabel.w-semi{font-weight:600;color:var(--fg-mid)}
 
   /* Spacing vis */
-  .ds-space-rows{display:flex;flex-direction:column;gap:7px;width:100%}
-  .ds-space-row{display:flex;align-items:center;gap:10px}
-  .ds-space-bar{height:9px;border-radius:2px;background:#d0d4e0;flex-shrink:0}
-  .ds-space-px{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--fg-dim);white-space:nowrap}
+  .ds-space-rows{display:flex;flex-direction:column;gap:10px;width:100%}
+  .ds-space-row{display:flex;align-items:center;gap:12px}
+  .ds-space-bar{height:12px;border-radius:3px;background:#d0d4e0;flex-shrink:0}
+  .ds-space-px{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-dim);white-space:nowrap}
 
   /* Components vis */
   .ds-comp-btn{background:#8241dd;color:#fff;border-radius:6px;padding:7px 16px;font-family:'Raleway',sans-serif;font-weight:600;font-size:11px}
@@ -252,18 +255,22 @@
   @media(max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
   .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
   .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
-  .outcome .stat .v em{font-style:normal;color:var(--ys-purple)}
+  .outcome .stat .v em{font-style:normal;color:var(--accent)}
   .outcome .stat p{font-size:13px;color:var(--fg-mid);margin-top:8px;max-width:22ch}
 
   /* ── Footer ── */
   footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
   footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
-  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:14ch}
-  footer h5 em{font-style:normal;color:var(--ys-purple)}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:none}
+  footer h5 em{font-style:normal;color:var(--accent)}
   footer .links{display:flex;gap:24px}
   footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
   footer .links a:hover{color:var(--fg);border-color:var(--fg)}
   footer .meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--fg-dim)}
+  footer .next-link{display:inline-flex;align-items:center;gap:12px;padding:16px 24px;border:1px solid var(--line-strong);border-radius:99px;text-decoration:none;color:var(--fg);font-size:14px;margin-top:32px;transition:background .3s,color .3s,border-color .3s}
+  footer .next-link:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  footer .next-link .arr{transition:transform .3s}
+  footer .next-link:hover .arr{transform:translateX(4px) rotate(-45deg)}
 
   /* ── Reveal ── */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
@@ -275,6 +282,7 @@
   @media(max-width:720px){
     section{padding:72px 0}
     .cover{margin-top:48px}
+    .cover-fig{height:auto}
     .scrolly-wrap{padding:0 16px}
     .wizard-steps{grid-template-columns:1fr 1fr}
     footer{padding:56px 0 32px}
@@ -297,8 +305,8 @@
           <span class="pulse"></span>
           <span class="mono"><a href="index.html">Index</a> &nbsp;/&nbsp; Case 02 &nbsp;/&nbsp; YieldShield</span>
         </div>
-        <h1 class="reveal d1">Yield farming, <em>made</em> for actual humans.</h1>
-        <p class="sub reveal d2">A full zero-to-one product design for <em>YieldShield</em> — an AI-powered DeFi dashboard that automates yield farming across Binance, Polygon, and Ethereum. Dashboard, data viz, IA, mobile app, and a design system built to scale.</p>
+        <h1 class="reveal d1">Yield farming, <em>made</em> for actual&nbsp;humans.</h1>
+        <p class="sub reveal d2">A full zero-to-one product design for <em>YieldShield</em>, an AI-powered DeFi dashboard that automates yield farming across Binance, Polygon, and Ethereum. Dashboard, data viz, IA, mobile app, and a design system built to scale.</p>
       </div>
 
       <div class="hero-visual reveal d2">
@@ -323,7 +331,7 @@
       <img src="assets/ys-hero.png" alt="YieldShield desktop — product overview" />
     </div>
     <div class="cover-cap reveal d1">
-      <span class="mono">Fig. 01 — Desktop product overview</span>
+      <span class="mono">Fig. 01 – Desktop product overview</span>
       <span class="mono">1440 × 900</span>
     </div>
   </div>
@@ -338,16 +346,16 @@
         <div class="sect-label reveal">
           <span class="num mono">01 / Context</span>
           <div>
-            <h2>DeFi's promise, without the <em>tax on your brain</em>.</h2>
-            <p class="lede">YieldShield layers AI and smart contracts on top of Yield Protocol to automate yield farming decisions — so users who don't speak DeFi can still participate in it without constant manual intervention.</p>
+            <h2>DeFi's promise, without the <em>tax on your&nbsp;brain</em>.</h2>
+            <p class="lede">YieldShield layers AI and smart contracts on top of Yield Protocol to automate yield farming decisions so users who don't speak DeFi can still participate in it without constant manual intervention.</p>
           </div>
         </div>
 
         <div class="narr reveal d1">
           <span class="lbl mono">The brief</span>
           <div>
-            <p>Yield farming was lucrative and inaccessible in equal measure. The protocols were there — PancakeSwap, SushiSwap, Apeswap — but the interface layer between a user's wallet and their best APY was a mesh of manual steps, invisible risk, and silent gas failures.</p>
-            <p>The ask was ambitious: design a dashboard that lets any user — from DeFi-native to DeFi-curious — create an <em>automated investment strategy</em>, monitor it in real time, and trust the platform to act on their behalf. The product had to work across Binance Smart Chain, Polygon, and Ethereum under one roof.</p>
+            <p>Yield farming was lucrative and inaccessible in equal measure. The protocols were there (PancakeSwap, SushiSwap, Apeswap) but the interface layer between a user's wallet and their best APY was a mesh of manual steps, invisible risk, and silent gas failures.</p>
+            <p>The ask was ambitious: design a dashboard that lets any user, DeFi-native or DeFi-curious, to create an <em>automated investment strategy</em>, monitor it in real time, and trust the platform to act on their behalf. The product had to work across Binance Smart Chain, Polygon, and Ethereum under one roof.</p>
             <p>One designer. Three chains. Six months from zero to shipped. Dark and light mode from day one.</p>
             <div class="pull">DeFi's core mechanic is <em>trust</em>. Every screen either built it or eroded it.</div>
           </div>
@@ -370,7 +378,7 @@
     <div class="sect-label reveal">
       <span class="num mono">02 / Diagnosis</span>
       <div>
-        <h2>DeFi asks too much. The interface <em>shouldn't</em>.</h2>
+        <h2>DeFi asks too much. The interface&nbsp;<em>shouldn't</em>.</h2>
         <p class="lede">Before a single frame was drawn, I mapped every friction point between a new user and their first automated investment. The problems were structural, not cosmetic.</p>
       </div>
     </div>
@@ -378,7 +386,7 @@
     <div class="two-col reveal d1">
       <div class="col">
         <h3>What was <em>broken</em></h3>
-        <p>Gas fees failed transactions silently — users had no visibility into their balance or burn rate until it was too late. Risk was either unlabeled or buried in tooltips. Claiming rewards and re-staking were separate manual actions users had to remember to do. Mobile didn't exist.</p>
+        <p>Gas fees failed transactions silently. Users had no visibility into their balance or burn rate until it was too late. Risk was either unlabeled or buried in tooltips. Claiming rewards and re-staking were separate manual actions users had to remember to do. Mobile didn't exist.</p>
         <p>Every competing product assumed DeFi fluency. The interface was built by insiders, for insiders. Everyone else was one failed transaction away from leaving.</p>
         <div class="tag-row">
           <span class="tag">Invisible gas risk</span>
@@ -390,8 +398,8 @@
       </div>
       <div class="col">
         <h3>The <em>approach</em></h3>
-        <p>Surface everything the user needs to know, automate everything they shouldn't have to do manually. Gas got its own dedicated station — visible balance, deposit/withdraw, burn rate and estimated transaction count all in one view. Risk got a plain-English label on every pool and every investment row.</p>
-        <p>Dark and light mode from day one. Mobile parity from day one. Auto-compound became a toggle in the investment wizard — not a separate manual workflow users had to discover themselves.</p>
+        <p>Surface everything the user needs to know, automate everything they shouldn't have to do manually. Gas got its own dedicated station: visible balance, deposit/withdraw, burn rate and estimated transaction count all in one view. Risk got a plain-English label on every pool and every investment row.</p>
+        <p>Dark and light mode from day one. Mobile parity from day one. Auto-compound became a toggle in the investment wizard, not a separate manual workflow users had to discover themselves.</p>
         <div class="tag-row">
           <span class="tag">Gas as UX</span>
           <span class="tag">Risk at a glance</span>
@@ -411,7 +419,7 @@
       <span class="num mono">03 / Surfaces</span>
       <div>
         <h2>Six views, <em>one system</em>.</h2>
-        <p class="lede">Every surface of the platform — dashboard, investments, pools, gas, staking — is built from the same tokens, the same 8pt spacing scale, the same Raleway type system. The product feels like one thing because it is one thing.</p>
+        <p class="lede">Every surface of the platform (dashboard, investments, pools, gas, staking) is built from the same tokens, the same 8pt spacing scale, the same Raleway type system. The product feels like one thing because it is one thing.</p>
       </div>
     </div>
   </div>
@@ -427,7 +435,7 @@
           <div class="screen-fig-cap"><span class="mono">/dashboard</span><span class="mono">Statistics · Gas · Investments</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.1 — Dashboard</span>
+          <span class="step-num">3.1 – Dashboard</span>
           <h3>The <em>command center</em>.</h3>
           <p>Everything that matters in one viewport: total invested, current balance, total ROI, and a live area chart. Below: a real-time notifications panel, the gas station widget, and the active investments table. No hidden tabs for the things users check every day.</p>
           <div class="step-cap">
@@ -443,11 +451,11 @@
           <div class="screen-fig-cap"><span class="mono">/investments</span><span class="mono">Active · Inactive · APY · Risk · P&amp;L</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.2 — Investments</span>
+          <span class="step-num">3.2 – Investments</span>
           <h3>Your portfolio, <em>ranked by what matters</em>.</h3>
-          <p>Active and inactive investments in a single scannable table — sortable by risk level, current ROI, and APY. Risk is never buried: Very High, High, Medium, Low, Very Low appear as color-coded inline badges on every row.</p>
-          <p>Drill into any position for a live P&amp;L chart, restake history with token routing, and an embedded gas station. Invest more, Claim rewards, Claim &amp; Exit — always in context, never two screens away.</p>
-          <p style="margin-top:16px;font-size:13px;color:var(--fg-dim);border-top:1px solid var(--line);padding-top:14px">↳ Shown in <em style="font-style:normal;color:var(--fg)">light mode</em>. User research showed ~30% of users preferred light — so both were shipped day one, with dark as the default.</p>
+          <p>Active and inactive investments in a single scannable table, sortable by risk level, current ROI, and APY. Risk is never buried: Very High, High, Medium, Low, Very Low appear as color-coded inline badges on every row.</p>
+          <p>Drill into any position for a live P&amp;L chart, restake history with token routing, and an embedded gas station. Invest more, Claim rewards, Claim &amp; Exit, always in context, never two screens away.</p>
+          <p style="margin-top:16px;font-size:13px;color:var(--fg-dim);border-top:1px solid var(--line);padding-top:14px">↳ Shown in <em style="font-style:normal;color:var(--fg)">light mode</em>. User research showed ~30% of users preferred light, so both were shipped day one, with dark as the default.</p>
           <div class="step-cap">
             <span class="mono">/investments</span>
             <span class="mono">Active · Inactive · APY · Risk · P&amp;L</span>
@@ -461,9 +469,9 @@
           <div class="screen-fig-cap"><span class="mono">/pools</span><span class="mono">Protocol filter · APY · Risk</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.3 — Pools</span>
+          <span class="step-num">3.3 – Pools</span>
           <h3>200+ pools, <em>filtered in seconds</em>.</h3>
-          <p>Browse by protocol — PancakeSwap, CafeSwap, Apeswap — with APY and risk level visible at a glance on every row. Expand any pool to reveal pair details, liquidity depth, and daily ROI. Power-user depth, first-timer legibility.</p>
+          <p>Browse by protocol (PancakeSwap, CafeSwap, Apeswap) with APY and risk level visible at a glance on every row. Expand any pool to reveal pair details, liquidity depth, and daily ROI. Power-user depth, first-timer legibility.</p>
           <div class="step-cap">
             <span class="mono">/pools</span>
             <span class="mono">Protocol filter · APY · Risk</span>
@@ -477,7 +485,7 @@
           <div class="screen-fig-cap"><span class="mono">/gas</span><span class="mono">Balance · Burn rate · Tx history</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.4 — Gas Station</span>
+          <span class="step-num">3.4 – Gas Station</span>
           <h3>Gas made <em>legible</em>.</h3>
           <p>Most platforms let gas stay invisible until a transaction fails. YieldShield surfaces your BNB balance, an analog gauge showing full/empty state, estimated transaction count, average gas cost, and a full filterable transaction history. Deposit or withdraw in two clicks from the same screen.</p>
           <div class="step-cap">
@@ -493,9 +501,9 @@
           <div class="screen-fig-cap"><span class="mono">/staking</span><span class="mono">YIELD token · LP · Multi-chain</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">3.5 — Staking</span>
+          <span class="step-num">3.5 – Staking</span>
           <h3>Earning <em>on your earnings</em>.</h3>
-          <p>YIELD token and LP staking across Binance, Polygon, and Ethereum — each network showing its own balance, APY, lock period, and stake/withdraw actions. All three chains unified in a single view. The design goal: eliminate the cognitive load of managing cross-chain positions.</p>
+          <p>YIELD token and LP staking across Binance, Polygon, and Ethereum, each network showing its own balance, APY, lock period, and stake/withdraw actions. All three chains unified in a single view. The design goal: eliminate the cognitive load of managing cross-chain positions.</p>
           <div class="step-cap">
             <span class="mono">/staking</span>
             <span class="mono">YIELD token · LP · Multi-chain</span>
@@ -507,6 +515,12 @@
 
     <!-- RIGHT: sticky panel -->
     <div class="scrolly-visual">
+      <div class="screen-counter">
+        <span class="mono" style="color:var(--fg)">YieldShield</span>
+        <div class="counter-track"><div class="counter-fill" id="counterFill" style="width:20%"></div></div>
+        <span class="counter-num" id="counterNum">01 / 05</span>
+      </div>
+
       <div class="screen-slides">
 
         <div class="screen-slide active" data-idx="0">
@@ -535,10 +549,6 @@
         </div>
 
       </div>
-      <div class="screen-counter">
-        <div class="counter-track"><div class="counter-fill" id="counterFill" style="width:20%"></div></div>
-        <span class="counter-num" id="counterNum">01 / 05</span>
-      </div>
     </div>
 
   </div>
@@ -550,7 +560,7 @@
     <div class="sect-label reveal">
       <span class="num mono">04 / Flows</span>
       <div>
-        <h2>Creating an investment in <em>six deliberate steps</em>.</h2>
+        <h2>Creating an investment in <em>six deliberate&nbsp;steps</em>.</h2>
         <p class="lede">The hardest UX problem on the platform: guiding a user through setting up a fully automated DeFi investment without triggering analysis paralysis. Every step had to earn the next one.</p>
       </div>
     </div>
@@ -558,23 +568,23 @@
     <div class="narr reveal d1">
       <span class="lbl mono">The challenge</span>
       <div>
-        <p>Every configuration in the wizard carries real financial consequence — users are setting up a bot that will trade on their behalf, with real money, on a live blockchain. There's no "undo." <em>Clarity at each step was not a nice-to-have.</em></p>
-        <p>The design response: one decision per screen, progressive disclosure, and a persistent six-dot progress indicator that lets users see exactly where they are and how far is left. Risk selection uses plain English — Very Low to Very High — rather than numeric scores. Stop-loss is explained inline, not behind a tooltip. The Summary step lets users edit any previous choice without losing later ones.</p>
-        <div class="pull">Users aren't configuring software — <em>they're delegating financial decisions</em>. The wizard had to earn that delegation, step by step.</div>
+        <p>Every configuration in the wizard carries real financial consequence. Users are setting up a bot that will trade on their behalf, with real money, on a live blockchain. There's no "undo." <em>Clarity at each step was not a nice-to-have.</em></p>
+        <p>The design response: one decision per screen, progressive disclosure, and a persistent six-dot progress indicator that lets users see exactly where they are and how far is left. Risk selection uses plain English (Very Low to Very High) rather than numeric scores. Stop-loss is explained inline, not behind a tooltip. The Summary step lets users edit any previous choice without losing later ones.</p>
+        <div class="pull">Users aren't configuring software. <em>They're delegating financial decisions.</em> The wizard had to earn that delegation, step by step.</div>
       </div>
     </div>
 
     <div class="flow-grid reveal d2">
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-1.png" alt="Step 1 — Investment name" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-1.png" alt="Step 1 – Investment name" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 01</span></div>
           <span class="ws-name">Investment name</span>
-          <span class="ws-desc">Name it yourself — no default. Forces intentionality before any money moves.</span>
+          <span class="ws-desc">Name it yourself. No default. Forces intentionality before any money moves.</span>
         </div>
       </div>
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-2.png" alt="Step 2 — Investment amount" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-2.png" alt="Step 2 – Investment amount" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 02</span></div>
           <span class="ws-name">Investment amount</span>
@@ -582,7 +592,7 @@
         </div>
       </div>
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-3.png" alt="Step 3 — Risk level" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-3.png" alt="Step 3 – Risk level" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 03</span></div>
           <span class="ws-name">Risk level</span>
@@ -590,7 +600,7 @@
         </div>
       </div>
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-4.png" alt="Step 4 — Stop-loss & auto-compound" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-4.png" alt="Step 4 – Stop-loss & auto-compound" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 04</span></div>
           <span class="ws-name">Stop-loss &amp; auto-compound</span>
@@ -598,7 +608,7 @@
         </div>
       </div>
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-5.png" alt="Step 5 — Summary" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-5.png" alt="Step 5 – Summary" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 05</span></div>
           <span class="ws-name">Summary</span>
@@ -606,19 +616,19 @@
         </div>
       </div>
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-6.png" alt="Step 6 — Wallet approval" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-6.png" alt="Step 6 – Wallet approval" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 06</span></div>
           <span class="ws-name">Wallet approval</span>
-          <span class="ws-desc">One signature. What gets signed is shown plainly — no hidden payload.</span>
+          <span class="ws-desc">One signature. What gets signed is shown plainly. No hidden payload.</span>
         </div>
       </div>
       <div>
-        <div class="flow-fig"><img src="assets/ys-create-7.png" alt="Step 7 — Confirmation" /></div>
+        <div class="flow-fig"><img src="assets/ys-create-7.png" alt="Step 7 – Confirmation" /></div>
         <div class="flow-cap">
           <div class="flow-cap-top"><span class="ws-num">Step 07</span></div>
           <span class="ws-name">Confirmation</span>
-          <span class="ws-desc">Investment is live. The platform takes over — automated, on-chain, on schedule.</span>
+          <span class="ws-desc">Investment is live. The platform takes over: automated, on-chain, on schedule.</span>
         </div>
       </div>
     </div>
@@ -631,8 +641,8 @@
     <div class="sect-label reveal">
       <span class="num mono">05 / System</span>
       <div>
-        <h2>The bones — <em>tokens, type, grid</em>.</h2>
-        <p class="lede">Four primary colors. One typeface. An 8pt spacing scale. Everything on the platform — desktop and mobile, dark and light — derives from these three primitives.</p>
+        <h2>The bones: <em>tokens, type,&nbsp;grid</em>.</h2>
+        <p class="lede">Four primary colors. One typeface. An 8pt spacing scale. Everything on the platform, desktop and mobile, dark and light, derives from these three primitives.</p>
       </div>
     </div>
 
@@ -640,22 +650,16 @@
 
       <!-- Color tokens -->
       <div class="ds-card reveal">
-        <div class="ds-card-vis" style="flex-direction:column">
-          <div class="ds-color-strip">
-            <div class="ds-color-swatch" style="background:#8241dd"></div>
-            <div class="ds-color-swatch" style="background:#217ccf"></div>
-            <div class="ds-color-swatch" style="background:#222636"></div>
-            <div class="ds-color-swatch" style="background:#24c872"></div>
-            <div class="ds-color-swatch" style="background:#e55050"></div>
-          </div>
-          <div class="ds-color-chip">
-            <div class="ds-color-chip-dot" style="background:#8241dd"></div>
-            --brand · #8241DD
-          </div>
+        <div class="ds-card-vis" style="gap:8px;padding:16px">
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#8241dd"></div><span class="ds-pal-hex">#8241DD</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#217ccf"></div><span class="ds-pal-hex">#217CCF</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#222636"></div><span class="ds-pal-hex">#222636</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#24c872"></div><span class="ds-pal-hex">#24C872</span></div>
+          <div class="ds-pal-card"><div class="ds-pal-swatch" style="background:#e55050"></div><span class="ds-pal-hex">#E55050</span></div>
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">Color system</h4>
-          <p class="ds-card-desc">5 semantic tokens — brand, action, surface, success, error — consistent across dark and light.</p>
+          <p class="ds-card-desc">5 semantic tokens: brand, action, surface, success, error. Consistent across dark and light.</p>
         </div>
       </div>
 
@@ -694,19 +698,12 @@
 
       <!-- Components -->
       <div class="ds-card reveal">
-        <div class="ds-card-vis" style="flex-direction:column;gap:10px">
-          <div style="display:flex;align-items:center">
-            <div class="ds-comp-btn">Stake now</div>
-            <div class="ds-comp-badge">+5.2% APY</div>
-          </div>
-          <div class="ds-comp-input">
-            <span>Enter amount</span>
-            <span class="ds-comp-cursor"></span>
-          </div>
+        <div class="ds-card-vis" style="background:#F6F4FA">
+          <img src="assets/ys-components.png" alt="YieldShield components" style="height:100%;width:auto;display:block;object-fit:contain" />
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">Components</h4>
-          <p class="ds-card-desc">Buttons, inputs, badges, and cards — each built on the same token system.</p>
+          <p class="ds-card-desc">Buttons, inputs, badges, and cards, all built on the same token system.</p>
         </div>
       </div>
 
@@ -770,7 +767,7 @@
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">Dark &amp; light mode</h4>
-          <p class="ds-card-desc">Both shipped day one. Research showed 70% dark preference — dark set as default.</p>
+          <p class="ds-card-desc">Both shipped day one. Research showed 70% dark preference. Dark set as default.</p>
         </div>
       </div>
 
@@ -784,7 +781,7 @@
     <div class="sect-label reveal">
       <span class="num mono">06 / Reflection</span>
       <div>
-        <h2>What I built, and <em>what I'd do differently</em>.</h2>
+        <h2>What I built, and <em>what I'd do&nbsp;differently</em>.</h2>
         <p class="lede">Numbers are directional. The lessons are the part that actually travels to the next product.</p>
       </div>
     </div>
@@ -792,31 +789,31 @@
     <div class="narr reveal d1">
       <span class="lbl mono">After ship</span>
       <div>
-        <p>Designing a product where the core mechanic is automation meant constantly asking: <em>what does the user need to see, and what can we spare them from?</em> Gas Station was the clearest answer — a dedicated view for something every other platform buried in transaction failure messages.</p>
-        <p>The thing that worked: treating the wizard as a trust exercise, not a form. Every step that acknowledged uncertainty — the plain-English risk labels, the inline stop-loss explanation, the fully editable Summary step — reduced the drop-off that would have otherwise come from users who didn't understand what they were committing to.</p>
-        <p>If I were starting over, I'd push empty states and the gas low-balance warning earlier in the design cycle. A user who sees "low gas balance" for the first time has <em>already missed a transaction</em>. The design should prevent that moment, not just respond to it — and I got to that insight too late in the cycle to reshape the notification architecture around it.</p>
+        <p>Designing a product where the core mechanic is automation meant constantly asking: <em>what does the user need to see, and what can we spare them from?</em> Gas Station was the clearest answer: a dedicated view for something every other platform buried in transaction failure messages.</p>
+        <p>The thing that worked: treating the wizard as a trust exercise, not a form. Every step that acknowledged uncertainty (the plain-English risk labels, the inline stop-loss explanation, the fully editable Summary step) reduced the drop-off that would have otherwise come from users who didn't understand what they were committing to.</p>
+        <p>If I were starting over, I'd push empty states and the gas low-balance warning earlier in the design cycle. A user who sees "low gas balance" for the first time has <em>already missed a transaction</em>. The design should prevent that moment, not just respond to it. I got to that insight too late in the cycle to reshape the notification architecture around it.</p>
       </div>
     </div>
 
     <div class="outcome reveal d2">
       <div class="stat">
         <span class="mono">Chains unified</span>
-        <div class="v"><em>3</em></div>
+        <div class="v">3</div>
         <p>Binance, Polygon, Ethereum under one dashboard</p>
       </div>
       <div class="stat">
         <span class="mono">Pools indexed</span>
-        <div class="v"><em>200<span style="font-size:.55em;vertical-align:super">+</span></em></div>
+        <div class="v">200<em>+</em></div>
         <p>Filterable by protocol, APY, and risk at launch</p>
       </div>
       <div class="stat">
         <span class="mono">Wizard steps</span>
-        <div class="v"><em>6</em></div>
+        <div class="v">6</div>
         <p>From zero to a fully automated investment</p>
       </div>
       <div class="stat">
         <span class="mono">Timeline</span>
-        <div class="v"><em>6mo</em></div>
+        <div class="v">6<em>mo</em></div>
         <p>Zero-to-one: design, system, mobile, shipped</p>
       </div>
     </div>
@@ -827,16 +824,20 @@
 <footer>
   <div class="wrap">
     <div class="row">
-      <h5>Next case — <em>Centive</em>.</h5>
+      <div>
+        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Next case</div>
+        <h5>Centive: <em>DePIN</em> compute network,<br>node operator UX.</h5>
+        <a href="Centive.html" class="next-link">View Centive <span class="arr">↗</span></a>
+      </div>
       <div class="links">
-        <a href="index.html">Back to index</a>
-        <a href="Centive.html">Next →</a>
+        <a href="index.html#work">All work</a>
+        <a href="index.html#about">About</a>
         <a href="index.html#contact">Contact</a>
       </div>
     </div>
     <div class="meta">
-      <span class="mono">© 2026 Gilad Cohen — All work shown with permission of clients.</span>
-      <span class="mono">Case 02 / 04</span>
+      <span>© 2026 Gilad Cohen</span>
+      <span class="mono">Case 02 / 04 – YieldShield · 2023</span>
     </div>
   </div>
 </footer>
@@ -867,6 +868,6 @@
   })();
 </script>
 
-<script src="nav.js"></script>
+<script src="nav.js?v=2"></script>
 </body>
 </html>

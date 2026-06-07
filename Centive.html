@@ -73,7 +73,7 @@
   .cover-frame img{width:100%;height:auto;display:block}
   .cover-macbook{border:none;background:transparent;margin:0 -40px;width:calc(100% + 80px)}
   .cover-macbook img{width:100%;display:block}
-  @media(max-width:720px){.cover-macbook{margin:0 -16px;width:calc(100% + 32px)}}
+  @media(max-width:720px){.cover-macbook{margin:0 -56px;width:calc(100% + 112px)}}
 
   /* ── MacBook video screen ── */
   .cover-macbook-vid{position:relative;aspect-ratio:3/2;isolation:isolate}
@@ -154,7 +154,8 @@
   @media(max-width:720px){.more-grid{grid-template-columns:1fr}}
 
   /* ── Brand identity section ── */
-  .brand-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start;max-width:90%}
+  .brand-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start}
+  @media(min-width:901px){.brand-layout{grid-template-columns:1fr 0.8fr}}
   @media(max-width:900px){.brand-layout{grid-template-columns:1fr;gap:32px}}
   .brand-logo-panel{background:#0a0f0e;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:24px;border:1px solid rgba(0,171,129,0.15)}
   .brand-logo-dark{padding:40px 32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#060b0a}
@@ -162,7 +163,7 @@
   .brand-logo-dark img,.brand-logo-light img{height:40px;width:auto;display:block}
   .brand-logo-light img{filter:invert(1) brightness(0)}
   .brand-palette{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:48px}
-  @media(max-width:720px){.brand-palette{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:720px){.brand-palette{grid-template-columns:repeat(4,1fr);gap:6px}}
   .palette-item{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
   .palette-swatch{height:72px}
   .palette-meta{padding:14px 12px;background:var(--bg)}
@@ -274,6 +275,7 @@
   /* ── Outcome ── */
   .outcome{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
   @media(max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
+  @media(max-width:720px){footer{padding:56px 0 32px}footer .meta{flex-direction:column;gap:8px}}
   .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
   .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
   .outcome .stat .v em{font-style:normal;color:var(--accent)}
@@ -282,7 +284,7 @@
   /* ── Footer ── */
   footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
   footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
-  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:14ch}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:none}
   footer h5 em{font-style:normal;color:var(--accent)}
   footer .links{display:flex;gap:24px}
   footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
@@ -350,8 +352,8 @@
           <span class="pulse"></span>
           <span class="mono"><a href="index.html">Index</a> &nbsp;/&nbsp; Case 03 &nbsp;/&nbsp; Centive</span>
         </div>
-        <h1 class="reveal d1">Brand, website, and product for a <em>DePIN</em> network.</h1>
-        <p class="sub reveal d2">Centive is the monitoring and verification layer for distributed compute. I owned the full design scope — <em>brand identity</em>, marketing website, and the <em>operator dashboard</em> — all from zero.</p>
+        <h1 class="reveal d1">Brand, website, and product for a <em>DePIN</em>&nbsp;network.</h1>
+        <p class="sub reveal d2">Centive is the monitoring and verification layer for distributed compute. I owned the full design scope: <em>brand identity</em>, marketing website, and <em>operator dashboard</em>, all from zero.</p>
       </div>
 
       <div class="hero-visual reveal d2">
@@ -380,8 +382,11 @@
       <img src="assets/centive/MacBook-Pro-16.png?v=2" alt="Centive operator dashboard on MacBook Pro 16" class="macbook-overlay" />
     </div>
     <div class="cover-cap reveal d1">
-      <span class="mono">Fig. 01 — Network overview · Main dashboard</span>
+      <span class="mono">Fig. 01 – Network overview · Main dashboard</span>
       <span class="mono">MacBook Pro 16 · 2024</span>
+    </div>
+    <div class="reveal d2" style="margin-top:16px;display:flex;justify-content:flex-end">
+      <a href="https://centive.network/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg);border-bottom:1px solid var(--fg);padding-bottom:2px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='1'">Visit live site <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
     </div>
   </div>
 </section>
@@ -396,16 +401,16 @@
           <span class="num mono">01 / Context</span>
           <div>
             <h2>One project. Three <em>design disciplines</em>.</h2>
-            <p class="lede">Centive is a monitoring and verification layer for DePIN — Decentralized Physical Infrastructure Networks. The founding team came with a protocol and no visual presence. I built the brand, the marketing site, and the full product from the ground up.</p>
+            <p class="lede">Centive is a monitoring and verification layer for DePIN (Decentralized Physical Infrastructure Networks). The founding team came with a protocol and no visual presence. I built the brand, the marketing site, and the full product from the ground up.</p>
           </div>
         </div>
         <div class="narr reveal d1">
           <span class="lbl mono">The brief</span>
           <div>
-            <p>The founding team had the protocol architecture — staking, verifier consensus, slashing, payouts. What they didn't have was anything visual: <em>no brand, no website, no product screens, no information architecture.</em></p>
-            <p>I came in as the solo designer and owned all three layers. <em>Brand first</em> — logo, color, type, the visual language that would carry across every surface. Then the <em>marketing website</em> — landing page for validators, node operators, and investors. Then the <em>operator dashboard</em> — the real product, shipped in parallel with the engineering build.</p>
+            <p>The founding team had the protocol architecture: staking, verifier consensus, slashing, payouts. What they didn't have was anything visual: <em>no brand, no website, no product screens, no information architecture.</em></p>
+            <p>I came in as the solo designer and owned all three layers. <em>Brand first</em>: logo, color, type, the visual language that would carry across every surface. Then the <em>marketing website</em>, a landing page for validators, node operators, and investors. Then the <em>operator dashboard</em>: the real product, shipped in parallel with the engineering build.</p>
             <div class="pull">When everything starts from zero, <em>brand decisions are product decisions</em>.</div>
-            <p>The challenge was coherence across very different surfaces — a marketing page that has to convince, and a dense ops dashboard that has to perform. The design system was the thread that held them together.</p>
+            <p>The challenge was coherence across very different surfaces: a marketing page that has to convince, and a dense ops dashboard that has to perform. The design system was the thread that held them together.</p>
           </div>
         </div>
       </div>
@@ -425,14 +430,14 @@
     <div class="sect-label reveal">
       <span class="num mono">02 / Approach</span>
       <div>
-        <h2>Technical infrastructure, <em>human-readable</em> interface.</h2>
-        <p class="lede">The protocol had five distinct phases. Each one needed UX clarity — or the whole system would feel opaque to the people running it.</p>
+        <h2>Technical infrastructure, <em>human-readable</em>&nbsp;interface.</h2>
+        <p class="lede">The protocol had five distinct phases. Each one needed UX clarity, or the whole system would feel opaque to the people running it.</p>
       </div>
     </div>
     <div class="two-col reveal d1">
       <div class="col">
         <h3>The <em>tension</em></h3>
-        <p>Operators needed density — real-time metrics, test configs, incident history, consensus state. At the same time, the product had to work for first-time node operators who weren't crypto-native infrastructure engineers.</p>
+        <p>Operators needed density: real-time metrics, test configs, incident history, consensus state. At the same time, the product had to work for first-time node operators who weren't crypto-native infrastructure engineers.</p>
         <p>Too sparse and power users would hit dead ends. Too technical and onboarding would drop off before the first node came online.</p>
         <div class="tag-row">
           <span class="tag">Density vs. clarity</span>
@@ -443,7 +448,7 @@
       </div>
       <div class="col">
         <h3>The <em>approach</em></h3>
-        <p>Dark, data-dense UI that felt like a professional ops tool — not a crypto dashboard with gradient cards. Every metric earned its screen real estate. Incident flows designed as step-by-step state machines. Test creation as a guided form, not a config file.</p>
+        <p>Dark, data-dense UI that felt like a professional ops tool. Not a crypto dashboard with gradient cards. Every metric earned its screen real estate. Incident flows designed as step-by-step state machines. Test creation as a guided form, not a config file.</p>
         <p>The design system anchored everything: a single green for health and activity, red only for failures, mono type for all data values.</p>
         <div class="tag-row">
           <span class="tag">Ops-tool aesthetic</span>
@@ -463,7 +468,7 @@
       <span class="num mono">03 / How It Works</span>
       <div>
         <h2>Five phases. One <em>continuous loop</em>.</h2>
-        <p class="lede">Centive's protocol runs as an automated cycle — stake in, monitor continuously, vote in secret, penalize failures, distribute rewards. The dashboard gives operators visibility into every phase.</p>
+        <p class="lede">Centive's protocol runs as an automated cycle: stake in, monitor continuously, vote in secret, penalize failures, distribute rewards. The dashboard gives operators visibility into every phase.</p>
       </div>
     </div>
 
@@ -471,31 +476,31 @@
 
       <div class="hiw-step" data-step="01">
         <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
-        <span class="hiw-num">01 — Stake &amp; Join</span>
+        <span class="hiw-num">01 – Stake &amp; Join</span>
         <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-1"></div></div>
         <h3>Commit capital, join the network</h3>
-        <p>Node operators stake PRZ tokens to enter the network. The optimistic mechanism allows instant participation — penalties only apply if failures are detected.</p>
+        <p>Node operators stake PRZ tokens to enter the network. The optimistic mechanism allows instant participation. Penalties only apply if failures are detected.</p>
       </div>
 
       <div class="hiw-step" data-step="02">
         <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
-        <span class="hiw-num">02 — Monitor</span>
+        <span class="hiw-num">02 – Monitor</span>
         <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-2"></div></div>
         <h3>Continuous health testing</h3>
-        <p>APM agents and end-to-end tests continuously evaluate every node — uptime, latency, GPU utilization, job completion rate. All surfaced in real time.</p>
+        <p>APM agents and end-to-end tests continuously evaluate every node: uptime, latency, GPU utilization, job completion rate. All surfaced in real time.</p>
       </div>
 
       <div class="hiw-step" data-step="03">
         <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
-        <span class="hiw-num">03 — Secret Vote</span>
+        <span class="hiw-num">03 – Secret Vote</span>
         <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-3"></div></div>
         <h3>Secret consensus voting</h3>
-        <p>When a test fails, distributed verifiers cast hidden votes. The commit-reveal scheme prevents collusion — no verifier knows others' votes until all are revealed.</p>
+        <p>When a test fails, distributed verifiers cast hidden votes. The commit-reveal scheme prevents collusion. No verifier knows others' votes until all are revealed.</p>
       </div>
 
       <div class="hiw-step" data-step="04">
         <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
-        <span class="hiw-num">04 — Slash</span>
+        <span class="hiw-num">04 – Slash</span>
         <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-4"></div></div>
         <h3>Automated penalties</h3>
         <p>If consensus confirms a failure, the protocol slashes the offending node's staked PRZ automatically. On-chain, no human moderator, no appeal queue.</p>
@@ -503,10 +508,10 @@
 
       <div class="hiw-step" data-step="05">
         <div class="hiw-progress"><div class="hiw-progress-fill"></div></div>
-        <span class="hiw-num">05 — Payout</span>
+        <span class="hiw-num">05 – Payout</span>
         <div class="hiw-lottie-wrap"><div class="hiw-lottie" id="lottie-5"></div></div>
         <h3>Performance-based rewards</h3>
-        <p>Nodes that pass all tests receive their proportional rewards. Validators who voted correctly also earn — the incentive loop runs without any manual intervention.</p>
+        <p>Nodes that pass all tests receive their proportional rewards. Validators who voted correctly also earn. The incentive loop runs without any manual intervention.</p>
       </div>
 
     </div>
@@ -519,8 +524,8 @@
     <div class="sect-label reveal">
       <span class="num mono">04 / Surfaces</span>
       <div>
-        <h2>Six screens that carry the <em>whole system</em>.</h2>
-        <p class="lede">The product spans network monitoring, node health, incident management, and test infrastructure. Each screen designed to give operators exactly what they need — no more, no less.</p>
+        <h2>Six screens that carry the <em>whole&nbsp;system</em>.</h2>
+        <p class="lede">The product spans network monitoring, node health, incident management, and test infrastructure. Each screen designed to give operators exactly what they need, nothing more.</p>
       </div>
     </div>
   </div>
@@ -534,9 +539,9 @@
           <div class="screen-fig-cap"><span class="mono">/overview</span><span class="mono">Network-wide view</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">5.1 — Network Overview</span>
+          <span class="step-num">5.1 – Network Overview</span>
           <h3>The whole network, <em>one screen</em>.</h3>
-          <p>The network overview gives operators a bird's-eye view — active nodes, total compute, available capacity, and live test success rates. Designed as the first screen operators open at the start of a shift.</p>
+          <p>The network overview gives operators a bird's-eye view: active nodes, total compute, available capacity, and live test success rates. Designed as the first screen operators open at the start of a shift.</p>
           <p>The dual charts (Nodes and Compute) give a temporal view of capacity trends without requiring any filtering or configuration.</p>
           <div class="step-cap">
             <span class="mono">/overview</span>
@@ -551,10 +556,10 @@
           <div class="screen-fig-cap"><span class="mono">/overview/:id</span><span class="mono">Node health</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">5.2 — Node Overview</span>
+          <span class="step-num">5.2 – Node Overview</span>
           <h3>Everything about your node, <em>at a glance</em>.</h3>
-          <p>The node overview is the operator's home screen — uptime counter, availability %, response time, GPU metrics, job success rate, and a live events heatmap. All reading from the same data source, updating every minute.</p>
-          <p>The Network Rank widget surfaces where the node stands relative to the full network — a competitive signal without a separate leaderboard page.</p>
+          <p>The node overview is the operator's home screen: uptime counter, availability %, response time, GPU metrics, job success rate, and a live events heatmap. All reading from the same data source, updating every minute.</p>
+          <p>The Network Rank widget surfaces where the node stands relative to the full network, a competitive signal without a separate leaderboard page.</p>
           <div class="step-cap">
             <span class="mono">/overview/:id</span>
             <span class="mono">Node health · Live data · GPU metrics</span>
@@ -568,10 +573,10 @@
           <div class="screen-fig-cap"><span class="mono">/nodes</span><span class="mono">Node management</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">5.3 — Nodes Table</span>
+          <span class="step-num">5.3 – Nodes Table</span>
           <h3>568 nodes, <em>scannable in seconds</em>.</h3>
           <p>The nodes table surfaces every node in the network with GPU model, location, uptime, last checked, and reputation score in a single dense row. Sortable, filterable, and built to handle scale.</p>
-          <p>Top-row stats — Total Nodes, Active Nodes, Total Compute, Available — give operators a network pulse before they look at any individual row.</p>
+          <p>Top-row stats (Total Nodes, Active Nodes, Total Compute, Available) give operators a network pulse before they look at any individual row.</p>
           <div class="step-cap">
             <span class="mono">/nodes</span>
             <span class="mono">Fleet management · GPU · Reputation</span>
@@ -585,10 +590,10 @@
           <div class="screen-fig-cap"><span class="mono">/incidents</span><span class="mono">Incident management</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">5.4 — Incidents</span>
+          <span class="step-num">5.4 – Incidents</span>
           <h3>Every failure, <em>tracked and classified</em>.</h3>
-          <p>The incidents screen consolidates all network failures into a single view — severity, root cause, duration, status, and reporter in a scannable table. The top-row stats give network-wide context instantly.</p>
-          <p>The heatmap above the table maps incident frequency over time — letting operators spot recurring patterns before they become systemic issues.</p>
+          <p>The incidents screen consolidates all network failures into a single view: severity, root cause, duration, status, and reporter in a scannable table. The top-row stats give network-wide context instantly.</p>
+          <p>The heatmap above the table maps incident frequency over time, letting operators spot recurring patterns before they become systemic issues.</p>
           <div class="step-cap">
             <span class="mono">/incidents</span>
             <span class="mono">Network failures · Severity · History</span>
@@ -602,9 +607,9 @@
           <div class="screen-fig-cap"><span class="mono">/incidents/:id</span><span class="mono">Consensus detail</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">5.5 — Incident Detail</span>
+          <span class="step-num">5.5 – Incident Detail</span>
           <h3>The consensus flow, <em>made visible</em>.</h3>
-          <p>Each incident detail page maps the full lifecycle — detection, commit voting, reveal votes, consensus reached — as a step-by-step progress UI. Operators can see exactly where the protocol stands at any moment.</p>
+          <p>Each incident detail page maps the full lifecycle (detection, commit voting, reveal votes, consensus reached) as a step-by-step progress UI. Operators can see exactly where the protocol stands at any moment.</p>
           <p>The consensus outcome is shown upfront so operators understand the stakes before digging into the evidence. No burying the lede.</p>
           <div class="step-cap">
             <span class="mono">/incidents/:id</span>
@@ -619,9 +624,9 @@
           <div class="screen-fig-cap"><span class="mono">/tests/:id</span><span class="mono">Test detail</span></div>
         </div>
         <div class="step-text">
-          <span class="step-num">5.6 — Test Detail</span>
+          <span class="step-num">5.6 – Test Detail</span>
           <h3>Every test run, <em>fully auditable</em>.</h3>
-          <p>The test detail page gives operators full visibility into an individual health check — success rate, node online count, verifier nodes, pass/fail counts, and a live histogram of test runs over time.</p>
+          <p>The test detail page gives operators full visibility into an individual health check: success rate, node online count, verifier nodes, pass/fail counts, and a live histogram of test runs over time.</p>
           <p>Ongoing incidents and a node audit log sit below the fold, so operators can trace any anomaly from test result back to root cause in a single screen.</p>
           <div class="step-cap">
             <span class="mono">/tests/:id</span>
@@ -635,7 +640,7 @@
     <!-- RIGHT sticky visual -->
     <div class="scrolly-visual">
       <div class="screen-counter">
-        <span class="mono" style="color:var(--accent)">Centive</span>
+        <span class="mono" style="color:var(--fg)">Centive</span>
         <div class="counter-track"><div class="counter-fill" id="counterFill"></div></div>
         <span class="counter-num" id="counterNum">1 / 6</span>
       </div>
@@ -643,27 +648,27 @@
       <div class="screen-slides">
         <div class="screen-slide active" data-slide="0">
           <div class="screen-fig dark-fig"><img src="assets/centive/overview.png" alt="Centive network overview" loading="lazy" /></div>
-          <div class="screen-fig-cap"><span class="mono">/overview — Network-wide view</span><span class="mono">1440px</span></div>
+          <div class="screen-fig-cap"><span class="mono">/overview</span><span class="mono">Network-wide view</span></div>
         </div>
         <div class="screen-slide" data-slide="1">
           <div class="screen-fig dark-fig"><img src="assets/centive/node overview.png" alt="Centive node overview" loading="lazy" /></div>
-          <div class="screen-fig-cap"><span class="mono">/overview — Node ZnF1FZ</span><span class="mono">1440px</span></div>
+          <div class="screen-fig-cap"><span class="mono">/overview/:id</span><span class="mono">Node health</span></div>
         </div>
         <div class="screen-slide" data-slide="2">
           <div class="screen-fig dark-fig"><img src="assets/centive/nodes.png" alt="Centive nodes table" loading="lazy" /></div>
-          <div class="screen-fig-cap"><span class="mono">/nodes — 568 nodes across the network</span><span class="mono">1440px</span></div>
+          <div class="screen-fig-cap"><span class="mono">/nodes</span><span class="mono">Node management</span></div>
         </div>
         <div class="screen-slide" data-slide="3">
           <div class="screen-fig dark-fig"><img src="assets/centive/incidents.png" alt="Centive incidents" loading="lazy" /></div>
-          <div class="screen-fig-cap"><span class="mono">/incidents — 2,829 results</span><span class="mono">1440px</span></div>
+          <div class="screen-fig-cap"><span class="mono">/incidents</span><span class="mono">Incident management</span></div>
         </div>
         <div class="screen-slide" data-slide="4">
           <div class="screen-fig dark-fig"><img src="assets/centive/Incident Overview.png" alt="Centive incident detail" loading="lazy" /></div>
-          <div class="screen-fig-cap"><span class="mono">/incidents/:id — Consensus</span><span class="mono">1440px</span></div>
+          <div class="screen-fig-cap"><span class="mono">/incidents/:id</span><span class="mono">Consensus detail</span></div>
         </div>
         <div class="screen-slide" data-slide="5">
           <div class="screen-fig dark-fig"><img src="assets/centive/Test Page.png" alt="Centive test detail" loading="lazy" /></div>
-          <div class="screen-fig-cap"><span class="mono">/tests/:id — Test detail &amp; history</span><span class="mono">1440px</span></div>
+          <div class="screen-fig-cap"><span class="mono">/tests/:id</span><span class="mono">Test detail</span></div>
         </div>
       </div>
     </div>
@@ -676,8 +681,8 @@
     <div class="sect-label reveal">
       <span class="num mono">05 / Mobile</span>
       <div>
-        <h2>Responsive down to <em>every pixel</em>.</h2>
-        <p class="lede">The full product — website and dashboard — designed mobile-first. Same information density, adapted for touch.</p>
+        <h2>Responsive down to <em>every&nbsp;pixel</em>.</h2>
+        <p class="lede">The full product (website and dashboard) designed mobile-first. Same information density, adapted for touch.</p>
       </div>
     </div>
     <div class="mobile-grid reveal d1">
@@ -703,16 +708,16 @@
     <div class="sect-label reveal">
       <span class="num mono">06 / Brand</span>
       <div>
-        <h2>An identity built for <em>infrastructure</em>.</h2>
-        <p class="lede">Starting from zero — name, logo, color, type. The brief was precision without coldness: a network that's serious about performance but not intimidating to operators.</p>
+        <h2>An identity built for&nbsp;<em>infrastructure</em>.</h2>
+        <p class="lede">Starting from zero: name, logo, color, type. The brief was precision without coldness: a network that's serious about performance but not intimidating to operators.</p>
       </div>
     </div>
 
     <div class="brand-layout reveal d1">
       <div>
-        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The mark combines a stylized <em style="font-style:normal;color:var(--fg)">C</em> with a network node grid — the same dot pattern used across the product UI — creating visual continuity from logo to interface.</p>
-        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The green accent <em style="font-style:normal;color:#03FF77">#03FF77</em> was chosen to signal liveness and health — the same color used in the dashboard for online nodes and passing tests.</p>
-        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid)">Typography pairs <em style="font-style:normal;color:var(--fg)">Montserrat</em> (headings, Bold) with <em style="font-style:normal;color:var(--fg)">Lato</em> (body, Regular) — geometric confidence at the top, neutral legibility at any density level below.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The mark combines a stylized <em style="font-style:normal;color:var(--fg)">C</em> with a network node grid, the same dot pattern used across the product UI, creating visual continuity from logo to interface.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid);margin-bottom:16px">The green accent <em style="font-style:normal;color:#03FF77">#03FF77</em> was chosen to signal liveness and health, the same color used in the dashboard for online nodes and passing tests.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--fg-mid)">Typography pairs <em style="font-style:normal;color:var(--fg)">Montserrat</em> (headings, Bold) with <em style="font-style:normal;color:var(--fg)">Lato</em> (body, Regular). Geometric confidence at the top, neutral legibility at any density level below.</p>
       </div>
       <div>
         <div class="brand-logo-panel">
@@ -753,7 +758,7 @@
     <div class="sect-label reveal">
       <span class="num mono">07 / Outcomes</span>
       <div>
-        <h2>Brand, site, and product — <em>all live</em>.</h2>
+        <h2>Brand, site, and product. <em>All&nbsp;live.</em></h2>
         <p class="lede">Centive launched with a complete visual identity, a marketing website, and a fully functional operator dashboard. Three deliverables, one designer, shipped in parallel with the engineering team.</p>
       </div>
     </div>
@@ -761,17 +766,17 @@
       <div class="stat">
         <span class="mono">Deliverables</span>
         <div class="v">3</div>
-        <p>Brand identity, marketing site, and full operator dashboard — all from zero</p>
+        <p>Brand identity, marketing site, and full operator dashboard, all from zero</p>
       </div>
       <div class="stat">
         <span class="mono">Product screens</span>
         <div class="v">12<em>+</em></div>
-        <p>Node overview to staking — every surface of the operator journey</p>
+        <p>Node overview to staking, covering every surface of the operator journey</p>
       </div>
       <div class="stat">
         <span class="mono">Design system</span>
         <div class="v">1</div>
-        <p>Single system spanning brand, marketing, and product — keeps all three coherent</p>
+        <p>Single system spanning brand, marketing, and product, keeping all three coherent</p>
       </div>
       <div class="stat">
         <span class="mono">Solo designer</span>
@@ -787,8 +792,8 @@
   <div class="wrap">
     <div class="row">
       <div>
-        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Next project</div>
-        <h5>MinerFun — <em>Web3</em> gaming, zero to one.</h5>
+        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Next case</div>
+        <h5>MinerFun: <em>Web3</em> mining game,<br>zero to one.</h5>
         <a href="MinerFun.html" class="next-link">
           View MinerFun
           <span class="arr">↗</span>
@@ -802,7 +807,7 @@
     </div>
     <div class="meta">
       <span>© 2026 Gilad Cohen</span>
-      <span class="mono">Case 03 / 04 — Centive · 2024</span>
+      <span class="mono">Case 03 / 04 – Centive · 2024</span>
     </div>
   </div>
 </footer>
@@ -860,7 +865,7 @@
     });
   });
 </script>
-<script src="nav.js"></script>
+<script src="nav.js?v=2"></script>
 
 <script>
   // ── Reading progress bar ──
