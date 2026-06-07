@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>NFTrade — Case Study · Gilad Cohen</title>
-<meta name="description" content="Lead designer on NFTrade — a multi-chain NFT marketplace with 200k+ users. Full design system, marketplace UX, and product design from zero to one." />
+<title>NFTrade · Case Study · Gilad Cohen</title>
+<meta name="description" content="Lead designer on NFTrade · a multi-chain NFT marketplace with 200k+ users. Full design system, marketplace UX, and product design from zero to one." />
 <link rel="canonical" href="https://gilad.design/NFTrade" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://gilad.design/NFTrade" />
-<meta property="og:title" content="NFTrade — Case Study · Gilad Cohen" />
-<meta property="og:description" content="Lead designer on NFTrade — a multi-chain NFT marketplace with 200k+ users. Full design system, marketplace UX, and product design from zero to one." />
+<meta property="og:title" content="NFTrade · Case Study · Gilad Cohen" />
+<meta property="og:description" content="Lead designer on NFTrade · a multi-chain NFT marketplace with 200k+ users. Full design system, marketplace UX, and product design from zero to one." />
 <meta property="og:image" content="https://gilad.design/assets/tumbnails/NFTrade.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="NFTrade — Case Study · Gilad Cohen" />
-<meta name="twitter:description" content="Lead designer on NFTrade — a multi-chain NFT marketplace with 200k+ users. Full design system, marketplace UX, and product design from zero to one." />
+<meta name="twitter:title" content="NFTrade · Case Study · Gilad Cohen" />
+<meta name="twitter:description" content="Lead designer on NFTrade · a multi-chain NFT marketplace with 200k+ users. Full design system, marketplace UX, and product design from zero to one." />
 <meta name="twitter:image" content="https://gilad.design/assets/tumbnails/NFTrade.png" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -146,7 +146,7 @@
     align-items:start;
   }
 
-  /* Each step is tall enough to fill the viewport — creates scroll space */
+  /* Each step is tall enough to fill the viewport · creates scroll space */
   .scrolly-step{
     min-height:90vh;
     display:flex;
@@ -177,7 +177,7 @@
   }
   .step-cap .mono{color:var(--fg-dim)}
 
-  /* Sticky visual panel — stays fixed while steps scroll past */
+  /* Sticky visual panel · stays fixed while steps scroll past */
   .scrolly-visual{
     position:sticky;top:0;
     height:100vh;
@@ -205,7 +205,7 @@
     color:var(--fg-dim);white-space:nowrap;
   }
 
-  /* Slides stacked — crossfade via opacity, grid keeps natural aspect-ratio height */
+  /* Slides stacked · crossfade via opacity, grid keeps natural aspect-ratio height */
   .screen-slides{
     display:grid;
   }
@@ -546,7 +546,7 @@
 
   <div class="scrolly-wrap">
 
-    <!-- LEFT: text steps — each ~90vh tall, scroll normally -->
+    <!-- LEFT: text steps · each ~90vh tall, scroll normally -->
     <div class="scrolly-steps">
 
       <div class="scrolly-step" data-idx="0">
@@ -631,7 +631,7 @@
 
       <div class="scrolly-step" data-idx="5">
         <div class="step-mobile-fig">
-          <div class="screen-fig"><img src="assets/nftrade-advanced.png" alt="Advanced trading — order book" /></div>
+          <div class="screen-fig"><img src="assets/nftrade-advanced.png" alt="Advanced trading · order book" /></div>
           <div class="screen-fig-cap"><span class="mono">/collection/:id?mode=advanced</span><span class="mono">Limit · market · live tape</span></div>
         </div>
         <div class="step-text">
@@ -710,7 +710,7 @@
 
         <div class="screen-slide" data-idx="5">
           <div class="screen-fig">
-            <img src="assets/nftrade-advanced.png" alt="Advanced trading — order book" />
+            <img src="assets/nftrade-advanced.png" alt="Advanced trading · order book" />
           </div>
           <div class="screen-fig-cap"><span class="mono">/collection/:id?mode=advanced</span><span class="mono">Limit · market · live tape</span></div>
         </div>
@@ -749,7 +749,7 @@
 
     <div class="flow-modals-wrap reveal d2">
       <div class="flow-modals-track">
-        <img src="assets/nftrade-modals.png" alt="NFTrade modal system — various states" class="flow-modals-img" />
+        <img src="assets/nftrade-modals.png" alt="NFTrade modal system · various states" class="flow-modals-img" />
         <img src="assets/nftrade-modals.png" alt="" class="flow-modals-img" aria-hidden="true" />
       </div>
     </div>
@@ -879,7 +879,7 @@
           </div>
         </div>
       </div>
-      <p class="video-attr">Platform walkthrough — not produced by designer</p>
+      <p class="video-attr">Platform walkthrough · not produced by designer</p>
     </div>
   </div>
 </section>
@@ -943,10 +943,10 @@
   }, {threshold:0.1});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ── Scrollytelling screens — IntersectionObserver ──
+  // ── Scrollytelling screens · IntersectionObserver ──
   // Each .scrolly-step is ~90vh tall and scrolls normally.
   // When a step crosses the viewport center, its image slide crossfades in.
-  // No scroll math, no snapping — CSS position:sticky handles the image panel.
+  // No scroll math, no snapping · CSS position:sticky handles the image panel.
   (function(){
     const steps  = Array.from(document.querySelectorAll('.scrolly-step'));
     const slides = Array.from(document.querySelectorAll('.screen-slide'));
@@ -963,7 +963,7 @@
     }
 
     // rootMargin '-40% 0px -40% 0px' = 20% detection window at viewport center.
-    // Each step (~90vh) crosses this window one at a time — no overlap.
+    // Each step (~90vh) crosses this window one at a time · no overlap.
     const screenIO = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if(e.isIntersecting){
