@@ -293,11 +293,11 @@
   }
 
   /* ── Flows strip ── */
-  .flow-modals-wrap{margin-top:40px;overflow:hidden;mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%)}
-  .flow-modals-track{display:flex;width:max-content;animation:modals-scroll 38s linear infinite}
+  .flow-modals-wrap{margin-top:40px;overflow:hidden;mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);cursor:grab;user-select:none}
+  .flow-modals-wrap:active{cursor:grabbing}
+  .flow-modals-track{display:flex;width:max-content}
   .flow-modals-img{width:1400px;height:auto;display:block;flex-shrink:0}
   @media(max-width:720px){.flow-modals-img{width:820px}}
-  @keyframes modals-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
   /* ── Video ── */
   .video-outer{max-width:900px;margin:0 auto}
@@ -1019,6 +1019,78 @@
 
 </script>
 
+<script>
+(function(){
+  const wrap  = document.querySelector('.flow-modals-wrap');
+  const track = document.querySelector('.flow-modals-track');
+  if(!wrap || !track) return;
+
+  const AUTO = 0.7;
+  let pos = 0, speed = AUTO, idleTimer;
+  let drag = false, dragX = 0;
+  let touchX = 0, touchY = 0;
+
+  function loopW(){ return track.scrollWidth / 2 || 1; }
+  function norm(p){ const w=loopW(); while(p<=-w) p+=w; while(p>0) p-=w; return p; }
+
+  function tick(){
+    pos = norm(pos - speed);
+    track.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  function resetIdle(){
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(()=>{
+      const s0=speed, t0=performance.now();
+      (function ease(now){
+        const t=Math.min((now-t0)/700,1);
+        speed = s0+(AUTO-s0)*(1-Math.pow(1-t,2));
+        if(t<1) requestAnimationFrame(ease);
+      })(t0);
+    }, 900);
+  }
+
+  wrap.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const d = Math.abs(e.deltaX)>Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    pos = norm(pos - d*0.5);
+    speed = 0; resetIdle();
+  },{passive:false});
+
+  wrap.addEventListener('pointerdown', e=>{
+    drag=true; dragX=e.clientX; speed=0;
+    clearTimeout(idleTimer);
+    wrap.style.cursor='grabbing';
+    wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove', e=>{
+    if(!drag) return;
+    pos = norm(pos-(dragX-e.clientX));
+    dragX = e.clientX;
+  });
+  ['pointerup','pointercancel'].forEach(ev=>wrap.addEventListener(ev,()=>{
+    if(!drag) return;
+    drag=false; wrap.style.cursor='grab'; resetIdle();
+  }));
+
+  wrap.addEventListener('touchstart', e=>{
+    touchX=e.touches[0].clientX; touchY=e.touches[0].clientY;
+    speed=0; clearTimeout(idleTimer);
+  },{passive:true});
+  wrap.addEventListener('touchmove', e=>{
+    const dx=touchX-e.touches[0].clientX, dy=touchY-e.touches[0].clientY;
+    if(Math.abs(dx)>Math.abs(dy)) e.preventDefault();
+    pos=norm(pos-dx); touchX=e.touches[0].clientX;
+  },{passive:false});
+  wrap.addEventListener('touchend', resetIdle, {passive:true});
+
+  const img = track.querySelector('img');
+  if(img && img.complete) requestAnimationFrame(tick);
+  else if(img) img.addEventListener('load', ()=>requestAnimationFrame(tick));
+  else requestAnimationFrame(tick);
+})();
+</script>
 <script src="nav.js?v=2"></script>
 </body>
 </html>
