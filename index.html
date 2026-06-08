@@ -227,7 +227,18 @@
   .v-miner{background:radial-gradient(ellipse at 50% 50%, #ff6b3d 0%, #7a3300 50%, #3d1a00 100%)}
 
   @media (max-width:1100px){.flagship-row .preview{display:none}.flagship-row{grid-template-columns:50px 1fr 0.6fr 48px}.flagship-row .role,.flagship-row .tags{display:none}}
-  @media (max-width:720px){.flagship-row{grid-template-columns:1fr 40px;gap:12px}.flagship-row .num,.flagship-row .year{display:none}}
+  @media (max-width:720px){
+    .flagship-row{grid-template-columns:1fr 40px;gap:12px}.flagship-row .num,.flagship-row .year{display:none}
+    .flagship-row .preview{
+      display:block;
+      position:relative;top:auto;right:auto;transform:none;
+      width:100%;aspect-ratio:2880/2040;
+      opacity:1;pointer-events:none;
+      grid-column:1 / -1;
+      border-radius:8px;
+      box-shadow:none;
+    }
+  }
 
   /* ── More work · slim list ─────────────────────────────── */
   .more-work{margin-top:80px;padding-top:48px;border-top:1px solid var(--line)}
