@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://gilad.design/</loc><priority>1.0</priority></url>
-  <url><loc>https://gilad.design/NFTrade</loc><priority>0.8</priority></url>
-  <url><loc>https://gilad.design/YieldShield</loc><priority>0.8</priority></url>
-  <url><loc>https://gilad.design/Centive</loc><priority>0.8</priority></url>
-  <url><loc>https://gilad.design/MinerFun</loc><priority>0.8</priority></url>
+  <url><loc>https://gilad.design/</loc><lastmod>2026-06-08</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://gilad.design/NFTrade</loc><lastmod>2026-06-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gilad.design/YieldShield</loc><lastmod>2026-06-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gilad.design/Centive</loc><lastmod>2026-06-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gilad.design/MinerFun</loc><lastmod>2026-06-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
