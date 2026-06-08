@@ -66,8 +66,9 @@
   .hero h1 em{font-style:normal;color:var(--accent)}
   .hero .sub{margin-top:40px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--fg-mid)}
   .hero .sub em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
-  .hero-visual{display:flex;align-items:flex-end;margin-right:-40px;overflow:hidden}
+  .hero-visual{display:flex;align-items:flex-end;margin-right:-40px;overflow:hidden;opacity:0;transform:translateY(20px);animation:hero-fadein .9s cubic-bezier(.2,.8,.2,1) .25s forwards}
   .hero-visual img{width:100%;object-fit:contain;object-position:bottom right;display:block}
+  @keyframes hero-fadein{to{opacity:1;transform:none}}
   .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:0;padding:32px 0 64px;border-top:1px solid var(--line)}
   @media(max-width:960px){
     .hero-wrap{grid-template-columns:1fr;min-height:auto}
@@ -425,8 +426,8 @@
         <p class="sub reveal d2">Full <em>redesign</em> of NFTrade: the cross-chain marketplace for buying, selling, and swapping NFTs across seven networks. New brand language, new design system, new flows.</p>
       </div>
 
-      <div class="hero-visual reveal d2">
-        <img loading="lazy" src="assets/nftrade-hero.webp" alt="NFTrade mobile app screens" />
+      <div class="hero-visual">
+        <img fetchpriority="high" src="assets/nftrade-hero.webp" alt="NFTrade mobile app screens" />
       </div>
     </div>
 

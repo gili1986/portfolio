@@ -73,7 +73,9 @@
     align-self:stretch;
     width:80%;
     margin-left:auto;
+    opacity:0;transform:translateY(20px);animation:hero-fadein .9s cubic-bezier(.2,.8,.2,1) .25s forwards;
   }
+  @keyframes hero-fadein{to{opacity:1;transform:none}}
   .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
   .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 64px;border-top:1px solid var(--line)}
   @media(max-width:960px){
@@ -324,8 +326,8 @@
         <p class="sub reveal d2">Full zero-to-one design for <em>YieldShield</em>: an AI-powered DeFi dashboard that automates yield farming across Binance, Polygon, and Ethereum. Dashboard, data viz, mobile app, and a design system from scratch.</p>
       </div>
 
-      <div class="hero-visual reveal d2">
-        <img loading="lazy" src="assets/ys-mobile.webp" alt="YieldShield mobile app mockup" />
+      <div class="hero-visual">
+        <img fetchpriority="high" src="assets/ys-mobile.webp" alt="YieldShield mobile app mockup" />
       </div>
 
       <div class="meta-row reveal d3">
