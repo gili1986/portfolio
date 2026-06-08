@@ -89,8 +89,9 @@
   .screen-nav{position:absolute;top:0;left:0;width:100%;height:9.82%;object-fit:cover;object-position:left top;display:block;z-index:2;background:#fff}
   .screen-cards-col{position:absolute;top:0;right:32px;width:36%;height:100%;overflow:hidden;z-index:1}
   .screen-trending-img{position:absolute;bottom:0;left:0;width:100%;height:34.67%;object-fit:cover;object-position:left top;display:block;z-index:2}
-  .screen-cards-track{display:flex;flex-direction:column;animation:cards-scroll 16.8s linear infinite}
+  .screen-cards-track{display:flex;flex-direction:column;animation:cards-scroll 16.8s linear infinite;-webkit-animation:cards-scroll 16.8s linear infinite;will-change:transform;-webkit-transform:translateZ(0);transform:translateZ(0)}
   .screen-cards-track img{width:100%;height:auto;display:block;flex-shrink:0}
+  @-webkit-keyframes cards-scroll{from{-webkit-transform:translateY(0)}to{-webkit-transform:translateY(-50%)}}
   @keyframes cards-scroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
   .cover-cap{max-width:860px;margin:14px auto 0;display:flex;justify-content:space-between;color:var(--fg-dim)}
 
