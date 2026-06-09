@@ -367,7 +367,7 @@
       <div class="hero-visual reveal d2">
         <div style="width:110%;border-radius:8px;overflow:hidden;border:1px solid rgba(123,92,240,0.25);box-shadow:0 40px 80px -20px rgba(27,22,96,0.35);position:relative;background:#0d0b24">
           <img fetchpriority="high" src="assets/minerfun/bg.webp" alt="" style="width:100%;height:auto;display:block;opacity:0.9" />
-          <img src="assets/minerfun/minerfun-logo-animation.gif" alt="MinerFun logo animation" fetchpriority="high" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72%;height:auto;display:block;image-rendering:pixelated;" />
+          <div id="minerfunLottie" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72%;aspect-ratio:455/104;overflow:hidden;pointer-events:none;"></div>
         </div>
       </div>
     </div>
@@ -981,6 +981,28 @@
   if(img && img.complete) requestAnimationFrame(tick);
   else if(img) img.addEventListener('load', ()=>requestAnimationFrame(tick));
   else requestAnimationFrame(tick);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.0/lottie.min.js"></script>
+<script>
+(function(){
+  var el = document.getElementById('minerfunLottie');
+  if(!el) return;
+  var anim = lottie.loadAnimation({
+    container: el,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'assets/minerfun/logo-animation-v2.json'
+  });
+  anim.addEventListener('DOMLoaded', function(){
+    var svg = el.querySelector('svg');
+    if(!svg) return;
+    svg.querySelectorAll('path').forEach(function(p){
+      var fill = p.getAttribute('fill') || '';
+      if(fill === 'rgb(31,25,38)' || fill === '#1f1926') p.remove();
+    });
+  });
 })();
 </script>
 <script src="nav.js?v=2"></script>
