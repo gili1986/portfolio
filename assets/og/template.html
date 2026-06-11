@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background:#fafaf7;
+    font-family:'DM Sans',sans-serif;
+    color:#0a0a0b;
+    position:relative;
+  }
+  .dots{
+    position:absolute;inset:0;
+    background-image:radial-gradient(#0a0a0b14 1.5px,transparent 1.5px);
+    background-size:28px 28px;
+    -webkit-mask-image:radial-gradient(ellipse at 30% 40%, black 30%, transparent 75%);
+  }
+  .frame{
+    position:absolute;inset:0;
+    display:flex;align-items:center;
+    padding:72px;
+  }
+  .text{width:56%;position:relative;z-index:2}
+  .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:17px;text-transform:uppercase;letter-spacing:0.1em;
+    color:#7a7770;margin-bottom:36px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .label .pulse{width:10px;height:10px;border-radius:50%;background:#2d8e4a;display:inline-block}
+  h1{
+    font-family:'Bricolage Grotesque',sans-serif;
+    font-weight:400;font-size:96px;line-height:0.95;letter-spacing:-0.04em;
+    margin-bottom:32px;
+  }
+  h1 em{font-style:normal;color:#5b3df5}
+  .sub{
+    font-size:25px;line-height:1.5;color:#3a3a3c;max-width:30ch;
+  }
+  .site{
+    position:absolute;left:72px;bottom:56px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:17px;text-transform:uppercase;letter-spacing:0.1em;color:#0a0a0b;
+    border-bottom:2px solid #5b3df5;padding-bottom:6px;
+  }
+  .visual{
+    position:absolute;right:-140px;top:50%;transform:translateY(-50%) rotate(-3deg);
+    width:640px;border-radius:16px;overflow:hidden;
+    box-shadow:0 50px 100px -20px #0a0a0b50, 0 0 0 1px #0a0a0b14;
+    z-index:1;
+  }
+  .visual img{width:100%;display:block}
+  .visual.portrait{width:380px;right:-40px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="dots"></div>
+<div class="frame">
+  <div class="text">
+    <div class="label"><span class="pulse"></span><span id="label">Case study · Gilad Cohen</span></div>
+    <h1 id="title">Title</h1>
+    <p class="sub" id="sub">Sub</p>
+  </div>
+</div>
+<div class="visual" id="visual"><img id="img" src="" alt=""/></div>
+<div class="site">gilad.design</div>
+<script>
+  const p = new URLSearchParams(location.search);
+  document.getElementById('label').textContent = p.get('label') || 'Case study · Gilad Cohen';
+  document.getElementById('title').innerHTML = p.get('title') || 'Gilad <em>Cohen</em>';
+  document.getElementById('sub').textContent = p.get('sub') || '';
+  document.getElementById('img').src = p.get('img') || '';
+  if(p.get('portrait')) document.getElementById('visual').classList.add('portrait');
+</script>
+</body>
+</html>
