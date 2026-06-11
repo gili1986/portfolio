@@ -11,6 +11,11 @@
 
   const style = document.createElement('style');
   style.textContent = `
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent, #5b3df5);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
     nav.top .nav-cta {
       display: none;
       color: var(--fg-dim);
@@ -51,7 +56,8 @@
       <a href="/assets/CV/Gilad Cohen - Resume.pdf" download>Resume</a>
       <a href="${h}#contact">Contact</a>
     </div>
-    <a href="/assets/CV/Gilad Cohen - Resume.pdf" download class="nav-cta first">Resume</a>
+    <a href="${h}#work" class="nav-cta first">Work</a>
+    <a href="/assets/CV/Gilad Cohen - Resume.pdf" download class="nav-cta">Resume</a>
     <a href="${h}#contact" class="nav-cta">Contact</a>
     <div class="mono clock" id="clock">TLV 00:00</div>
   </div>
