@@ -33,7 +33,8 @@
     nav.top .nav-cta:hover::after { transform: scaleX(1); }
     @media (max-width: 720px) {
       nav.top .row { justify-content: flex-start; }
-      nav.top .nav-cta { display: inline-block; margin-left: auto; margin-right: 20px; }
+      nav.top .nav-cta { display: inline-block; margin-right: 16px; }
+      nav.top .nav-cta.first { margin-left: auto; }
     }
   `;
   document.head.appendChild(style);
@@ -47,8 +48,10 @@
     <div class="links">
       <a href="${h}#work">Work</a>
       <a href="${h}#about">About</a>
+      <a href="/assets/CV/Gilad Cohen - Resume.pdf" download>Resume</a>
       <a href="${h}#contact">Contact</a>
     </div>
+    <a href="/assets/CV/Gilad Cohen - Resume.pdf" download class="nav-cta first">Resume</a>
     <a href="${h}#contact" class="nav-cta">Contact</a>
     <div class="mono clock" id="clock">TLV 00:00</div>
   </div>
