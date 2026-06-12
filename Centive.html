@@ -92,7 +92,7 @@
   .cover-frame img{width:100%;height:auto;display:block}
   .cover-macbook{border:none;background:transparent;margin:0 -40px;width:calc(100% + 80px)}
   .cover-macbook img{width:100%;display:block}
-  @media(max-width:720px){.cover-macbook{margin:0 -56px;width:calc(100% + 112px)}}
+  @media(max-width:720px){.cover-macbook{margin:-24px -56px 0;width:calc(100% + 112px)}}
 
   /* ── MacBook video screen ── */
   .cover-macbook-vid{position:relative;aspect-ratio:3/2;isolation:isolate}
@@ -322,12 +322,15 @@
   .reveal.d3{transition-delay:.3s}
 
   @media(max-width:720px){
-    section{padding:72px 0}
-    .hero-text{padding:120px 0 40px}
-    .hero-visual{display:flex;padding-top:0;padding-bottom:40px;justify-content:center}
+    section{padding:56px 0}
+    .hero-text{padding:104px 0 32px}
+    .hero .crumb{margin-bottom:40px}
+    .hero-visual{display:flex;padding-top:0;padding-bottom:32px;justify-content:center}
     .hero-visual>img{width:100%;border-radius:12px}
-    .hiw{padding:72px 0}
+    .hiw{padding:56px 0}
     .narr .lbl{position:static}
+    .meta-row{padding:24px 0 40px}
+    .sect-label{margin-bottom:40px}
   }
   @media(max-width:600px){
     .hiw-step{border-right:none}
