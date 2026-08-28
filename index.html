@@ -227,6 +227,10 @@
 
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
   .reveal.in{opacity:1;transform:none}
+  /* .flagships holds the cursor-anchored preview (position:fixed). A transform
+     here would make it the preview's containing block, so this one reveals on
+     opacity alone. Don't give it a transform. */
+  .flagships.reveal{transform:none}
   .reveal.delay-1{transition-delay:.1s}
   .reveal.delay-2{transition-delay:.2s}
   .reveal.delay-3{transition-delay:.3s}
@@ -280,13 +284,15 @@
     width:340px;aspect-ratio:2880/2040;
     border-radius:10px;overflow:hidden;
     opacity:0;pointer-events:none;
-    transition:opacity .3s, transform .45s cubic-bezier(.2,.8,.2,1);
+    transition:opacity .16s ease, transform .28s cubic-bezier(.2,.8,.2,1);
     box-shadow:0 30px 60px -10px #0a0a0b40;
     z-index:40;
     border:1px solid var(--line-strong);
     will-change:translate,transform;
   }
-  .flagship-row:hover .preview{opacity:1;transform:scale(1)}
+  /* Slow, eased on the way in; quick on the way out, so moving between rows
+     doesn't leave the previous card ghosting at its old position. */
+  .flagship-row:hover .preview{opacity:1;transform:scale(1);transition:opacity .3s, transform .45s cubic-bezier(.2,.8,.2,1)}
   .flagship-row .preview .placeholder-mark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:96px;font-weight:300;color:#ffffff24;letter-spacing:-0.04em}
   .flagship-row .preview .top-bar{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:#ffffffcc}
   .flagship-row .preview .bot-bar{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:#ffffff80}
@@ -904,12 +910,14 @@
 </script>
 
 <script>
-  /* ── Flagship hover preview · follows the cursor, bottom-right ──────
-     The card is position:fixed, but an ancestor with a transform becomes
-     its containing block (.flagships animates transform on reveal). So we
-     never assume translate(0,0) means the viewport origin: every frame we
-     read where the card actually is and steer from there, in viewport
-     coordinates. Correct while the reveal is mid-flight, and after. */
+  /* ── Flagship hover preview · follows the cursor ────────────────────
+     The card sits at the cursor's bottom-right and grows out of the
+     corner nearest the cursor. Near a viewport edge it flips to the
+     other side, and the scale origin flips with it, so the open always
+     reads as coming from the pointer.
+     Position rides on `translate`, kept clear of the `transform` used
+     for the scale. This assumes no ancestor creates a containing block
+     for the fixed card (see .flagships.reveal in the CSS). */
   (function(){
     const rows = document.querySelectorAll('.flagship-row');
     if(!rows.length) return;
@@ -919,38 +927,38 @@
 
     const OFF_X = 10, OFF_Y = 8, EDGE = 16;
     let card = null,
-        vX = 0, vY = 0,   // where we want the card's top-left, in viewport coords
-        tX = 0, tY = 0,   // the translate currently written to the card
+        vX = 0, vY = 0,   // where the card is headed
+        cX = 0, cY = 0,   // where it is now
         raf = null;
 
     function aim(e){
       const w = card.offsetWidth, h = card.offsetHeight;
-      vX = Math.max(EDGE, Math.min(e.clientX + OFF_X, innerWidth  - w - EDGE));
-      vY = Math.max(EDGE, Math.min(e.clientY + OFF_Y, innerHeight - h - EDGE));
+
+      // Which side of the cursor still has room for the card?
+      const right = e.clientX + OFF_X + w <= innerWidth  - EDGE;
+      const below = e.clientY + OFF_Y + h <= innerHeight - EDGE;
+
+      vX = right ? e.clientX + OFF_X : e.clientX - OFF_X - w;
+      vY = below ? e.clientY + OFF_Y : e.clientY - OFF_Y - h;
+
+      // Tight corners: stay on screen even if neither side fully fits.
+      vX = Math.max(EDGE, Math.min(vX, innerWidth  - w - EDGE));
+      vY = Math.max(EDGE, Math.min(vY, innerHeight - h - EDGE));
+
+      // Grow from the corner that touches the cursor.
+      card.style.transformOrigin = (right ? '0' : '100%') + ' ' + (below ? '0' : '100%');
     }
 
-    function write(x, y){
-      tX = x; tY = y;
-      card.style.setProperty('--px', x.toFixed(1) + 'px');
-      card.style.setProperty('--py', y.toFixed(1) + 'px');
-    }
-
-    /* Current viewport position of the card's top-left. transform-origin is
-       0 0, so the enter/exit scale doesn't move this point. */
-    function here(){
-      const r = card.getBoundingClientRect();
-      return { x: r.left, y: r.top };
-    }
-
-    function snap(){
-      const at = here();
-      write(tX + (vX - at.x), tY + (vY - at.y));
+    function write(){
+      card.style.setProperty('--px', cX.toFixed(1) + 'px');
+      card.style.setProperty('--py', cY.toFixed(1) + 'px');
     }
 
     function loop(){
       if(!card){ raf = null; return; }
-      const at = here();
-      write(tX + (vX - at.x) * 0.16, tY + (vY - at.y) * 0.16);
+      cX += (vX - cX) * 0.16;
+      cY += (vY - cY) * 0.16;
+      write();
       raf = requestAnimationFrame(loop);
     }
 
@@ -962,14 +970,15 @@
         if(!canFollow() || e.pointerType !== 'mouse') return;
         card = preview;
         aim(e);
-        snap();            // land on the cursor, no flight in from the last row
+        cX = vX; cY = vY;   // open on the cursor, no flight in from the last row
+        write();
         if(soft && !raf) raf = requestAnimationFrame(loop);
       });
 
       row.addEventListener('pointermove', e => {
         if(card !== preview) return;
         aim(e);
-        if(!soft) snap();
+        if(!soft){ cX = vX; cY = vY; write(); }
       });
 
       row.addEventListener('pointerleave', () => {
