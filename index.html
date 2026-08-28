@@ -904,7 +904,12 @@
 </script>
 
 <script>
-  /* ── Flagship hover preview · follows the cursor, bottom-right ────── */
+  /* ── Flagship hover preview · follows the cursor, bottom-right ──────
+     The card is position:fixed, but an ancestor with a transform becomes
+     its containing block (.flagships animates transform on reveal). So we
+     never assume translate(0,0) means the viewport origin: every frame we
+     read where the card actually is and steer from there, in viewport
+     coordinates. Correct while the reveal is mid-flight, and after. */
   (function(){
     const rows = document.querySelectorAll('.flagship-row');
     if(!rows.length) return;
@@ -913,24 +918,39 @@
     const soft = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const OFF_X = 10, OFF_Y = 8, EDGE = 16;
-    let card = null, tX = 0, tY = 0, cX = 0, cY = 0, raf = null;
+    let card = null,
+        vX = 0, vY = 0,   // where we want the card's top-left, in viewport coords
+        tX = 0, tY = 0,   // the translate currently written to the card
+        raf = null;
 
-    function target(e){
+    function aim(e){
       const w = card.offsetWidth, h = card.offsetHeight;
-      tX = Math.max(EDGE, Math.min(e.clientX + OFF_X, innerWidth  - w - EDGE));
-      tY = Math.max(EDGE, Math.min(e.clientY + OFF_Y, innerHeight - h - EDGE));
+      vX = Math.max(EDGE, Math.min(e.clientX + OFF_X, innerWidth  - w - EDGE));
+      vY = Math.max(EDGE, Math.min(e.clientY + OFF_Y, innerHeight - h - EDGE));
     }
 
-    function paint(){
-      card.style.setProperty('--px', cX.toFixed(1) + 'px');
-      card.style.setProperty('--py', cY.toFixed(1) + 'px');
+    function write(x, y){
+      tX = x; tY = y;
+      card.style.setProperty('--px', x.toFixed(1) + 'px');
+      card.style.setProperty('--py', y.toFixed(1) + 'px');
+    }
+
+    /* Current viewport position of the card's top-left. transform-origin is
+       0 0, so the enter/exit scale doesn't move this point. */
+    function here(){
+      const r = card.getBoundingClientRect();
+      return { x: r.left, y: r.top };
+    }
+
+    function snap(){
+      const at = here();
+      write(tX + (vX - at.x), tY + (vY - at.y));
     }
 
     function loop(){
-      if(!card) return;
-      cX += (tX - cX) * 0.16;
-      cY += (tY - cY) * 0.16;
-      paint();
+      if(!card){ raf = null; return; }
+      const at = here();
+      write(tX + (vX - at.x) * 0.16, tY + (vY - at.y) * 0.16);
       raf = requestAnimationFrame(loop);
     }
 
@@ -941,16 +961,15 @@
       row.addEventListener('pointerenter', e => {
         if(!canFollow() || e.pointerType !== 'mouse') return;
         card = preview;
-        target(e);
-        cX = tX; cY = tY;   // snap on entry, no flight in from the last row
-        paint();
+        aim(e);
+        snap();            // land on the cursor, no flight in from the last row
         if(soft && !raf) raf = requestAnimationFrame(loop);
       });
 
       row.addEventListener('pointermove', e => {
         if(card !== preview) return;
-        target(e);
-        if(!soft){ cX = tX; cY = tY; paint(); }
+        aim(e);
+        if(!soft) snap();
       });
 
       row.addEventListener('pointerleave', () => {
