@@ -98,6 +98,7 @@
     --accent:#5b3df5;    /* deep indigo for ink */
     --warm:#d24a1a;      /* warm signal */
     --good:#2d8e4a;
+    --contact-scale:0.7;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -269,17 +270,23 @@
   .flagship-row:hover .arrow{background:var(--fg);color:var(--bg);border-color:var(--fg);transform:rotate(-45deg) scale(1.1)}
   .flagship-row .arrow svg{width:16px;height:16px}
 
+  /* Desktop: preview is pinned to the cursor, sitting to its bottom-right.
+     Position rides on `translate` (JS, per-frame) so it stays independent of
+     the `transform` used for the enter/exit scale. */
   .flagship-row .preview{
-    position:absolute;right:96px;top:50%;transform:translateY(-50%) scale(0.92);
+    position:fixed;left:0;top:0;
+    translate:var(--px,0) var(--py,0);
+    transform:scale(0.9);transform-origin:0 0;
     width:340px;aspect-ratio:2880/2040;
     border-radius:10px;overflow:hidden;
     opacity:0;pointer-events:none;
-    transition:opacity .35s, transform .45s cubic-bezier(.2,.8,.2,1);
+    transition:opacity .3s, transform .45s cubic-bezier(.2,.8,.2,1);
     box-shadow:0 30px 60px -10px #0a0a0b40;
-    z-index:5;
+    z-index:40;
     border:1px solid var(--line-strong);
+    will-change:translate,transform;
   }
-  .flagship-row:hover .preview{opacity:1;transform:translateY(-50%) scale(1)}
+  .flagship-row:hover .preview{opacity:1;transform:scale(1)}
   .flagship-row .preview .placeholder-mark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:96px;font-weight:300;color:#ffffff24;letter-spacing:-0.04em}
   .flagship-row .preview .top-bar{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:#ffffffcc}
   .flagship-row .preview .bot-bar{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:#ffffff80}
@@ -293,7 +300,8 @@
     .flagship-row{grid-template-columns:1fr 40px;gap:12px}.flagship-row .num,.flagship-row .year{display:none}
     .flagship-row .preview{
       display:block;
-      position:relative;top:auto;right:auto;transform:none;
+      position:relative;top:auto;left:auto;right:auto;
+      translate:none;transform:none;
       width:100%;aspect-ratio:2880/2040;
       opacity:1;pointer-events:none;
       grid-column:1 / -1;
@@ -653,7 +661,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="label mono"><span class="pulse" style="background-color: rgb(0, 171, 129); font-size: 11px; height: 8px; width: 8px"></span> <span style="color:var(--good)">Available</span> for Senior roles · Q3 2026</div>
+    <div class="label mono"><span class="pulse" style="background-color: rgb(0, 171, 129); font-size: 11px; height: 8px; width: 8px"></span> <span style="color:var(--good)">Available</span> for Senior roles · Q4 2026</div>
 
     <h1 id="hero-headline">
       <span class="word w1"><span>Hi,</span></span> <span class="word w2"><span>I'm</span></span> <span class="word w3"><span><em>Gilad</em></span></span> <span class="word w4"><span><em>Cohen</em></span></span><br/>
@@ -686,24 +694,6 @@
     <div class="sect-label reveal">
       <div class="num mono">Selected work</div>
       <div>
-        <!-- Copy options · swap the active <h2>+<p> for any of these:
-
-        A. Restrained / dated
-          <h2>Selected work, <em>2012-2025</em>.</h2>
-          <p class="lede">A focused set of projects across FinTech, Web3, and Gaming. Each opens into a full case study: context, decisions, screens, and outcomes.</p>
-
-        B. Confident / plainspoken
-          <h2>Four projects worth <em>talking about</em>.</h2>
-          <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study: the brief, the calls I made, and what shipped.</p>
-
-        C. Editorial
-          <h2>A decade of products, <em>distilled</em>.</h2>
-          <p class="lede">Six years of product work across three industries, narrowed to four. Each case study covers the problem, the decisions, and the measurable outcome.</p>
-
-        D. Direct / minimal
-          <h2>Selected work.</h2>
-          <p class="lede">Four flagship projects across FinTech, Web3, and Gaming, each with the full story behind it.</p>
-        -->
         <h2>Four projects worth <br/><em>talking about</em>.</h2>
         <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study: the brief, the calls I made, and what shipped.</p>
       </div>
@@ -881,115 +871,6 @@
   </div>
 </footer>
 
-<!-- ── Tweaks: Headline variations ────────────────────── -->
-<div id="tweaks-panel" style="display:none;position:fixed;right:16px;bottom:16px;z-index:9999;width:320px;background:#fff;border:1px solid #0a0a0b24;border-radius:12px;box-shadow:0 20px 50px -10px #0a0a0b30;font-family:'DM Sans',sans-serif;overflow:hidden">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #0a0a0b14;background:#fafaf7">
-    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#0a0a0b">Tweaks</span>
-    <button id="tweaks-close" style="background:none;border:none;cursor:pointer;font-size:18px;color:#7a7770;padding:0;line-height:1">×</button>
-  </div>
-  <div style="padding:16px">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:#7a7770;margin-bottom:10px">Headline variation</div>
-    <div id="tweaks-headline-options" style="display:flex;flex-direction:column;gap:8px"></div>
-
-    <div style="margin-top:22px;padding-top:18px;border-top:1px solid #0a0a0b14">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:#7a7770">Contact headline size</span>
-        <span id="tweak-contact-val" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#0a0a0b">100%</span>
-      </div>
-      <input id="tweak-contact-scale" type="range" min="40" max="120" step="5" value="100" style="width:100%;accent-color:#0a0a0b;cursor:pointer" />
-    </div>
-
-    <div style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#7a7770;line-height:1.5">Switch between framing approaches · from personal intro to manifesto.</div>
-  </div>
-</div>
-
-<script>
-  // ── Headline variations ──
-  const HEADLINE_VARIANTS = {
-    'v1-hi': {
-      label: '01 · Hi, I\'m Gilad (recommended)',
-      h1: '<span class="word w1"><span>Hi,</span></span> <span class="word w2"><span>I\'m</span></span> <span class="word w3"><span><em>Gilad</em>.</span></span>',
-      sub: 'I take ideas and turn them into things that <em>live</em> · products that work, feel right, and are easy on the eyes. Product designer with 6+ years in UI/UX and 12 in design, across <em>FinTech</em>, <em>Web3</em>, and gaming.'
-    },
-    'v2-stacked': {
-      label: '02 · Stacked, lowercase',
-      h1: '<span class="word w1"><span>hi.</span></span><br/><span class="word w2"><span>i\'m</span></span><br/><span class="word w3"><span><em>gilad</em>.</span></span>',
-      sub: 'A product designer who likes taking a raw idea and turning it into something <em>alive</em> · usable, beautiful, real. 6+ years in UI/UX, 12 in design, across <em>FinTech</em>, <em>Web3</em>, and gaming.'
-    },
-    'v3-role': {
-      label: '03 · Hi + role',
-      h1: '<span class="word w1"><span>Hi,</span></span> <span class="word w2"><span>I\'m</span></span> <span class="word w3"><span><em>Gilad</em></span></span> <span class="word w4"><span><em>Cohen</em></span></span><br/><span class="word w5"><span>a</span></span> <span class="word w6"><span>product</span></span> <span class="word w7"><span>designer.</span></span>',
-      sub: 'I turn ideas into products that are <em>alive</em>, usable, and easy on the eyes.<br/>12 years in design, 6+ of them in <em>UI/UX</em>, across <em>FinTech</em>, <em>Web3</em>, and gaming. <em>AI</em> in the workflow at every step.'
-    },
-    'v4-manifesto': {
-      label: '04 · Original manifesto',
-      h1: '<span class="word w1"><span>Designing</span></span> <span class="word w2"><span>products</span></span><br/><span class="word w3"><span>that</span></span> <span class="word w4"><span><em>ship</em>,</span></span> <span class="word w5"><span>not</span></span><br/><span class="word w6"><span>products</span></span> <span class="word w7"><span>that</span></span> <span class="word w8"><span><em>impress</em>.</span></span>',
-      sub: 'I\'m <em>Gilad Cohen</em>, a product designer with 12 years in design and 6+ building zero-to-one products in FinTech, Web3, and gaming. I lead with clarity, ship faster than most teams expect, and treat motion and craft as part of the product, not decoration.'
-    }
-  };
-
-  const headlineEl = document.getElementById('hero-headline');
-  const subEl = document.getElementById('hero-sub');
-  const optionsEl = document.getElementById('tweaks-headline-options');
-
-  let currentVariant = 'v1-intro';
-
-  function applyVariant(key){
-    const v = HEADLINE_VARIANTS[key];
-    if(!v) return;
-    currentVariant = key;
-    headlineEl.innerHTML = v.h1;
-    subEl.innerHTML = v.sub;
-    // restart entry animations
-    headlineEl.querySelectorAll('.word span').forEach(s => {
-      s.style.animation = 'none';
-      void s.offsetWidth;
-      s.style.animation = '';
-    });
-    document.querySelectorAll('#tweaks-headline-options .opt').forEach(b => {
-      b.style.background = b.dataset.key === key ? '#0a0a0b' : '#fff';
-      b.style.color = b.dataset.key === key ? '#fafaf7' : '#0a0a0b';
-      b.style.borderColor = b.dataset.key === key ? '#0a0a0b' : '#0a0a0b24';
-    });
-  }
-
-  Object.entries(HEADLINE_VARIANTS).forEach(([key, v]) => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.dataset.key = key;
-    btn.textContent = v.label;
-    btn.style.cssText = 'text-align:left;padding:10px 12px;border:1px solid #0a0a0b24;border-radius:8px;background:#fff;color:#0a0a0b;font-family:DM Sans,sans-serif;font-size:13px;cursor:pointer;transition:background .2s,color .2s,border-color .2s';
-    btn.addEventListener('click', () => applyVariant(key));
-    optionsEl.appendChild(btn);
-  });
-  applyVariant('v3-role');
-
-  // ── Contact headline size ──
-  const contactSlider = document.getElementById('tweak-contact-scale');
-  const contactVal = document.getElementById('tweak-contact-val');
-  function applyContactScale(pct){
-    const scale = pct / 100;
-    document.documentElement.style.setProperty('--contact-scale', scale);
-    contactVal.textContent = pct + '%';
-  }
-  contactSlider.addEventListener('input', e => applyContactScale(+e.target.value));
-  applyContactScale(70);
-  contactSlider.value = 70;
-
-  // ── Edit-mode protocol ──
-  const tweaksPanel = document.getElementById('tweaks-panel');
-  window.addEventListener('message', (e) => {
-    if(!e.data || typeof e.data !== 'object') return;
-    if(e.data.type === '__activate_edit_mode') tweaksPanel.style.display = 'block';
-    if(e.data.type === '__deactivate_edit_mode') tweaksPanel.style.display = 'none';
-  });
-  document.getElementById('tweaks-close').addEventListener('click', () => {
-    tweaksPanel.style.display = 'none';
-    try { window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); } catch(_) {}
-  });
-  try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(_) {}
-</script>
-
 <script>
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -1022,6 +903,64 @@
   }
 </script>
 
+<script>
+  /* ── Flagship hover preview · follows the cursor, bottom-right ────── */
+  (function(){
+    const rows = document.querySelectorAll('.flagship-row');
+    if(!rows.length) return;
+
+    const canFollow = () => matchMedia('(min-width:1101px) and (hover:hover)').matches;
+    const soft = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const OFF_X = 10, OFF_Y = 8, EDGE = 16;
+    let card = null, tX = 0, tY = 0, cX = 0, cY = 0, raf = null;
+
+    function target(e){
+      const w = card.offsetWidth, h = card.offsetHeight;
+      tX = Math.max(EDGE, Math.min(e.clientX + OFF_X, innerWidth  - w - EDGE));
+      tY = Math.max(EDGE, Math.min(e.clientY + OFF_Y, innerHeight - h - EDGE));
+    }
+
+    function paint(){
+      card.style.setProperty('--px', cX.toFixed(1) + 'px');
+      card.style.setProperty('--py', cY.toFixed(1) + 'px');
+    }
+
+    function loop(){
+      if(!card) return;
+      cX += (tX - cX) * 0.16;
+      cY += (tY - cY) * 0.16;
+      paint();
+      raf = requestAnimationFrame(loop);
+    }
+
+    rows.forEach(row => {
+      const preview = row.querySelector('.preview');
+      if(!preview) return;
+
+      row.addEventListener('pointerenter', e => {
+        if(!canFollow() || e.pointerType !== 'mouse') return;
+        card = preview;
+        target(e);
+        cX = tX; cY = tY;   // snap on entry, no flight in from the last row
+        paint();
+        if(soft && !raf) raf = requestAnimationFrame(loop);
+      });
+
+      row.addEventListener('pointermove', e => {
+        if(card !== preview) return;
+        target(e);
+        if(!soft){ cX = tX; cY = tY; paint(); }
+      });
+
+      row.addEventListener('pointerleave', () => {
+        if(card !== preview) return;
+        card = null;
+        if(raf){ cancelAnimationFrame(raf); raf = null; }
+      });
+    });
+  })();
+</script>
 <script src="nav.js?v=4"></script>
 <script>
   (function(){
