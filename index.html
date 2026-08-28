@@ -911,10 +911,9 @@
 
 <script>
   /* ── Flagship hover preview · follows the cursor ────────────────────
-     The card sits at the cursor's bottom-right and grows out of the
-     corner nearest the cursor. Near a viewport edge it flips to the
-     other side, and the scale origin flips with it, so the open always
-     reads as coming from the pointer.
+     The card sits at the cursor's bottom-right and always grows out of
+     its top-left corner (transform-origin 0 0 in the CSS), so every row
+     opens the same way.
      Position rides on `translate`, kept clear of the `transform` used
      for the scale. This assumes no ancestor creates a containing block
      for the fixed card (see .flagships.reveal in the CSS). */
@@ -933,20 +932,11 @@
 
     function aim(e){
       const w = card.offsetWidth, h = card.offsetHeight;
-
-      // Which side of the cursor still has room for the card?
-      const right = e.clientX + OFF_X + w <= innerWidth  - EDGE;
-      const below = e.clientY + OFF_Y + h <= innerHeight - EDGE;
-
-      vX = right ? e.clientX + OFF_X : e.clientX - OFF_X - w;
-      vY = below ? e.clientY + OFF_Y : e.clientY - OFF_Y - h;
-
-      // Tight corners: stay on screen even if neither side fully fits.
-      vX = Math.max(EDGE, Math.min(vX, innerWidth  - w - EDGE));
-      vY = Math.max(EDGE, Math.min(vY, innerHeight - h - EDGE));
-
-      // Grow from the corner that touches the cursor.
-      card.style.transformOrigin = (right ? '0' : '100%') + ' ' + (below ? '0' : '100%');
+      // Always the cursor's bottom-right, every row, every position. Near an
+      // edge the card slides just enough to stay on screen; it never flips to
+      // another side, so the open reads the same way everywhere.
+      vX = Math.max(EDGE, Math.min(e.clientX + OFF_X, innerWidth  - w - EDGE));
+      vY = Math.max(EDGE, Math.min(e.clientY + OFF_Y, innerHeight - h - EDGE));
     }
 
     function write(){
