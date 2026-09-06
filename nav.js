@@ -77,3 +77,90 @@
   tick();
   setInterval(tick, 30000);
 })();
+
+/* ── No orphans ───────────────────────────────────────────────────────────
+   CSS (text-wrap: balance / pretty) handles almost every case. This is the
+   safety net for narrow columns where the browser still leaves a single word
+   alone on the last line: glue the last two words with a non-breaking space,
+   but only when doing so does not add a line or overflow the box.          */
+(function () {
+  const SELECTOR = 'h1,h2,h3,h4,p,li,blockquote,figcaption';
+  const NBSP = '\u00a0';
+
+  function lastTextNode(el) {
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node = null, n;
+    while ((n = walk.nextNode())) if (n.textContent.trim()) node = n;
+    return node;
+  }
+
+  function lineTops(el) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const rects = [...range.getClientRects()].filter(r => r.width > 0);
+    return { rects, tops: [...new Set(rects.map(r => Math.round(r.top)))].sort((a, b) => a - b) };
+  }
+
+  function wordsOnLastLine(el) {
+    const { tops } = lineTops(el);
+    if (tops.length < 2) return -1;
+    const lastTop = tops[tops.length - 1];
+    let count = 0;
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = walk.nextNode())) {
+      const re = /\S+/g;
+      let m;
+      while ((m = re.exec(n.textContent))) {
+        const r = document.createRange();
+        r.setStart(n, m.index);
+        r.setEnd(n, m.index + m[0].length);
+        const rect = r.getClientRects()[0];
+        if (rect && Math.abs(rect.top - lastTop) < 3) count++;
+      }
+    }
+    return count;
+  }
+
+  function fix(el) {
+    if (el.dataset.noOrphan === 'off') return;
+    const text = (el.textContent || '').trim();
+    if (!text || text.split(/\s+/).length < 4) return;
+    if (wordsOnLastLine(el) !== 1) return;
+
+    const node = lastTextNode(el);
+    if (!node) return;
+    const original = node.textContent;
+    const match = original.match(/(\S+)(\s+)(\S+)\s*$/);
+    if (!match) return;
+    // Don't glue two long words together in a narrow column.
+    if ((match[1] + match[3]).length > 18) return;
+
+    const before = { lines: lineTops(el).tops.length, height: el.scrollHeight };
+    const at = original.lastIndexOf(match[2] + match[3]);
+    node.textContent = original.slice(0, at) + NBSP + original.slice(at + match[2].length);
+
+    const after = { lines: lineTops(el).tops.length, width: el.scrollWidth };
+    if (after.lines > before.lines || after.width > el.clientWidth + 1) {
+      node.textContent = original; // made it worse — leave the browser's break
+    }
+  }
+
+  function run() {
+    document.querySelectorAll(SELECTOR).forEach(el => {
+      // Restore any previous glue so a resize is measured from a clean state.
+      const node = lastTextNode(el);
+      if (node && node.textContent.indexOf(NBSP) !== -1) {
+        node.textContent = node.textContent.replace(/\u00a0(\S+\s*)$/, ' $1');
+      }
+    });
+    document.querySelectorAll(SELECTOR).forEach(fix);
+  }
+
+  let timer;
+  const schedule = () => { clearTimeout(timer); timer = setTimeout(run, 150); };
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  else window.addEventListener('load', run);
+  window.addEventListener('resize', schedule);
+})();

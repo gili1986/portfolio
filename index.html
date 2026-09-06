@@ -4,20 +4,20 @@
 <meta charset="utf-8" />
 <meta name="color-scheme" content="only light" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Gilad Cohen · Senior Product Designer</title>
-<meta name="description" content="Senior product designer: 6+ years in UI/UX, 12 in design. FinTech, Web3, and gaming. Available for Senior roles. Zero-to-one products that ship." />
+<title>Gilad Cohen · Product Designer</title>
+<meta name="description" content="Product designer: 6+ years in product and UI/UX, 12 in design. UI, visual design, design systems, and complex digital products. Zero-to-one work and redesigns." />
 <link rel="canonical" href="https://gilad.design/" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://gilad.design/" />
-<meta property="og:title" content="Gilad Cohen · Senior Product Designer" />
-<meta property="og:description" content="Senior product designer: 6+ years in UI/UX, 12 in design. FinTech, Web3, and gaming. Available for Senior roles. Zero-to-one products that ship." />
+<meta property="og:title" content="Gilad Cohen · Product Designer" />
+<meta property="og:description" content="Product designer: 6+ years in product and UI/UX, 12 in design. UI, visual design, design systems, and complex digital products. Zero-to-one work and redesigns." />
 <meta property="og:image" content="https://gilad.design/assets/og/og-home.png" />
 <meta property="og:image:width" content="2400" />
 <meta property="og:image:height" content="1260" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Gilad Cohen · Senior Product Designer" />
-<meta name="twitter:description" content="Senior product designer: 6+ years in UI/UX, 12 in design. FinTech, Web3, and gaming. Available for Senior roles. Zero-to-one products that ship." />
+<meta name="twitter:title" content="Gilad Cohen · Product Designer" />
+<meta name="twitter:description" content="Product designer: 6+ years in product and UI/UX, 12 in design. UI, visual design, design systems, and complex digital products. Zero-to-one work and redesigns." />
 <meta name="twitter:image" content="https://gilad.design/assets/og/og-home.png" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -28,8 +28,8 @@
     "name": "Gilad Cohen",
     "givenName": "Gilad",
     "familyName": "Cohen",
-    "jobTitle": "Senior Product Designer",
-    "description": "Senior product designer with 6+ years in UI/UX and 12 years in design overall, across FinTech, Web3, and gaming. Specializing in zero-to-one products, design systems, and AI-native workflows. Available for Senior roles.",
+    "jobTitle": "Product Designer",
+    "description": "Product designer with 6+ years in product and UI/UX and 12 years in design overall. Focused on UI, visual design, design systems, and complex digital products, across FinTech, Web3, and gaming.",
     "image": {
       "@type": "ImageObject",
       "url": "https://gilad.design/assets/gilad-cohen-product-designer.webp",
@@ -57,24 +57,24 @@
       "Gaming UX",
       "Freelance Product Designer",
       "Zero-to-one Products",
-      "AI-native Workflow",
+      "Complex Digital Products",
       "Figma",
       "Motion Design",
-      "Frontend Development"
+      "Prototyping"
     ],
     "hasOccupation": {
       "@type": "Occupation",
-      "name": "Senior Product Designer",
+      "name": "Product Designer",
       "occupationalCategory": "15-1299.09",
-      "skills": "UX Design, UI Design, Design Systems, Figma, Motion Design, Frontend Development, Web3, FinTech"
+      "skills": "UX Design, UI Design, Design Systems, Figma, Motion Design, Prototyping, Web3, FinTech"
     }
   },
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Gilad Cohen — Senior Product Designer",
+    "name": "Gilad Cohen · Product Designer",
     "url": "https://gilad.design",
-    "description": "Portfolio of Gilad Cohen, senior product designer with 6+ years in UI/UX and 12 years in design overall, across FinTech, Web3, and gaming.",
+    "description": "Portfolio of Gilad Cohen, product designer with 6+ years in product and UI/UX and 12 years in design overall, across FinTech, Web3, and gaming.",
     "author": {
       "@type": "Person",
       "name": "Gilad Cohen"
@@ -101,6 +101,13 @@
     --contact-scale:0.7;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+
+  /* Typography: prevent orphan words (single word on the last line) */
+  h1,h2,h3,h4,h5,h6,.lede,blockquote,figcaption{text-wrap:balance}
+  h1:has(br),h2:has(br),h3:has(br),h4:has(br){text-wrap:pretty}
+  p,li,dd,dt,summary,label{text-wrap:pretty}
+  .stat p,.ds-card-desc,.ps-desc,.screen-fig-cap,.card p,figcaption{text-wrap:balance}
+  .lede,h1,h2,h3,h4,h5,h6{-webkit-hyphens:none;hyphens:none}
   html{scroll-behavior:smooth}
   body{
     background:var(--bg);color:var(--fg);
@@ -427,7 +434,7 @@
   .ps-step.in{opacity:1;transform:translateY(0) scale(1)}
   .ps-step::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
   .ps-step:hover::before{transform:scaleX(1)}
-  .ps-step .ps-icon{width:46px;height:46px;padding:12px;border-radius:13px;color:var(--accent);background:rgba(91,61,245,0.07);margin-bottom:26px;flex-shrink:0}
+  .ps-step .ps-icon{width:46px;height:46px;padding:12px;border-radius:13px;color:var(--accent);background:transparent;border:1px solid var(--accent);margin-bottom:26px;flex-shrink:0}
   .ps-step .ps-num{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;position:relative;z-index:1}
   .ps-step .ps-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:28px;letter-spacing:-0.025em;color:var(--fg);line-height:1.05;margin-bottom:12px;min-height:calc(28px * 1.05 * 2);position:relative;z-index:1}
   .ps-step .ps-desc{font-size:13px;line-height:1.55;color:var(--fg-dim);flex:1;margin-bottom:24px;position:relative;z-index:1}
@@ -667,14 +674,14 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="label mono"><span class="pulse" style="background-color: rgb(0, 171, 129); font-size: 11px; height: 8px; width: 8px"></span> <span style="color:var(--good)">Available</span> for Senior roles · Q4 2026</div>
+    <div class="label mono"><span class="pulse" style="background-color: rgb(0, 171, 129); font-size: 11px; height: 8px; width: 8px"></span> <span style="color:var(--good)">Available</span> for product design roles · Q4 2026</div>
 
     <h1 id="hero-headline">
       <span class="word w1"><span>Hi,</span></span> <span class="word w2"><span>I'm</span></span> <span class="word w3"><span><em>Gilad</em></span></span> <span class="word w4"><span><em>Cohen</em></span></span><br/>
       <span class="word w5"><span>a</span></span> <span class="word w6"><span>product</span></span> <span class="word w7"><span>designer.</span></span>
     </h1>
 
-    <p class="sub" id="hero-sub">I turn ideas into products that are <em>alive</em>, usable, and easy on the eyes.<br/>12 years in design, 6+ of them in <em>UI/UX</em>, across <em>FinTech</em>, <em>Web3</em>, and gaming. <em>AI</em> in the workflow at every step.</p>
+    <p class="sub" id="hero-sub">I design digital products from <em>UX flows</em> to <em>polished interfaces</em>.<br/>6+ years in Product and UI/UX, with 12 years in design overall. I focus on complex products, <em>0→1 work</em>, redesigns, and design systems, working closely with product and engineering to bring ideas into the product.</p>
 
     <div class="meta-row">
       <div class="cell"><span class="mono">Years in UI/UX</span><strong data-count="6" data-suffix="+">0</strong></div>
@@ -701,7 +708,7 @@
       <div class="num mono">Selected work</div>
       <div>
         <h2>Four projects worth <br/><em>talking about</em>.</h2>
-        <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study: the brief, the calls I made, and what shipped.</p>
+        <p class="lede">The work I'd put on the table in a first meeting. Each opens into a full case study: the brief, the decisions, and what shipped.</p>
       </div>
     </div>
 
@@ -722,7 +729,7 @@
       <a href="/YieldShield" class="flagship-row">
         <span class="num">02 / Flagship</span>
         <span class="name">YieldShield</span>
-        <span class="role">Senior product designer · DeFi dashboard · IA + data viz</span>
+        <span class="role">Product designer · DeFi dashboard · IA + data viz</span>
         <span class="tags"><span class="tag">FinTech</span><span class="tag">DeFi</span><span class="tag">Data viz</span></span>
         <span class="year">2023</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -734,7 +741,7 @@
       <a href="/Centive" class="flagship-row">
         <span class="num">03 / Flagship</span>
         <span class="name">Centive</span>
-        <span class="role">Lead designer · DePIN compute network · Node operator UX</span>
+        <span class="role">Product designer · DePIN compute network · Node operator UX</span>
         <span class="tags"><span class="tag">DePIN</span><span class="tag">Dashboard</span><span class="tag">Data viz</span></span>
         <span class="year">2024</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -746,7 +753,7 @@
       <a href="/MinerFun" class="flagship-row">
         <span class="num">04 / Flagship</span>
         <span class="name">MinerFun</span>
-        <span class="role">Lead designer · Web3 mining game · 0 → 1</span>
+        <span class="role">Product designer · Web3 mining game · 0 → 1</span>
         <span class="tags"><span class="tag">Gaming</span><span class="tag">Web3</span><span class="tag">0→1</span></span>
         <span class="year">2024</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -765,13 +772,13 @@
   <div class="wrap">
     <div class="ps-header reveal">
       <span class="mono">How I work</span>
-      <p>Research to production. I do the thinking, AI shortens the distance.</p>
+      <p>How a project actually runs, from brief to shipped UI.</p>
     </div>
     <div class="process-steps">
       <div class="ps-step">
         <svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
         <span class="ps-num">Frame</span>
-        <span class="ps-name">Research<br/>&amp; brief</span>
+        <span class="ps-name">Context<br/>&amp; brief</span>
         <span class="ps-desc">I dig into the market and the target audience myself. AI helps me synthesize, not decide.</span>
         <span class="ps-tool">Market research</span>
       </div>
@@ -791,16 +798,16 @@
       </div>
       <div class="ps-step">
         <svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <span class="ps-num">Code</span>
+        <span class="ps-num">Prototype</span>
         <span class="ps-name">Working<br/>prototype</span>
-        <span class="ps-desc">Translate design into real, testable frontend code.</span>
+        <span class="ps-desc">Turn the design into a working prototype with AI, then refine the code by hand.</span>
         <span class="ps-tool">Claude</span>
       </div>
       <div class="ps-step">
         <svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/><path d="M5 21h14"/></svg>
         <span class="ps-num">Ship</span>
         <span class="ps-name">Ship to<br/>production</span>
-        <span class="ps-desc">Deploy, monitor, and iterate on real user data.</span>
+        <span class="ps-desc">Work with engineering to get the design into the product.</span>
         <span class="ps-tool">Vercel · GitHub</span>
       </div>
     </div>
@@ -813,30 +820,29 @@
     <div class="sect-label reveal">
       <div class="num mono">About</div>
       <div>
-        <h2>Six years in product, twelve in design, one <em>AI-native obsession</em>: getting users to the moment a product clicks,&nbsp;sooner.</h2>
-        <p class="lede">A short version of the story, in my own voice. The longer version is the work above.</p>
+        <h2>Six years in product, twelve in design. My strongest work sits where product thinking meets <em>UI&nbsp;craft</em>.</h2>
       </div>
     </div>
 
     <div class="grid">
       <div class="col">
         <div class="photo reveal" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="assets/gilad-cohen-product-designer.webp" alt="Gilad Cohen — Senior Product Designer" itemprop="image" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img loading="lazy" src="assets/gilad-cohen-product-designer.webp" alt="Gilad Cohen, product designer" itemprop="image" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </div>
       <div class="col reveal delay-1">
-        <p>I spent my first years in <em>graphic design</em> and branding, because a single visual could carry what words took a page to say. Then I moved into <em>product</em>, because shipping is the only honest critique. I still believe the best UI is the one a user doesn't notice.</p>
-        <p>I work fast. Not because I cut corners, but because I learned early that <em>velocity is a design quality</em>. A team that can run three experiments a week beats a team that runs one perfect one.</p>
-        <p>Lately I've been folding AI into the way I design: generating variants, prototyping with code, replacing meetings with shared documents the team can argue with. It hasn't replaced craft. It's let me <em>spend more of the day on craft</em>.</p>
-        <p>If you're hiring a designer who thinks in product, ships in code, and writes the spec, I'd love to talk. Full-time first, and open to freelance projects with startups.</p>
+        <p>I started in <em>graphic design</em> and branding: identity, print, and motion. Six years ago I moved into <em>product</em>. The visual background stayed with me. Type, hierarchy, and color are where I start, not where I finish.</p>
+        <p>Most of my work has been <em>0→1</em> and full redesigns: complex products with dense data, a lot of state, and flows that have to stay legible. I build the <em>design system</em> alongside the screens, so the product stays consistent as it grows.</p>
+        <p>I use <em>AI</em> to explore ideas and build working prototypes. I don't write code from scratch, but I read it and adjust it until the build matches the design. It is part of the workflow, not the point of it.</p>
+        <p>I work closely with PMs and engineers, and I am comfortable writing the spec and reviewing the implementation when that is what moves the project. Looking for a full-time product design role, and open to freelance with startups.</p>
       </div>
     </div>
 
     <div class="timeline reveal delay-2">
-      <div class="step"><span class="y">2014 · now</span><span class="t">Freelance product &amp; brand</span><span class="r">End-to-end products and identities for startups and founders.</span></div>
+      <div class="step"><span class="y">2014 · 2019</span><span class="t">Freelance designer</span><span class="r">Brand identities, websites, and digital design for startups and businesses.</span></div>
       <div class="step"><span class="y">2019 · 2022</span><span class="t">Graphic designer</span><span class="r">Climax Studio. Branding and visual direction, digital and print.</span></div>
-      <div class="step"><span class="y">2022 · 2025</span><span class="t">UI/UX designer</span><span class="r">Nifty Technologies. NFTrade · YieldShield · Centive.</span></div>
-      <div class="step"><span class="y">2025 · now</span><span class="t">Independent · 0→1</span><span class="r">AI-native product design.</span></div>
+      <div class="step"><span class="y">2022 · 2025</span><span class="t">UI/UX designer</span><span class="r">Nifty Technologies. NFTrade · Centive.</span></div>
+      <div class="step"><span class="y">2025 · now</span><span class="t">Freelance product designer</span><span class="r">0→1 products, redesigns, and design systems for startups and founders.</span></div>
     </div>
   </div>
 </section>
@@ -845,8 +851,7 @@
 <section id="contact" class="contact">
   <div class="wrap">
     <div class="reveal">
-      <div class="mono" style="color:var(--fg-dim);margin-bottom:32px">Get in touch</div>
-      <h2>Let's <em>build</em> <br/>something together.</h2>
+      <h2>Get in <em>Touch</em>.</h2>
       <a href="mailto:gili.syk@gmail.com" class="email reveal delay-1" style="line-height: 1.55; border-width: 2px" title="gili.syk@gmail.com">
         Email me
         <span class="arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
@@ -979,7 +984,7 @@
     });
   })();
 </script>
-<script src="nav.js?v=4"></script>
+<script src="nav.js?v=5"></script>
 <script>
   (function(){
     const container = document.querySelector('.process-steps');

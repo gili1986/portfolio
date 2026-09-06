@@ -33,6 +33,13 @@
     --accent:#5b3df5;--warm:#d24a1a;--good:#2d8e4a;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+
+  /* Typography: prevent orphan words (single word on the last line) */
+  h1,h2,h3,h4,h5,h6,.lede,blockquote,figcaption{text-wrap:balance}
+  h1:has(br),h2:has(br),h3:has(br),h4:has(br){text-wrap:pretty}
+  p,li,dd,dt,summary,label{text-wrap:pretty}
+  .stat p,.ds-card-desc,.ps-desc,.screen-fig-cap,.card p,figcaption{text-wrap:balance}
+  .lede,h1,h2,h3,h4,h5,h6{-webkit-hyphens:none;hyphens:none}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
@@ -121,6 +128,9 @@
   /* ── Two-col diagnosis ── */
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
   @media (max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  /* Align the diagnosis columns to the section heading's left edge (label gutter: 120px + 48px gap) */
+  @media (min-width:901px){.two-col{margin-left:168px}}
+
   .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
   .two-col .col h3 em{font-style:normal;color:var(--accent)}
   .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
@@ -371,9 +381,9 @@
   .ds-nft-eth{font-family:'JetBrains Mono',monospace;font-size:8px;color:#0099fa}
   .ds-nft-usd{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--fg-dim)}
   /* Grid vis */
-  .ds-grid-cols{display:flex;gap:4px;align-items:flex-end;width:100%;height:90px}
-  .ds-grid-bar{flex:1;border-radius:3px 3px 0 0;background:#c8cfd8}
-  .ds-grid-bar.hi{background:#0099fa55}
+  .ds-grid-cols{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;width:100%;height:100%}
+  .ds-grid-bar{border-radius:2px;background:#0099fa38}
+  .ds-grid-cols .gutter-note{grid-column:1 / -1}
   @media(max-width:900px){.ds-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:600px){.ds-grid{grid-template-columns:1fr}}
 
@@ -516,7 +526,6 @@
       <span class="num mono">02 / Diagnosis</span>
       <div>
         <h2>The product was <em>capable</em>, the experience&nbsp;wasn't.</h2>
-        <p class="lede">Before any pixels moved I sat with PM and engineering, watched real sessions, and audited every screen. A pattern showed up fast.</p>
       </div>
     </div>
     <div class="two-col reveal d1">
@@ -551,7 +560,7 @@
       <span class="num mono">03 / Surfaces</span>
       <div>
         <h2>Selected screens, <em>desktop</em>.</h2>
-        <p class="lede">Seven surfaces that span the redesign, from the core product to the brand's public voice. Each one took multiple rounds; what's shown is the shipped state.</p>
+        <p class="lede">Seven surfaces spanning the redesign, from the core product to the marketing site. What's shown is the shipped state.</p>
       </div>
     </div>
   </div>
@@ -775,7 +784,7 @@
       <span class="num mono">05 / System</span>
       <div>
         <h2>The bones: <em>tokens, type,&nbsp;grid</em>.</h2>
-        <p class="lede">Every screen above is rendered from the same primitives. A short look at the system the team kept building on after I shipped.</p>
+        <p class="lede">The system underneath every screen above, and the one the team kept building on after I shipped.</p>
       </div>
     </div>
 
@@ -842,20 +851,20 @@
 
       <!-- Grid -->
       <div class="ds-card reveal d1">
-        <div class="ds-card-vis" style="align-items:flex-end;padding-bottom:0;padding-top:16px">
+        <div class="ds-card-vis" style="padding:20px">
           <div class="ds-grid-cols">
-            <div class="ds-grid-bar" style="height:50%"></div>
-            <div class="ds-grid-bar hi" style="height:70%"></div>
-            <div class="ds-grid-bar" style="height:90%"></div>
-            <div class="ds-grid-bar" style="height:60%"></div>
-            <div class="ds-grid-bar hi" style="height:100%"></div>
-            <div class="ds-grid-bar" style="height:80%"></div>
-            <div class="ds-grid-bar" style="height:65%"></div>
-            <div class="ds-grid-bar hi" style="height:85%"></div>
-            <div class="ds-grid-bar" style="height:45%"></div>
-            <div class="ds-grid-bar" style="height:75%"></div>
-            <div class="ds-grid-bar hi" style="height:55%"></div>
-            <div class="ds-grid-bar" style="height:40%"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
           </div>
         </div>
         <div class="ds-card-body">
@@ -915,9 +924,9 @@
     </div>
 
     <div class="outcome reveal d2">
-      <div class="stat"><span class="mono">Listings flow</span><div class="v"><em>−</em>42%</div><p>Steps to list an NFT, before vs after</p></div>
-      <div class="stat"><span class="mono">Mobile sessions</span><div class="v">2.1<em>×</em></div><p>Avg session length on mobile, post-launch</p></div>
-      <div class="stat"><span class="mono">Swap usage</span><div class="v">3.4<em>×</em></div><p>Monthly swap proposals after redesign</p></div>
+      <div class="stat"><span class="mono">Listings flow</span><div class="v"><em>−</em>42%</div><p>Steps in the listing flow, before vs after</p></div>
+      <div class="stat"><span class="mono">Mobile sessions</span><div class="v">2.1<em>×</em></div><p>Avg mobile session length, reported by the team</p></div>
+      <div class="stat"><span class="mono">Swap usage</span><div class="v">3.4<em>×</em></div><p>Monthly swap proposals, reported by the team</p></div>
       <div class="stat"><span class="mono">Components</span><div class="v">86</div><p>Tokenised components in the shipped library</p></div>
     </div>
   </div>
@@ -1101,7 +1110,7 @@
   else requestAnimationFrame(tick);
 })();
 </script>
-<script src="nav.js?v=4"></script>
+<script src="nav.js?v=5"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

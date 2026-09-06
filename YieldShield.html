@@ -5,21 +5,21 @@
 <meta name="color-scheme" content="only light" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>YieldShield · Case Study · Gilad Cohen</title>
-<meta name="description" content="Senior product designer on YieldShield · an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum. IA, data viz, and full design system." />
+<meta name="description" content="Product designer on YieldShield · an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum. IA, data viz, and full design system." />
 <link rel="canonical" href="https://gilad.design/YieldShield" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://gilad.design/YieldShield" />
 <meta property="og:title" content="YieldShield · Case Study · Gilad Cohen" />
-<meta property="og:description" content="Senior product designer on YieldShield · an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum. IA, data viz, and full design system." />
+<meta property="og:description" content="Product designer on YieldShield · an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum. IA, data viz, and full design system." />
 <meta property="og:image" content="https://gilad.design/assets/og/og-yieldshield.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="YieldShield · Case Study · Gilad Cohen" />
-<meta name="twitter:description" content="Senior product designer on YieldShield · an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum. IA, data viz, and full design system." />
+<meta name="twitter:description" content="Product designer on YieldShield · an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum. IA, data viz, and full design system." />
 <meta name="twitter:image" content="https://gilad.design/assets/og/og-yieldshield.png" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"YieldShield - Case Study","description":"Senior product designer on YieldShield, an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum.","url":"https://gilad.design/YieldShield","image":"https://gilad.design/assets/tumbnails/YieldShield.webp","author":{"@type":"Person","name":"Gilad Cohen","url":"https://gilad.design"},"dateCreated":"2023","keywords":"DeFi, dashboard design, data visualization, product design, UX design"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"YieldShield - Case Study","description":"Product designer on YieldShield, an AI-powered DeFi dashboard for yield farming across Binance, Polygon, and Ethereum.","url":"https://gilad.design/YieldShield","image":"https://gilad.design/assets/tumbnails/YieldShield.webp","author":{"@type":"Person","name":"Gilad Cohen","url":"https://gilad.design"},"dateCreated":"2023","keywords":"DeFi, dashboard design, data visualization, product design, UX design"}</script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,6 +34,13 @@
     --ys-purple:#8241dd;--ys-blue:#217ccf;--ys-dark:#151623;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+
+  /* Typography: prevent orphan words (single word on the last line) */
+  h1,h2,h3,h4,h5,h6,.lede,blockquote,figcaption{text-wrap:balance}
+  h1:has(br),h2:has(br),h3:has(br),h4:has(br){text-wrap:pretty}
+  p,li,dd,dt,summary,label{text-wrap:pretty}
+  .stat p,.ds-card-desc,.ps-desc,.screen-fig-cap,.card p,figcaption{text-wrap:balance}
+  .lede,h1,h2,h3,h4,h5,h6{-webkit-hyphens:none;hyphens:none}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
@@ -79,7 +86,7 @@
     opacity:0;transform:translateY(20px);animation:hero-fadein .9s cubic-bezier(.2,.8,.2,1) .25s forwards;
   }
   @keyframes hero-fadein{to{opacity:1;transform:none}}
-  .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transform:scale(1.05);transform-origin:center center}
+  .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transform:translateY(32px) scale(1.05);transform-origin:center center}
   .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 64px;border-top:1px solid var(--line)}
   @media(max-width:960px){
     .hero-wrap{grid-template-columns:1fr;height:auto}
@@ -119,6 +126,9 @@
   /* ── Two-col ── */
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
   @media (max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  /* Align the diagnosis columns to the section heading's left edge (label gutter: 120px + 48px gap) */
+  @media (min-width:901px){.two-col{margin-left:168px}}
+
   .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
   .two-col .col h3 em{font-style:normal;color:var(--accent)}
   .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
@@ -254,9 +264,9 @@
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
   /* Grid vis */
-  .ds-grid-cols{display:flex;gap:4px;align-items:flex-end;width:100%;height:90px}
-  .ds-grid-bar{flex:1;border-radius:3px 3px 0 0;background:#d0d4e0}
-  .ds-grid-bar.hi{background:#8241dd55}
+  .ds-grid-cols{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;width:100%;height:100%}
+  .ds-grid-bar{border-radius:2px;background:#8241dd38}
+  .ds-grid-cols .gutter-note{grid-column:1 / -1}
 
   /* Modes vis */
   .ds-modes{display:flex;gap:10px;width:100%}
@@ -330,7 +340,7 @@
           <span class="mono"><a href="/">Index</a> &nbsp;/&nbsp; Case 02 &nbsp;/&nbsp; YieldShield</span>
         </div>
         <h1 class="reveal d1">Yield farming, <em>made</em> for actual&nbsp;humans.</h1>
-        <p class="sub reveal d2">Full zero-to-one design for <em>YieldShield</em>: an AI-powered DeFi dashboard that automates yield farming across Binance, Polygon, and Ethereum. Dashboard, data viz, mobile app, and a design system from scratch. Shipped in <em>6 months</em>: 3 chains unified, 200+ pools indexed.</p>
+        <p class="sub reveal d2">Full zero-to-one design for <em>YieldShield</em>: an AI-powered DeFi dashboard that automates yield farming across Binance, Polygon, and Ethereum. Dashboard, data viz, mobile app, and a design system from scratch. Shipped in <em>2 months</em>: 3 chains unified, 200+ pools indexed.</p>
       </div>
 
       <div class="hero-visual">
@@ -338,7 +348,7 @@
       </div>
 
       <div class="meta-row reveal d3">
-        <div class="cell"><span class="mono">Role</span><strong>Senior Product Designer</strong></div>
+        <div class="cell"><span class="mono">Role</span><strong>Product Designer · freelance</strong></div>
         <div class="cell"><span class="mono">Year</span><strong>2023</strong></div>
         <div class="cell"><span class="mono">Team</span><strong>1 designer · PM · eng</strong></div>
         <div class="cell"><span class="mono">Scope</span><strong>Dashboard · data viz · IA · mobile</strong></div>
@@ -379,7 +389,7 @@
           <span class="lbl mono">The brief</span>
           <div>
             <p>The ask: design a dashboard that lets any user, DeFi-native or DeFi-curious, set up an <em>automated investment strategy</em> and trust the platform to act on their behalf. One roof for Binance Smart Chain, Polygon, and Ethereum.</p>
-            <p>One designer. Three chains. Six months from zero to shipped. Dark and light mode from day one.</p>
+            <p>One designer. Three chains. Two months from zero to shipped. Dark and light mode from day one.</p>
             <div class="pull">DeFi's core mechanic is <em>trust</em>. Every screen either built it or eroded it.</div>
           </div>
         </div>
@@ -402,7 +412,6 @@
       <span class="num mono">02 / Diagnosis</span>
       <div>
         <h2>DeFi asks too much. The interface&nbsp;<em>shouldn't</em>.</h2>
-        <p class="lede">Before a single frame was drawn, I mapped every friction point between a new user and their first automated investment. The problems were structural, not cosmetic.</p>
       </div>
     </div>
 
@@ -441,7 +450,7 @@
       <span class="num mono">03 / Surfaces</span>
       <div>
         <h2>Six views, <em>one system</em>.</h2>
-        <p class="lede">Every surface of the platform (dashboard, investments, pools, gas, staking) is built from the same tokens, the same 8pt spacing scale, the same Raleway type system. The product feels like one thing because it is one thing.</p>
+        <p class="lede">Dashboard, investments, pools, gas, and staking, all built from one set of tokens, one spacing scale, one type system.</p>
       </div>
     </div>
   </div>
@@ -477,7 +486,7 @@
           <h3>Your portfolio, <em>ranked by what matters</em>.</h3>
           <p>Active and inactive investments in a single scannable table, sortable by risk level, current ROI, and APY. Risk is never buried: Very High, High, Medium, Low, Very Low appear as color-coded inline badges on every row.</p>
           <p>Drill into any position for a live P&amp;L chart, restake history with token routing, and an embedded gas station. Invest more, Claim rewards, Claim &amp; Exit, always in context, never two screens away.</p>
-          <p style="margin-top:16px;font-size:13px;color:var(--fg-dim);border-top:1px solid var(--line);padding-top:14px">↳ Shown in <em style="font-style:normal;color:var(--fg)">light mode</em>. User research showed ~30% of users preferred light, so both were shipped day one, with dark as the default.</p>
+          <p style="margin-top:16px;font-size:13px;color:var(--fg-dim);border-top:1px solid var(--line);padding-top:14px">↳ Shown in <em style="font-style:normal;color:var(--fg)">light mode</em>. Both themes were designed and shipped day one, with dark as the default.</p>
           <div class="step-cap">
             <span class="mono">/investments</span>
             <span class="mono">Active · Inactive · APY · Risk · P&amp;L</span>
@@ -583,7 +592,7 @@
       <span class="num mono">04 / Flows</span>
       <div>
         <h2>Creating an investment in <em>six deliberate&nbsp;steps</em>.</h2>
-        <p class="lede">The hardest UX problem on the platform: guiding a user through setting up a fully automated DeFi investment without triggering analysis paralysis. Every step had to earn the next one.</p>
+        <p class="lede">The hardest UX problem on the platform: setting up a fully automated DeFi investment without overwhelming the person doing it.</p>
       </div>
     </div>
 
@@ -731,20 +740,20 @@
 
       <!-- Grid -->
       <div class="ds-card reveal d1">
-        <div class="ds-card-vis" style="align-items:flex-end;padding-bottom:0;padding-top:16px">
+        <div class="ds-card-vis" style="padding:20px">
           <div class="ds-grid-cols">
-            <div class="ds-grid-bar" style="height:50%"></div>
-            <div class="ds-grid-bar hi" style="height:70%"></div>
-            <div class="ds-grid-bar" style="height:90%"></div>
-            <div class="ds-grid-bar" style="height:60%"></div>
-            <div class="ds-grid-bar hi" style="height:100%"></div>
-            <div class="ds-grid-bar" style="height:80%"></div>
-            <div class="ds-grid-bar" style="height:65%"></div>
-            <div class="ds-grid-bar hi" style="height:85%"></div>
-            <div class="ds-grid-bar" style="height:45%"></div>
-            <div class="ds-grid-bar" style="height:75%"></div>
-            <div class="ds-grid-bar hi" style="height:55%"></div>
-            <div class="ds-grid-bar" style="height:40%"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
+            <div class="ds-grid-bar"></div>
           </div>
         </div>
         <div class="ds-card-body">
@@ -789,7 +798,7 @@
         </div>
         <div class="ds-card-body">
           <h4 class="ds-card-title">Dark &amp; light mode</h4>
-          <p class="ds-card-desc">Both shipped day one. Research showed 70% dark preference. Dark set as default.</p>
+          <p class="ds-card-desc">Both themes designed and shipped day one, with dark as the default.</p>
         </div>
       </div>
 
@@ -812,7 +821,7 @@
       <span class="lbl mono">After ship</span>
       <div>
         <p>Designing a product where the core mechanic is automation meant constantly asking: <em>what does the user need to see, and what can we spare them from?</em> Gas Station was the clearest answer: a dedicated view for something every other platform buried in transaction failure messages.</p>
-        <p>The thing that worked: treating the wizard as a trust exercise, not a form. Every step that acknowledged uncertainty (plain-English risk labels, inline stop-loss, editable Summary) reduced drop-off.</p>
+        <p>The thing that worked: treating the wizard as a trust exercise, not a form. Every step that acknowledged uncertainty (plain-English risk labels, inline stop-loss, editable Summary) gave the user a reason to continue instead of a reason to hesitate.</p>
       </div>
     </div>
 
@@ -834,7 +843,7 @@
       </div>
       <div class="stat">
         <span class="mono">Timeline</span>
-        <div class="v">6<em>mo</em></div>
+        <div class="v">2<em>mo</em></div>
         <p>Zero-to-one: design, system, mobile, shipped</p>
       </div>
     </div>
@@ -889,7 +898,7 @@
   })();
 </script>
 
-<script src="nav.js?v=4"></script>
+<script src="nav.js?v=5"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

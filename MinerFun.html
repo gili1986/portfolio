@@ -5,21 +5,21 @@
 <meta name="color-scheme" content="only light" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>MinerFun · Case Study · Gilad Cohen</title>
-<meta name="description" content="Lead designer on MinerFun · a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch as solo designer." />
+<meta name="description" content="Product designer on MinerFun · a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch as solo designer." />
 <link rel="canonical" href="https://gilad.design/MinerFun" />
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://gilad.design/MinerFun" />
 <meta property="og:title" content="MinerFun · Case Study · Gilad Cohen" />
-<meta property="og:description" content="Lead designer on MinerFun · a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch as solo designer." />
+<meta property="og:description" content="Product designer on MinerFun · a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch as solo designer." />
 <meta property="og:image" content="https://gilad.design/assets/og/og-minerfun.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="MinerFun · Case Study · Gilad Cohen" />
-<meta name="twitter:description" content="Lead designer on MinerFun · a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch as solo designer." />
+<meta name="twitter:description" content="Product designer on MinerFun · a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch as solo designer." />
 <meta name="twitter:image" content="https://gilad.design/assets/og/og-minerfun.png" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"MinerFun - Case Study","description":"Lead designer on MinerFun, a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch.","url":"https://gilad.design/MinerFun","image":"https://gilad.design/assets/tumbnails/MinerFun.webp","author":{"@type":"Person","name":"Gilad Cohen","url":"https://gilad.design"},"dateCreated":"2024","keywords":"Web3, game design, play-to-earn, brand design, product design"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"MinerFun - Case Study","description":"Product designer on MinerFun, a Web3 play-to-earn mining game. Game UI, marketing site, launchpad, and full brand built from scratch.","url":"https://gilad.design/MinerFun","image":"https://gilad.design/assets/tumbnails/MinerFun.webp","author":{"@type":"Person","name":"Gilad Cohen","url":"https://gilad.design"},"dateCreated":"2024","keywords":"Web3, game design, play-to-earn, brand design, product design"}</script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,6 +38,13 @@
     --mf-dark-fig:#1e1b4b;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+
+  /* Typography: prevent orphan words (single word on the last line) */
+  h1,h2,h3,h4,h5,h6,.lede,blockquote,figcaption{text-wrap:balance}
+  h1:has(br),h2:has(br),h3:has(br),h4:has(br){text-wrap:pretty}
+  p,li,dd,dt,summary,label{text-wrap:pretty}
+  .stat p,.ds-card-desc,.ps-desc,.screen-fig-cap,.card p,figcaption{text-wrap:balance}
+  .lede,h1,h2,h3,h4,h5,h6{-webkit-hyphens:none;hyphens:none}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
@@ -114,6 +121,9 @@
   /* ── Two-col ── */
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
   @media(max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  /* Align the diagnosis columns to the section heading's left edge (label gutter: 120px + 48px gap) */
+  @media (min-width:901px){.two-col{margin-left:168px}}
+
   .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
   .two-col .col h3 em{font-style:normal;color:var(--accent)}
   .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
@@ -379,10 +389,10 @@
     </div>
 
     <div class="meta-row reveal d3">
-      <div class="cell"><span class="mono">Role</span><strong>Lead Designer</strong></div>
+      <div class="cell"><span class="mono">Role</span><strong>Product Designer · freelance</strong></div>
       <div class="cell"><span class="mono">Year</span><strong>2024-2025</strong></div>
       <div class="cell"><span class="mono">Deliverables</span><strong>Game · Site · Launchpad</strong></div>
-      <div class="cell"><span class="mono">Scope</span><strong>0 → 1 · Solo designer</strong></div>
+      <div class="cell"><span class="mono">Scope</span><strong>0 → 1 · sole designer</strong></div>
     </div>
   </div>
 </header>
@@ -459,11 +469,11 @@
     <div class="two-col reveal d1">
       <div class="col">
         <h3>The <em>tension</em></h3>
-        <p>Play-to-earn is fundamentally a financial product wearing a game costume. Every "fun" action (buy a room, place a miner, claim rewards) is a real blockchain transaction with real money on the line. The typical DeFi response is warnings, disclaimers, and clinical UI. That kills engagement before it starts. The challenge: keep the game feeling dominant while the financial reality stays present but never paralyzing.</p>
+        <p>Play-to-earn is fundamentally a financial product wearing a game costume. Every "fun" action (buy a room, place a miner, claim rewards) is a real blockchain transaction with real money on the line. The typical DeFi response is warnings, disclaimers, and clinical UI. That turns the game into a risk disclosure. The challenge: keep the game feeling dominant while the financial reality stays present but never paralyzing.</p>
         <div class="tag-row">
           <span class="tag">Crypto anxiety</span>
           <span class="tag">Transaction trust</span>
-          <span class="tag">Retention vs. caution</span>
+          <span class="tag">Play vs. caution</span>
           <span class="tag">Two-sided platform</span>
         </div>
       </div>
@@ -489,7 +499,6 @@
       <span class="num mono">03 / How It Works</span>
       <div>
         <h2>Four steps to your <em>mining empire</em>.</h2>
-        <p class="lede">The player journey is a four-step loop, from wallet connect to daily earnings. A fifth path exists for project creators who want to list their coin on the launchpad.</p>
       </div>
     </div>
 
@@ -562,7 +571,6 @@
       <span class="num mono">04 / Surfaces</span>
       <div>
         <h2>Every screen, <em>a game moment</em>.</h2>
-        <p class="lede">Four key surfaces: the project page, the game room, the empty state onboarding moment, and the empire-wide facilities table.</p>
       </div>
     </div>
   </div>
@@ -579,7 +587,7 @@
           <span class="step-num">4.1 - The Game</span>
           <h3>Your room. Your <em>mining empire</em>.</h3>
           <p>The isometric room is the product's heart. Players see their miners placed in a physical space, not a row in a table or a number in a dashboard. The stats bar above shows live hashrate, daily $MYNE yield, and blocks until halving.</p>
-          <p>Room tiers (Bedroom → Lounge → Urban → Data Center → Vault) give players a progression path that turns retention into spatial ambition.</p>
+          <p>Room tiers (Bedroom → Lounge → Urban → Data Center → Vault) give players a visible progression path: the next room is always in sight.</p>
           <div class="step-cap">
             <span class="mono">/game/facilities/:id · Active room</span>
             <span class="mono">Isometric view · Live stats · Claim</span>
@@ -678,7 +686,7 @@
       <span class="num mono">05 / Modals</span>
       <div>
         <h2>Every transaction, <em>a game moment</em>.</h2>
-        <p class="lede">Six transaction flows: buy room, buy miner, upgrade, launch a coin, confirm, claim. Each modal carries the pixel-art visual language into the blockchain layer, turning friction into familiarity.</p>
+        <p class="lede">Six transaction flows, each carrying the pixel-art language into the blockchain layer so the money step still feels like the game.</p>
       </div>
     </div>
 
@@ -750,7 +758,7 @@
       <span class="num mono">08 / Brand</span>
       <div>
         <h2>Pixel type, <em>two-tone mark</em>.</h2>
-        <p class="lede">The brand started from the visual language of the game. Every color, every typographic choice traces back to the isometric pixel world players inhabit.</p>
+        <p class="lede">Every color and typographic choice traces back to the isometric pixel world of the game itself.</p>
       </div>
     </div>
 
@@ -819,7 +827,7 @@
       <span class="num mono">09 / Shipped</span>
       <div>
         <h2>From zero to <em>mainnet</em>.</h2>
-        <p class="lede">MinerFun shipped with a complete visual identity, a marketing launchpad, a full game UI, and a system of transaction modals, all from zero, solo designer, live on mainnet.</p>
+        <p class="lede">Brand, game UI, launchpad, and transaction system, all from zero as sole designer, live on mainnet.</p>
       </div>
     </div>
     <div class="outcome reveal d1">
@@ -1011,7 +1019,7 @@
   });
 })();
 </script>
-<script src="nav.js?v=4"></script>
+<script src="nav.js?v=5"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
