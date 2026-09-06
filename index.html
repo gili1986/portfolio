@@ -232,15 +232,15 @@
   .sect-label .lede{margin-top:16px;color:var(--fg-mid);font-size:17px;max-width:60ch;line-height:1.55}
   @media (max-width:720px){.sect-label{grid-template-columns:1fr;gap:16px}}
 
-  .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .35s cubic-bezier(.22,.61,.36,1),transform .35s cubic-bezier(.22,.61,.36,1)}
   .reveal.in{opacity:1;transform:none}
   /* .flagships holds the cursor-anchored preview (position:fixed). A transform
      here would make it the preview's containing block, so this one reveals on
      opacity alone. Don't give it a transform. */
   .flagships.reveal{transform:none}
-  .reveal.delay-1{transition-delay:.1s}
-  .reveal.delay-2{transition-delay:.2s}
-  .reveal.delay-3{transition-delay:.3s}
+  .reveal.delay-1{transition-delay:.04s}
+  .reveal.delay-2{transition-delay:.08s}
+  .reveal.delay-3{transition-delay:.12s}
 
   /* ── Marquee strip ─────────────────────────────────────── */
   .marquee{
@@ -430,7 +430,7 @@
   .process-strip .ps-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:48px}
   .process-strip .ps-header p{color:var(--fg-dim);font-size:14px;text-align:right}
   .process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .ps-step{position:relative;overflow:hidden;background:var(--bg);padding:36px 28px 32px;display:flex;flex-direction:column;transition:background .3s,opacity .65s cubic-bezier(.2,.8,.2,1),transform .65s cubic-bezier(.2,.8,.2,1);opacity:0;transform:translateY(20px) scale(0.96)}
+  .ps-step{position:relative;overflow:hidden;background:var(--bg);padding:36px 28px 32px;display:flex;flex-direction:column;transition:background .3s,opacity .35s cubic-bezier(.22,.61,.36,1),transform .35s cubic-bezier(.22,.61,.36,1);opacity:0;transform:translateY(12px) scale(0.98)}
   .ps-step.in{opacity:1;transform:translateY(0) scale(1)}
   .ps-step::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
   .ps-step:hover::before{transform:scaleX(1)}
@@ -885,7 +885,7 @@
 <script>
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  },{threshold:0.12, rootMargin:'0px 0px -10% 0px'});
+  },{threshold:0, rootMargin:'0px 0px 12% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   // Hero count-up animation · triggers after meta-row fades in (delay 1.1s + .8s ease)
@@ -992,9 +992,9 @@
     const steps = container.querySelectorAll('.ps-step');
     new IntersectionObserver(([e], obs) => {
       if(!e.isIntersecting) return;
-      steps.forEach((s, i) => setTimeout(() => s.classList.add('in'), i * 90));
+      steps.forEach((s, i) => setTimeout(() => s.classList.add('in'), i * 45));
       obs.disconnect();
-    }, {threshold: 0.15}).observe(container);
+    }, {threshold: 0, rootMargin: '0px 0px 12% 0px'}).observe(container);
   })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>

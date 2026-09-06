@@ -303,11 +303,11 @@
   footer .next-link:hover .arr{transform:translateX(4px) rotate(-45deg)}
 
   /* ── Reveal ── */
-  .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .35s cubic-bezier(.22,.61,.36,1),transform .35s cubic-bezier(.22,.61,.36,1)}
   .reveal.in{opacity:1;transform:none}
-  .reveal.d1{transition-delay:.1s}
-  .reveal.d2{transition-delay:.2s}
-  .reveal.d3{transition-delay:.3s}
+  .reveal.d1{transition-delay:.04s}
+  .reveal.d2{transition-delay:.08s}
+  .reveal.d3{transition-delay:.12s}
 
   @media(max-width:720px){
     section{padding:56px 0}
@@ -875,7 +875,7 @@
 <script>
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
+  }, {threshold:0, rootMargin:'0px 0px 12% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   (function(){
