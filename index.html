@@ -294,11 +294,13 @@
     transition:opacity .16s ease, transform .28s cubic-bezier(.2,.8,.2,1);
     box-shadow:0 30px 60px -10px #0a0a0b40;
     z-index:40;
-    border:1px solid var(--line-strong);
+    border:1px solid var(--fg-dim);
     will-change:translate,transform;
   }
   /* Slow, eased on the way in; quick on the way out, so moving between rows
      doesn't leave the previous card ghosting at its old position. */
+  /* Thumbnails fill the card, so no dark fallback can bleed at the rounded edge */
+  .flagship-row .preview.v-ant,.flagship-row .preview.v-nft,.flagship-row .preview.v-yield,.flagship-row .preview.v-miner,.flagship-row .preview{background:var(--bg-2)}
   .flagship-row:hover .preview{opacity:1;transform:scale(1);transition:opacity .3s, transform .45s cubic-bezier(.2,.8,.2,1)}
   .flagship-row .preview .placeholder-mark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:96px;font-weight:300;color:#ffffff24;letter-spacing:-0.04em}
   .flagship-row .preview .top-bar{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:#ffffffcc}
@@ -735,7 +737,7 @@
         <span class="year">2026</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         <div class="preview v-ant">
-          <img loading="lazy" src="assets/tumbnails/AntSeed.webp" alt="AntSeed open market for AI inference" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
+          <img loading="lazy" src="assets/tumbnails/AntSeed.webp?v=4" alt="AntSeed open market for AI inference" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </a>
 
@@ -758,7 +760,7 @@
         <span class="tags"><span class="tag">DePIN</span><span class="tag">Dashboard</span><span class="tag">Data viz</span></span>
         <span class="year">2024</span>
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <div class="preview" style="background:#000">
+        <div class="preview">
           <img loading="lazy" src="assets/tumbnails/Centive.webp" alt="Centive node overview" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>
         </div>
       </a>
