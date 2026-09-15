@@ -42,7 +42,7 @@
   .lede,h1,h2,h3,h4,h5,h6{-webkit-hyphens:none;hyphens:none}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  .mono{font-family:'DM Sans',sans-serif;font-size:12px;text-transform:uppercase;}
   .wrap{max-width:1440px;margin:0 auto;padding:0 40px;position:relative}
   @media (max-width:720px){.wrap{padding:0 16px}}
 
@@ -135,7 +135,7 @@
   .two-col .col h3 em{font-style:normal;color:var(--accent)}
   .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
   .two-col .col .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-  .two-col .col .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
+  .two-col .col .tag{font-family:'DM Sans',sans-serif;font-size:12px;text-transform:uppercase;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
 
   /* ── Context 2-col + logo card ── */
   .context-grid{display:grid;grid-template-columns:1fr 344px;gap:80px;align-items:start}
@@ -146,7 +146,7 @@
   #lottieIcon svg{overflow:visible!important}
   #lottieIcon g[clip-path]{clip-path:none!important}
   .nft-wordmark{height:34px;width:auto;display:block}
-  .logo-tagline{color:var(--fg-dim);font-size:11px;text-align:center;line-height:1.6;letter-spacing:0.01em}
+  .logo-tagline{color:var(--fg-dim);font-size:12px;text-align:center;line-height:1.6;letter-spacing:0.01em}
   @media(max-width:960px){.context-grid{grid-template-columns:1fr}.context-aside{position:static}}
 
   /* ── Scrollytelling screens ── */
@@ -174,8 +174,8 @@
 
   .step-text{max-width:340px}
   .step-num{
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    text-transform:uppercase;letter-spacing:0.06em;
+    font-family:'DM Sans',sans-serif;font-size:12px;
+    text-transform:uppercase;
     color:var(--fg-dim);display:block;margin-bottom:24px;
   }
   .step-text h3{
@@ -217,8 +217,8 @@
     transition:width .5s cubic-bezier(.25,.8,.25,1);
   }
   .counter-num{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    text-transform:uppercase;letter-spacing:0.06em;
+    font-family:'DM Sans',sans-serif;font-size:12px;
+    text-transform:uppercase;
     color:var(--fg-dim);white-space:nowrap;
   }
 
@@ -294,8 +294,8 @@
     background:var(--bg-2);
   }
   .fig-placeholder .ph-tag{
-    font-family:'JetBrains Mono',monospace;font-size:9px;
-    text-transform:uppercase;letter-spacing:0.08em;
+    font-family:'DM Sans',sans-serif;font-size:9px;
+    text-transform:uppercase;
     color:var(--fg-dim);padding:4px 10px;
     border:1px solid var(--line-strong);border-radius:99px;
   }
@@ -325,7 +325,7 @@
   .video-card:hover .video-play-btn{transform:scale(1.1);background:#fff}
   .video-play-btn svg{width:20px;height:20px;margin-left:3px;fill:var(--fg)}
   .video-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .video-attr{margin-top:12px;color:var(--fg-dim);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;text-align:center}
+  .video-attr{margin-top:12px;color:var(--fg-dim);font-size:12px;font-family:'DM Sans',sans-serif;text-transform:uppercase;text-align:center}
 
   /* ── Mobile filmstrip ── */
   .phone-strip-wrap{position:relative;margin-top:40px}
@@ -350,11 +350,11 @@
   /* Color vis */
   .ds-color-strip{display:flex;gap:6px;width:100%}
   .ds-color-swatch{flex:1;height:44px;border-radius:8px}
-  .ds-color-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:5px 10px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--fg-dim)}
+  .ds-color-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:5px 10px;margin-top:10px;font-family:'DM Sans',sans-serif;font-size:9px;color:var(--fg-dim)}
   .ds-color-chip-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
   .ds-pal-card{display:flex;flex-direction:column;flex:1;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
   .ds-pal-swatch{height:88px;flex-shrink:0}
-  .ds-pal-hex{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.03em;color:var(--fg-dim);padding:6px;background:#fff;white-space:nowrap;text-align:center}
+  .ds-pal-hex{font-family:'DM Sans',sans-serif;font-size:8px;color:var(--fg-dim);padding:6px;background:#fff;white-space:nowrap;text-align:center}
   /* Typography vis */
   .ds-type-big{font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(40px,4vw,56px);letter-spacing:-0.04em;color:#001028;line-height:1}
   .ds-type-weights{display:flex;gap:16px;margin-top:10px}
@@ -365,11 +365,11 @@
   .ds-space-rows{display:flex;flex-direction:column;gap:10px;width:100%}
   .ds-space-row{display:flex;align-items:center;gap:12px}
   .ds-space-bar{height:12px;border-radius:3px;background:#c8cfd8;flex-shrink:0}
-  .ds-space-px{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-dim);white-space:nowrap}
+  .ds-space-px{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--fg-dim);white-space:nowrap}
   /* Components vis */
-  .ds-comp-btn{background:#0099fa;color:#fff;border-radius:6px;padding:7px 16px;font-family:'Inter',sans-serif;font-weight:600;font-size:11px}
-  .ds-comp-badge{background:#0099fa14;color:#0099fa;border:1px solid #0099fa30;border-radius:100px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;margin-left:8px}
-  .ds-comp-input{width:100%;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:7px 10px;font-size:11px;color:var(--fg-dim);display:flex;align-items:center;gap:5px;box-sizing:border-box}
+  .ds-comp-btn{background:#0099fa;color:#fff;border-radius:6px;padding:7px 16px;font-family:'Inter',sans-serif;font-weight:600;font-size:12px}
+  .ds-comp-badge{background:#0099fa14;color:#0099fa;border:1px solid #0099fa30;border-radius:100px;padding:3px 10px;font-family:'DM Sans',sans-serif;font-size:9px;margin-left:8px}
+  .ds-comp-input{width:100%;background:#fff;border:1px solid var(--line-strong);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:5px;box-sizing:border-box}
   .ds-comp-cursor{width:1px;height:12px;background:#0099fa;display:inline-block;animation:blink 1s step-start infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
   /* NFT card vis */
@@ -378,8 +378,8 @@
   .ds-nft-body{padding:8px}
   .ds-nft-name{font-family:'Inter',sans-serif;font-weight:600;font-size:9px;color:#001028;margin-bottom:4px}
   .ds-nft-price{display:flex;justify-content:space-between;align-items:center}
-  .ds-nft-eth{font-family:'JetBrains Mono',monospace;font-size:8px;color:#0099fa}
-  .ds-nft-usd{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--fg-dim)}
+  .ds-nft-eth{font-family:'DM Sans',sans-serif;font-size:8px;color:#0099fa}
+  .ds-nft-usd{font-family:'DM Sans',sans-serif;font-size:7px;color:var(--fg-dim)}
   /* Grid vis */
   .ds-grid-cols{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;width:100%;height:100%}
   .ds-grid-bar{border-radius:2px;background:#0099fa38}
@@ -424,6 +424,7 @@
   .reveal.d1{transition-delay:.04s}
   .reveal.d2{transition-delay:.08s}
   .reveal.d3{transition-delay:.12s}
+  /* Sentence case everywhere */ *{text-transform:none!important}
 </style>
 </head>
 <body>
