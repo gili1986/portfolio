@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="color-scheme" content="only light" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AntSeed · Case Study · Gilad Cohen</title>
+<meta name="description" content="Product designer on AntSeed · a peer-to-peer market for AI inference. Brand, macOS desktop app, marketing site, and a motion system built to make decentralized infrastructure read as one switch." />
+<link rel="canonical" href="https://gilad.design/AntSeed" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://gilad.design/AntSeed" />
+<meta property="og:title" content="AntSeed · Case Study · Gilad Cohen" />
+<meta property="og:description" content="Product designer on AntSeed · a peer-to-peer market for AI inference. Brand, macOS desktop app, marketing site, and a motion system." />
+<meta property="og:image" content="https://gilad.design/assets/og/og-antseed.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AntSeed · Case Study · Gilad Cohen" />
+<meta name="twitter:description" content="Product designer on AntSeed · a peer-to-peer market for AI inference. Brand, desktop app, site, and motion." />
+<meta name="twitter:image" content="https://gilad.design/assets/og/og-antseed.png" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"AntSeed - Case Study","description":"Product designer on AntSeed, a peer-to-peer market for AI inference. Brand, macOS desktop app, marketing site, and motion system.","url":"https://gilad.design/AntSeed","image":"https://gilad.design/assets/antseed/site-hero.webp","author":{"@type":"Person","name":"Gilad Cohen","url":"https://gilad.design"},"dateCreated":"2026","keywords":"product design, desktop app design, brand identity, motion design, peer-to-peer, AI infrastructure"}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7;--bg-2:#f0eee7;
+    --ink:#0a0a0b;--line:#0a0a0b14;--line-strong:#0a0a0b24;
+    --fg:#0a0a0b;--fg-dim:#7a7770;--fg-mid:#3a3a3c;
+    --accent:#5b3df5;--warm:#d24a1a;--good:#2d8e4a;
+    /* AntSeed product tokens */
+    --as-void:#001e12;--as-void-deep:#001408;--as-void-cta:#143226;
+    --as-live:#10b981;--as-live-bright:#24cd95;--as-live-text:#008359;
+    --as-badge:#e2fff0;--as-app-bg:#fbf9f4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  /* Typography: prevent orphan words (single word on the last line) */
+  h1,h2,h3,h4,h5,h6,.lede,blockquote,figcaption{text-wrap:balance}
+  h1:has(br),h2:has(br),h3:has(br),h4:has(br){text-wrap:pretty}
+  p,li,dd,dt,summary,label{text-wrap:pretty}
+  .stat p,.ds-card-desc,.ps-desc,.screen-fig-cap,.card p,figcaption{text-wrap:balance}
+  .lede,h1,h2,h3,h4,h5,h6{-webkit-hyphens:none;hyphens:none}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;letter-spacing:-0.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 40px;position:relative}
+  @media (max-width:720px){.wrap{padding:0 16px}}
+
+  .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(#0a0a0b0a 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);opacity:0.5}
+
+  /* ── Nav ── */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background:linear-gradient(180deg,#fafaf7cc 0%,#fafaf780 70%,transparent);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+  nav.top.scrolled{border-bottom-color:var(--line);background:#fafaf7ee}
+  nav.top .row{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px}
+  nav.top .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+  nav.top .brand .dot{width:33px;height:24px;display:inline-block}
+  nav.top .brand .dot svg{width:100%;height:100%;display:block}
+  nav.top .links{display:flex;gap:32px}
+  nav.top .links a{color:var(--fg-dim);text-decoration:none;font-size:13px;transition:color .2s;position:relative}
+  nav.top .links a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  nav.top .links a:hover{color:var(--fg)}
+  nav.top .links a:hover::after{transform:scaleX(1)}
+  nav.top .clock{color:var(--fg-dim)}
+  @media (max-width:720px){nav.top .links{display:none}}
+
+  /* ── Hero ── */
+  .hero{padding:0;position:relative;z-index:1}
+  .hero-wrap{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;align-items:stretch;gap:0;min-height:580px}
+  .hero-wrap .meta-row{grid-column:1/-1;align-self:end;padding-bottom:40px}
+  .hero-text{padding:144px 48px 64px 0;align-self:center}
+  .hero .crumb{display:flex;align-items:center;gap:16px;color:var(--fg-dim);margin-bottom:64px}
+  .hero .crumb .pulse{width:6px;height:6px;border-radius:50%;background:var(--as-live);box-shadow:0 0 0 4px #10b98122}
+  .hero .crumb a{color:var(--fg-dim);text-decoration:none;transition:color .2s}
+  .hero .crumb a:hover{color:var(--fg)}
+  .hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,96px);line-height:0.9;letter-spacing:-0.04em;color:var(--fg);max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .sub{margin-top:40px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--fg-mid)}
+  .hero .sub em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .hero-visual{
+    display:flex;align-items:flex-end;justify-content:flex-end;
+    padding:112px 0 0;
+    opacity:0;transform:translateY(20px);animation:hero-fadein .9s cubic-bezier(.2,.8,.2,1) .25s forwards;
+  }
+  @keyframes hero-fadein{to{opacity:1;transform:none}}
+  .hero-visual img{width:100%;max-width:620px;height:auto;display:block;margin-right:7%}
+  .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 64px;border-top:1px solid var(--line)}
+  @media(max-width:960px){
+    .hero-wrap{grid-template-columns:1fr}
+    .hero-text{padding:120px 0 24px}
+    .hero-visual{padding:0 0 24px;justify-content:center}
+    .hero-visual img{max-width:420px;margin-right:0}
+    .meta-row{grid-template-columns:repeat(2,1fr);gap:24px;padding-bottom:48px}
+  }
+  @media(max-width:720px){.meta-row{grid-template-columns:repeat(2,1fr);gap:16px 24px}}
+  .meta-row .cell .mono{display:block;color:var(--fg-dim);margin-bottom:8px}
+  .meta-row .cell strong{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:22px;letter-spacing:-0.02em;color:var(--fg);display:block}
+
+  /* ── Cover ── */
+  .cover{margin-top:96px;position:relative;z-index:1}
+  /* Ratio matches the captured antseed.com viewport so the site header is never cropped */
+  .cover-fig{max-width:765px;margin:0 auto;position:relative;aspect-ratio:1280/918;border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;background:#fff}
+  .cover-fig video,.cover-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .cover-cap{max-width:765px;margin:14px auto 0;display:flex;justify-content:space-between;color:var(--fg-dim)}
+  .cover-link{display:inline-flex;align-items:center;gap:4px;color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity .2s}
+  .cover-link:hover{opacity:.75}
+  .cover-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  @media(max-width:600px){.cover-cap{flex-direction:column;gap:8px}}
+
+  /* ── Sections ── */
+  section{position:relative;z-index:1;padding:120px 0;border-top:1px solid var(--line)}
+  .sect-label{display:grid;grid-template-columns:120px 1fr;gap:48px;align-items:start;margin-bottom:64px}
+  .sect-label .num{color:var(--fg-dim)}
+  .sect-label h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4.6vw,64px);line-height:0.96;letter-spacing:-0.035em;color:var(--fg);max-width:18ch}
+  .sect-label h2 em{font-style:normal;color:var(--accent)}
+  .sect-label .lede{margin-top:16px;color:var(--fg-mid);font-size:17px;max-width:52ch;line-height:1.55}
+  @media (max-width:720px){.sect-label{grid-template-columns:1fr;gap:16px}}
+
+  /* ── Narrative ── */
+  .narr{display:grid;grid-template-columns:120px 1fr;gap:48px}
+  .narr .lbl{color:var(--fg-dim);position:sticky;top:90px;align-self:start}
+  @media (max-width:720px){.narr{grid-template-columns:1fr;gap:16px}.narr .lbl{position:static}}
+  .narr p{color:var(--fg-mid);font-size:17px;line-height:1.65;max-width:60ch;margin-bottom:16px}
+  .narr p em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .narr .pull{margin:32px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.25;letter-spacing:-0.02em;color:var(--fg);max-width:32ch}
+  .narr .pull em{font-style:normal;color:var(--accent)}
+
+  /* ── Two-col ── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:24px}
+  @media (max-width:900px){.two-col{grid-template-columns:1fr;gap:40px}}
+  /* Align the diagnosis columns to the section heading's left edge (label gutter: 120px + 48px gap) */
+  @media (min-width:901px){.two-col{margin-left:168px}}
+
+  .two-col .col h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:32px;letter-spacing:-0.025em;margin-bottom:24px;line-height:1.05}
+  .two-col .col h3 em{font-style:normal;color:var(--accent)}
+  .two-col .col p{color:var(--fg-mid);font-size:16px;line-height:1.65;max-width:48ch;margin-bottom:14px}
+  .two-col .col .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .two-col .col .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);padding:4px 12px;border:1px solid var(--line-strong);border-radius:99px}
+
+  /* ── Context grid ── */
+  .context-grid{display:grid;grid-template-columns:1fr 300px;gap:80px;align-items:start}
+  .context-aside{position:sticky;top:120px}
+  @media(max-width:960px){.context-grid{grid-template-columns:1fr}.context-aside{position:static}}
+
+  /* ── AntSeed brand card ── */
+  .as-brand-card{
+    background:var(--as-void);
+    border:1px solid #10b98130;
+    border-radius:16px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    padding:48px 32px;
+  }
+  .as-brand-card img{width:100%;max-width:200px;height:auto;display:block}
+  .as-aside-note{margin-top:16px;font-size:13px;line-height:1.55;color:var(--fg-dim)}
+  .as-aside-note em{font-style:normal;color:var(--fg)}
+
+  /* ── Scrollytelling ── */
+  .scrolly-wrap{
+    display:grid;grid-template-columns:360px 1fr;gap:80px;
+    max-width:1270px;margin:0 auto;padding:0 40px;align-items:start;
+  }
+  .scrolly-step{min-height:90vh;display:flex;align-items:center}
+  .scrolly-step:first-child{padding-top:5vh}
+  .scrolly-step:last-child{padding-bottom:10vh}
+  .step-text{max-width:340px}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--as-live-text);display:block;margin-bottom:24px}
+  .step-text h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(32px,3.6vw,52px);letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;color:var(--fg)}
+  .step-text h3 em{font-style:normal;color:var(--accent)}
+  .step-text p{color:var(--fg-mid);font-size:16px;line-height:1.65;margin-bottom:12px}
+  .step-ui{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);list-style:none;display:flex;flex-direction:column;gap:9px}
+  .step-ui .step-ui-lbl{font-family:'JetBrains Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg-dim);margin-bottom:2px}
+  .step-ui li{font-size:13px;line-height:1.5;color:var(--fg-mid);padding-left:15px;position:relative}
+  .step-ui li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--as-live)}
+  .step-cap{display:flex;flex-direction:column;gap:4px;padding-top:16px;margin-top:24px;border-top:1px solid var(--line)}
+  .step-cap .mono{color:var(--fg-dim)}
+  .scrolly-visual{position:sticky;top:0;height:100vh;padding:76px 0 28px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+  .screen-counter{display:flex;align-items:center;gap:16px}
+  .counter-track{flex:1;height:1px;background:var(--line-strong);position:relative;overflow:hidden}
+  .counter-fill{position:absolute;top:0;left:0;height:100%;background:var(--as-live-text);transition:width .5s cubic-bezier(.25,.8,.25,1)}
+  .counter-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim);white-space:nowrap}
+  .screen-slides{display:grid;flex:1;min-height:0}
+  .screen-slide{grid-area:1/1;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .55s cubic-bezier(.25,.8,.25,1);min-height:0}
+
+  /* App window figure. The PNGs already carry macOS chrome + rounded corners */
+  .app-fig{
+    flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+    padding:0;background:none;border:0;
+  }
+  .app-fig img{max-height:61%;max-width:61%;width:auto;height:auto;display:block;filter:drop-shadow(0 22px 40px rgba(0,30,18,0.16))}
+  .screen-slide.active{opacity:1;pointer-events:auto}
+  .screen-fig-cap{display:flex;justify-content:space-between;margin-top:10px;color:var(--fg-dim);flex-shrink:0}
+  .step-mobile-fig{display:none;margin-bottom:24px}
+  .step-mobile-fig .app-fig{height:auto;padding:0}
+  .step-mobile-fig .app-fig img{max-height:none;width:80%;max-width:80%;margin:0 auto}
+  @media(max-width:900px){
+    .scrolly-wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+    .scrolly-visual{display:none}
+    .step-mobile-fig{display:block}
+    .scrolly-step{min-height:auto;padding:48px 0;flex-direction:column;align-items:stretch}
+    .scrolly-step:first-child{padding-top:0}
+    .scrolly-step:last-child{padding-bottom:0}
+    .step-text{max-width:none}
+  }
+
+  /* ── Site section grid ── */
+  .site-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:48px}
+  @media(max-width:900px){.site-grid{grid-template-columns:1fr;gap:24px}}
+  .site-item.wide{grid-column:1/-1}
+  .site-fig{border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;background:#fff}
+  .site-fig img{width:100%;height:auto;display:block}
+  /* Half-width items share one ratio so their captions sit on the same line.
+     Captures are letterboxed on white, which matches the site's own ground. */
+  .site-item:not(.wide) .site-fig{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center}
+  .site-item:not(.wide) .site-fig img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .site-item.pair .site-fig{aspect-ratio:1600/713}
+  .site-item.pair .site-fig img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+  .site-cap{display:flex;flex-direction:column;gap:4px;margin-top:12px}
+  .site-cap-top{display:flex;align-items:baseline;gap:10px}
+  .site-cap .s-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--as-live-text)}
+  .site-cap .s-name{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:400;letter-spacing:-0.015em;color:var(--fg);line-height:1.2}
+  .site-cap .s-desc{font-size:13.5px;color:var(--fg-dim);line-height:1.55;margin-top:2px;max-width:52ch}
+
+  /* ── Process: wireframe to shipped ── */
+  /* Process blocks sit on the section heading's left edge (label gutter 120px + 48px gap). */
+  @media(min-width:901px){
+    #process .narr > div{max-width:68ch}
+    .wf-lead,.wf-grid{margin-left:168px}
+  }
+  .wf-lead{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-top:72px;padding-bottom:12px;border-bottom:1px solid var(--line-strong)}
+  .wf-lead span{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg-dim)}
+  .wf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:44px 24px;margin-top:28px}
+  @media(max-width:1200px){.wf-grid{grid-template-columns:repeat(3,1fr);gap:40px 22px}}
+  @media(max-width:900px){.wf-grid{grid-template-columns:repeat(2,1fr);gap:36px 20px}}
+  @media(max-width:640px){.wf-grid{grid-template-columns:1fr;gap:32px}}
+  .wf-item{display:flex;flex-direction:column;gap:13px}
+  .wf-fig{border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;background:#fff;aspect-ratio:1008/1322}
+  .wf-fig img{width:100%;height:auto;display:block}
+  .wf-num{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--as-live-text);display:block;margin-bottom:5px}
+  .wf-name{font-family:'Bricolage Grotesque',sans-serif;font-size:19px;font-weight:400;letter-spacing:-0.02em;color:var(--fg);line-height:1.2;display:block;margin-bottom:8px}
+  .wf-desc{font-size:13.5px;line-height:1.62;color:var(--fg-mid);margin:0}
+
+  /* ── State comparisons inside the VPR section ── */
+  .states{margin-top:104px}
+  .states + .states{margin-top:88px}
+  .states-head{display:grid;grid-template-columns:120px 1fr;gap:48px;align-items:start;margin-bottom:36px}
+  @media(max-width:720px){.states-head{grid-template-columns:1fr;gap:14px}}
+  .states-head h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.03em;line-height:1.08;color:var(--fg);margin-bottom:12px}
+  .states-head h3 em{font-style:normal;color:var(--accent)}
+  .states-head p{font-size:15px;line-height:1.65;color:var(--fg-mid);max-width:62ch}
+  .state-row{display:grid;gap:20px}
+  .state-row.of-3{grid-template-columns:repeat(3,1fr)}
+  .state-row.of-2{grid-template-columns:repeat(2,1fr);max-width:1000px}
+  @media(max-width:900px){.state-row.of-3,.state-row.of-2{grid-template-columns:1fr;gap:28px}}
+  .state-cell{display:flex;flex-direction:column;gap:12px}
+  .state-fig{display:flex;align-items:center;justify-content:center;aspect-ratio:1024/1320}
+  .state-fig img{max-width:80%;max-height:80%;width:auto;height:auto;display:block;filter:drop-shadow(0 18px 34px rgba(0,30,18,0.15))}
+  .state-cap{display:flex;flex-direction:column;gap:4px}
+  .state-step{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--as-live-text)}
+  .state-name{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:400;letter-spacing:-0.015em;color:var(--fg);line-height:1.25}
+  .state-desc{font-size:13.5px;line-height:1.55;color:var(--fg-dim);max-width:44ch}
+
+  /* ── Motion ── */
+  .motion-grid{display:grid;grid-template-columns:1fr;gap:64px;margin-top:48px}
+  .motion-item{display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:start}
+  @media(max-width:1000px){.motion-item{grid-template-columns:1fr;gap:24px}}
+  .motion-fig{border-radius:12px;overflow:hidden;background:var(--as-void);border:1px solid #10b98126;position:relative;aspect-ratio:16/9}
+  .motion-fig.site-ratio{aspect-ratio:1280/918;background:#fff;border-color:var(--line-strong)}
+  .motion-fig video{width:100%;height:100%;object-fit:cover;display:block}
+  .motion-body h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.025em;line-height:1.08;margin-bottom:14px;color:var(--fg)}
+  .motion-body h3 em{font-style:normal;color:var(--accent)}
+  .motion-body p{color:var(--fg-mid);font-size:15.5px;line-height:1.65;margin-bottom:12px}
+  .motion-body p em{font-family:'Bricolage Grotesque',sans-serif;font-style:normal;color:var(--fg)}
+  .motion-spec{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+  .motion-spec span{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-dim)}
+  .motion-spec span + span::before{content:"·";margin-right:8px;color:var(--line-strong)}
+
+  /* ── Design system ── */
+  .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;max-width:1152px;margin-left:auto;margin-right:auto}
+  .ds-card{background:#fff;border:1px solid var(--line-strong);border-radius:14px;overflow:hidden}
+  .ds-card-vis{height:160px;background:#f2f6f3;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+  .ds-card-body{padding:16px 24px 24px;border-top:1px solid var(--line)}
+  .ds-card-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:15px;letter-spacing:-0.02em;color:var(--fg);margin:0 0 5px}
+  .ds-card-desc{font-size:12px;line-height:1.55;color:var(--fg-dim);margin:0;text-wrap:balance}
+  .ds-pal-card{display:flex;flex-direction:column;flex:1;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .ds-pal-swatch{height:88px;flex-shrink:0}
+  .ds-pal-card{height:100%;justify-content:flex-end}
+  .ds-pal-hex{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.03em;color:#001e12b3;padding:8px 6px;white-space:nowrap;text-align:center}
+  .ds-pal-card.on-dark .ds-pal-hex{color:#ffffffc7}
+  .ds-type-big{font-family:'Geist','DM Sans',sans-serif;font-weight:600;font-size:clamp(40px,4vw,56px);letter-spacing:-0.04em;color:var(--as-void);line-height:1}
+  .ds-type-weights{display:flex;gap:16px;margin-top:10px;font-family:'Geist','DM Sans',sans-serif}
+  .ds-type-wlabel{font-size:12px;color:var(--fg-dim)}
+  .ds-type-wlabel.w-bold{font-weight:600;color:var(--fg)}
+  .ds-type-wlabel.w-semi{font-weight:500;color:var(--fg-mid)}
+  .ds-type-wlabel.mono{font-family:'JetBrains Mono',monospace;font-size:11px}
+  /* Components vis */
+  .ds-comps{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;font-family:'Geist','DM Sans',sans-serif}
+  .ds-comp-row{display:flex;align-items:center;gap:6px}
+  .ds-comp-badge{background:var(--as-badge);color:var(--as-live-text);border-radius:100px;padding:3px 10px;font-size:10.5px;font-weight:500}
+  .ds-comp-btn{background:var(--as-void);color:#fff;border-radius:100px;padding:6px 16px;font-size:11px;font-weight:500}
+  .ds-comp-btn.ghost{background:#fff;color:var(--fg);border:1px solid var(--line-strong)}
+  .ds-comp-input{width:100%;max-width:250px;background:#fff;border:1px solid var(--line-strong);border-radius:100px;padding:6px 6px 6px 14px;font-size:11px;color:var(--fg-dim);display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
+  .ds-comp-send{width:22px;height:22px;border-radius:50%;background:var(--as-badge);display:flex;align-items:center;justify-content:center;color:var(--as-live)}
+  .ds-comp-send svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  @media(max-width:900px){.ds-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.ds-grid{grid-template-columns:1fr}}
+
+  /* ── Outcome stats ── */
+  .outcome{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:24px;padding-top:32px;border-top:1px solid var(--line)}
+  @media(max-width:720px){.outcome{grid-template-columns:repeat(2,1fr);gap:24px}}
+  .outcome .stat .mono{color:var(--fg-dim);display:block;margin-bottom:10px}
+  .outcome .stat .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,52px);letter-spacing:-0.03em;line-height:1;color:var(--fg)}
+  .outcome .stat .v em{font-style:normal;color:var(--accent)}
+  .outcome .stat p{font-size:13px;color:var(--fg-mid);margin-top:8px;max-width:24ch}
+  .outcome-note{margin-top:28px;font-size:12.5px;color:var(--fg-dim);max-width:60ch}
+  .outcome-note a{color:var(--fg-mid)}
+
+  /* ── Footer ── */
+  footer{padding:80px 0 40px;border-top:1px solid var(--line);position:relative;z-index:1}
+  footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+  footer h5{font-family:'Bricolage Grotesque',sans-serif;font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-0.03em;line-height:1;max-width:none}
+  footer h5 em{font-style:normal;color:var(--accent)}
+  footer .links{display:flex;gap:24px}
+  footer .links a{color:var(--fg-mid);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:color .2s,border-color .2s}
+  footer .links a:hover{color:var(--fg);border-color:var(--fg)}
+  footer .meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--fg-dim)}
+  footer .next-link{display:inline-flex;align-items:center;gap:12px;padding:14px 28px;border:1px solid var(--fg);border-radius:99px;text-decoration:none;color:var(--fg);font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:-0.02em;margin-top:32px;transition:background .3s,color .3s,border-color .3s}
+  footer .next-link:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  footer .next-link .arr{transition:transform .3s}
+  footer .next-link:hover .arr{transform:translateX(4px) rotate(-45deg)}
+
+  /* ── Reveal ── */
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .35s cubic-bezier(.22,.61,.36,1),transform .35s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.04s}
+  .reveal.d2{transition-delay:.08s}
+  .reveal.d3{transition-delay:.12s}
+
+  @media(max-width:720px){
+    section{padding:56px 0}
+    .hero-text{padding:104px 0 24px}
+    .hero .crumb{margin-bottom:40px}
+    .meta-row{padding:24px 0 40px}
+    .sect-label{margin-bottom:40px}
+    .cover{margin-top:24px}
+    .scrolly-wrap{padding:0 16px}
+    footer{padding:56px 0 32px}
+    footer .meta{flex-direction:column;gap:8px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .hero-visual{opacity:1;transform:none;animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div id="site-nav"></div>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-wrap">
+
+      <div class="hero-text">
+        <div class="crumb reveal">
+          <span class="pulse"></span>
+          <span class="mono"><a href="/">Index</a> &nbsp;/&nbsp; Case 02 &nbsp;/&nbsp; AntSeed</span>
+        </div>
+        <h1 class="reveal d1">Peer-to-peer AI, reduced to <em>one switch</em>.</h1>
+        <p class="sub reveal d2">Full design for <em>AntSeed</em>, an open peer-to-peer market for AI inference: brand, macOS app, marketing site and motion. All of it had to make sense in the four seconds before someone closes the tab.</p>
+      </div>
+
+      <div class="hero-visual">
+        <img fetchpriority="high" src="assets/antseed/hero.webp" alt="AntSeed VPR desktop app, connected state, on a macOS desktop" width="974" height="990" />
+      </div>
+
+      <div class="meta-row reveal d3">
+        <div class="cell"><span class="mono">Role</span><strong>Product Designer · freelance</strong></div>
+        <div class="cell"><span class="mono">Year</span><strong>2026</strong></div>
+        <div class="cell"><span class="mono">Team</span><strong>Solo designer · founder · eng</strong></div>
+        <div class="cell"><span class="mono">Scope</span><strong>Brand · desktop app · site · motion</strong></div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ── COVER ── -->
+<section class="cover" style="border:none;padding-top:0">
+  <div class="wrap">
+    <div class="cover-fig reveal">
+      <video autoplay muted loop playsinline preload="auto" poster="assets/antseed/motion/hero-site-poster.webp" aria-label="The antseed.com hero: one request routed across the open market, live">
+        <source src="assets/antseed/motion/hero-site.mp4" type="video/mp4">
+        <img fetchpriority="high" src="assets/antseed/motion/hero-site-poster.webp" alt="The antseed.com hero: one request routed across the open market" />
+      </video>
+    </div>
+    <div class="cover-cap reveal d1">
+      <span class="mono">Fig. 01 - antseed.com · hero, live · 19s loop</span>
+      <a class="mono cover-link" href="https://antseed.com" target="_blank" rel="noopener">Visit antseed.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 01 CONTEXT ── -->
+<section id="context">
+  <div class="wrap">
+    <div class="context-grid">
+
+      <div>
+        <div class="sect-label reveal">
+          <span class="num mono">01 / Context</span>
+          <div>
+            <h2>A market with no company in the <em>middle</em>.</h2>
+            <p class="lede">AntSeed moves AI requests the way BitTorrent moves files. Providers set their own prices, buyers route by price, latency, reputation or privacy. No aggregator taking a cut, no account to create.</p>
+          </div>
+        </div>
+
+        <div class="narr reveal d1">
+          <span class="lbl mono">The brief</span>
+          <div>
+            <p>The engineering was already real: a DHT, a routing protocol, on-chain settlement. What was missing was any reason for a normal person to <em>want</em> it. My job was everything outside the protocol: the mark, the app, the site and the films.</p>
+            <p>The audience splits in two: developers who judge it on architecture, and people who just want their coding agent to cost less. One surface had to serve both without patronising either.</p>
+            <div class="pull">P2P sells itself on architecture. <em>Nobody adopts it for architecture.</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="context-aside reveal d2">
+        <div class="as-brand-card">
+          <img loading="lazy" src="assets/antseed/antseed-logo-onvoid.svg" alt="AntSeed logo · an ant whose legs terminate in network nodes, with the wordmark" />
+        </div>
+        <p class="as-aside-note">An ant whose legs end in nodes. <em>It is already a graph</em>, so one shape carries the brand, the app icon and the films.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 DIAGNOSIS ── -->
+<section id="problem">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">02 / Diagnosis</span>
+      <div>
+        <h2>The category's whole vocabulary works <em>against</em> it.</h2>
+        <p class="lede">Decentralized products inherit dashboards, node graphs and dark terminals. That reads as "infrastructure" to engineers and "not for me" to everyone else.</p>
+      </div>
+    </div>
+
+    <div class="two-col reveal d1">
+      <div class="col">
+        <h3>What was <em>hard</em></h3>
+        <p>The value is invisible. Routing happens in milliseconds, through providers the user never meets, and the saving arrives as an absence: a bill that did not grow.</p>
+        <p>"Peer-to-peer" and "on-chain" also promise configuration, wallets and risk, while the real job is mundane: point your tools somewhere cheaper and carry on.</p>
+        <div class="tag-row">
+          <span class="tag">Invisible value</span>
+          <span class="tag">Crypto adjacency</span>
+          <span class="tag">Two audiences</span>
+          <span class="tag">No visible product</span>
+          <span class="tag">Trust before spend</span>
+        </div>
+      </div>
+      <div class="col">
+        <h3>The <em>approach</em></h3>
+        <p>Anchor the product to one physical control. The VPR opens on a power button the size of a fist: on or off. A user who understands nothing else understands that.</p>
+        <p>Then show the money where it is earned. Every model row strikes the official price through against the live one, so the saving is a number, not a headline.</p>
+        <p>Warm paper, not black glass, with green reserved for what is actually live.</p>
+        <div class="tag-row">
+          <span class="tag">One control</span>
+          <span class="tag">Price as proof</span>
+          <span class="tag">Warm surface</span>
+          <span class="tag">Green means live</span>
+          <span class="tag">Tools unchanged</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 PROCESS ── -->
+<section id="process">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">03 / Process</span>
+      <div>
+        <h2>Everything argued out in <em>grey</em> first.</h2>
+        <p class="lede">Two full grey passes before anything was styled. Each screen answered one question, and most of what changed was not layout but naming.</p>
+      </div>
+    </div>
+
+    <div class="narr reveal d1">
+      <span class="lbl mono">How it ran</span>
+      <div>
+        <p>Grey lets structure and wording get argued before anyone reacts to colour, and it is the one version a founder and an engineer read the same way.</p>
+        <p>The pass that mattered most was the money: a credits label, a dollar figure and a separate token with its own Claim button, all fighting for attention. Settling it here was far cheaper than after the visual pass.</p>
+      </div>
+    </div>
+
+    <div class="wf-lead reveal d1">
+      <span>The grey set</span>
+      <span>8 screens · pass 01 and 02</span>
+    </div>
+    <div class="wf-grid reveal d1">
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-home.webp" alt="Wireframe: Home" /></div>
+        <div>
+          <span class="wf-num">01</span>
+          <span class="wf-name">Home · the switch</span>
+          <p class="wf-desc">One control, one word of state, one default model. The test: can the app be understood with the power control as its only hierarchy?</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-home-active.webp" alt="Wireframe: Home" /></div>
+        <div>
+          <span class="wf-num">02</span>
+          <span class="wf-name">Home · in use</span>
+          <p class="wf-desc">How much can this screen carry before it stops reading as a switch? Too much. The Popular list pushed it over and moved to its own view.</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-explore.webp" alt="Wireframe: Models" /></div>
+        <div>
+          <span class="wf-num">03</span>
+          <span class="wf-name">Models · the market</span>
+          <p class="wf-desc">419 models is a filtering problem first. Recommended lands, All Models waits behind a tab, and Favourites and Recent give the market a memory.</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-model.webp" alt="Wireframe: Model" /></div>
+        <div>
+          <span class="wf-num">04</span>
+          <span class="wf-name">Model · the sellers</span>
+          <p class="wf-desc">Where delegation gets decided. The Auto toggle sits right above the list it governs, and switching it off hands you Pinned sellers instead of taking something away.</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-tools.webp" alt="Wireframe: Tools" /></div>
+        <div>
+          <span class="wf-num">05</span>
+          <span class="wf-name">Tools · connect</span>
+          <p class="wf-desc">The product's argument is that your setup doesn't change. One identical button per row, so it reads as things that already work, not a setup process.</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-prefs.webp" alt="Wireframe: Preferences" /></div>
+        <div>
+          <span class="wf-num">06</span>
+          <span class="wf-name">Preferences · the floor</span>
+          <p class="wf-desc">Auto-routing sends a prompt to a stranger's machine, so the bounds had to be few: two sliders, two toggles. In grey, no control said what it does, which rewrote the shipped version.</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-profile.webp" alt="Wireframe: Profile" /></div>
+        <div>
+          <span class="wf-num">07</span>
+          <span class="wf-name">Profile · the money</span>
+          <p class="wf-desc">Balance, token, usage and history together exposed the problem: a Credits label over a dollar figure, plus a second currency with its own Claim button. Two units, three names, one balance.</p>
+        </div>
+      </div>
+      <div class="wf-item">
+        <div class="wf-fig"><img loading="lazy" src="assets/antseed/wire/wire-qr.webp" alt="Wireframe: Deposit" /></div>
+        <div>
+          <span class="wf-num">08</span>
+          <span class="wf-name">Deposit · crypto</span>
+          <p class="wf-desc">A QR code and a signer address: right for wallet holders, a dead end for everyone else. Crypto could not be the front door to paying.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 04 THE INTERFACE ── -->
+<section id="screens">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">04 / The interface</span>
+      <div>
+        <h2>Nine screens, <em>one switch</em>.</h2>
+        <p class="lede">The Virtual Private Router is the product you hold: a macOS app that exposes an OpenAI and Anthropic compatible endpoint on localhost and routes every request across the open market.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrolly-wrap">
+
+    <div class="scrolly-steps">
+
+      <div class="scrolly-step" data-idx="0">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-home.webp" alt="AntSeed VPR · connected" /></div>
+          <div class="screen-fig-cap"><span class="mono">/vpr</span><span class="mono">Power · Default model · Apps</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.1 - VPR</span>
+          <h3>The whole product is <em>one button</em>.</h3>
+          <p>A power control and one word of state. Everything below it is optional detail, and the button is deliberately oversized, because its size is the message.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>Power control sized past any guideline</li>
+            <li>One word of state, in green, with nothing competing against it</li>
+            <li>Status bar is the only place the protocol speaks: port, peers, services, build</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/vpr</span>
+            <span class="mono">Power · Default model · Apps</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="1">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-home-1.webp" alt="AntSeed VPR · running with usage" /></div>
+          <div class="screen-fig-cap"><span class="mono">/vpr · active</span><span class="mono">Requests · Tokens · Saving</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.2 - In use</span>
+          <h3>Proof, <em>the moment it exists</em>.</h3>
+          <p>Once traffic flows, a usage strip appears: requests, tokens, saving. Only saving is green, because it is the only figure that answers why the app is open.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>The usage strip appears with traffic rather than reserving empty cells</li>
+            <li>Saving is the only figure rendered in green</li>
+            <li>The balance prompt arrives after proof, never before it</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/vpr · active</span>
+            <span class="mono">Requests · Tokens · Saving</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="2">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-explore.webp" alt="AntSeed VPR · model market" /></div>
+          <div class="screen-fig-cap"><span class="mono">/explore</span><span class="mono">419 models · peers · price band</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.3 - Explore</span>
+          <h3>Every row is an <em>argument about price</em>.</h3>
+          <p>Hundreds of models is a filtering problem, so the default view is a short Recommended list. Each row shows the official price struck through against the live band, and one-word badges do the ranking.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>Recommended is the landing tab, All Models sits behind it</li>
+            <li>Every row carries the same four facts in the same order</li>
+            <li>One-word badges do the ranking: Cheapest, Auto, Free</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/explore</span>
+            <span class="mono">419 models · peers · price band</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="3">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-explore-3.webp" alt="AntSeed VPR · model page with Auto select off and pinned sellers" /></div>
+          <div class="screen-fig-cap"><span class="mono">/explore · model</span><span class="mono">Auto select · Pinned sellers</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.4 - Auto select</span>
+          <h3>One switch decides <em>who decides</em>.</h3>
+          <p>With Auto on, the router picks from one list ranked by reputation. Turn it off and a Pinned sellers group appears above the market, so the choice becomes the user's to keep.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>Auto on: one ranked list, with the router's pick marked in place</li>
+            <li>Auto off: Pinned sellers appear above the market, nothing is removed</li>
+            <li>Price, saving and seller count stay fixed at the top in both states</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/explore · model</span>
+            <span class="mono">Auto select · Pinned sellers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="4">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-apps.webp" alt="AntSeed VPR · connected apps" /></div>
+          <div class="screen-fig-cap"><span class="mono">/apps</span><span class="mono">Connect · Requests · Spend</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.5 - Apps</span>
+          <h3>Keep the tools you <em>already have</em>.</h3>
+          <p>The strongest thing AntSeed can say is that nothing changes. Each tool is one Connect button, and on software that sits between a user and their paid tools, the exit is as visible as the entrance.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>One button per row, and the same button every time</li>
+            <li>Connected rows report their own request count and weekly spend</li>
+            <li>Disconnect stays visible in red rather than hiding in an overflow menu</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/apps</span>
+            <span class="mono">Connect · Requests · Spend</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="5">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-prefs.webp" alt="AntSeed VPR · routing preferences" /></div>
+          <div class="screen-fig-cap"><span class="mono">/prefs</span><span class="mono">Trust score · Price ceiling</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.6 - Preferences</span>
+          <h3>Delegation with a <em>floor under it</em>.</h3>
+          <p>Auto-routing means a stranger's machine answers your prompt. This screen bounds it with a trust floor, a price ceiling and an opt-in for free peers, because a policy that needs a manual is one nobody sets.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>Every control states its consequence, including the off state</li>
+            <li>Two sliders and two toggles is the entire surface</li>
+            <li>Seller, not peer, on the screen where money is being spent</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/prefs</span>
+            <span class="mono">Trust score · Price ceiling</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-step" data-idx="6">
+        <div class="step-mobile-fig">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-balance.webp" alt="AntSeed VPR · balance and settlement" /></div>
+          <div class="screen-fig-cap"><span class="mono">/balance</span><span class="mono">Card · Crypto · Withdraw</span></div>
+        </div>
+        <div class="step-text">
+          <span class="step-num">4.7 - Balance</span>
+          <h3>Crypto, <em>without the crypto tax</em>.</h3>
+          <p>"On-chain and non-custodial" is the sentence that loses a mainstream user. So the screen leads with dollars, puts Credit Card first, and shows how the money gets back out before asking for the first top-up.</p>
+          <ul class="step-ui">
+            <li class="step-ui-lbl" style="padding-left:0">UI decisions</li>
+            <li>The dollar figure is the largest thing on the screen</li>
+            <li>Credit Card before Crypto, as a peer rather than a prerequisite</li>
+            <li>Withdraw stated in plain words directly under the payment methods</li>
+          </ul>
+          <div class="step-cap">
+            <span class="mono">/balance</span>
+            <span class="mono">Card · Crypto · Withdraw</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="scrolly-visual">
+      <div class="screen-counter">
+        <span class="mono" style="color:var(--fg)">AntSeed VPR</span>
+        <div class="counter-track"><div class="counter-fill" id="counterFill" style="width:14.3%"></div></div>
+        <span class="counter-num" id="counterNum">01 / 07</span>
+      </div>
+
+      <div class="screen-slides">
+        <div class="screen-slide active" data-idx="0">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-home.webp" alt="VPR · connected" /></div>
+          <div class="screen-fig-cap"><span class="mono">/vpr</span><span class="mono">Power · Default model · Apps</span></div>
+        </div>
+        <div class="screen-slide" data-idx="1">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-home-1.webp" alt="VPR · running with usage" /></div>
+          <div class="screen-fig-cap"><span class="mono">/vpr · active</span><span class="mono">Requests · Tokens · Saving</span></div>
+        </div>
+        <div class="screen-slide" data-idx="2">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-explore.webp" alt="VPR · model market" /></div>
+          <div class="screen-fig-cap"><span class="mono">/explore</span><span class="mono">419 models · peers · price band</span></div>
+        </div>
+        <div class="screen-slide" data-idx="3">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-explore-3.webp" alt="VPR · model page, Auto select off" /></div>
+          <div class="screen-fig-cap"><span class="mono">/explore · model</span><span class="mono">Auto select · Pinned sellers</span></div>
+        </div>
+        <div class="screen-slide" data-idx="4">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-apps.webp" alt="VPR · connected apps" /></div>
+          <div class="screen-fig-cap"><span class="mono">/apps</span><span class="mono">Connect · Requests · Spend</span></div>
+        </div>
+        <div class="screen-slide" data-idx="5">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-prefs.webp" alt="VPR · routing preferences" /></div>
+          <div class="screen-fig-cap"><span class="mono">/prefs</span><span class="mono">Trust score · Price ceiling</span></div>
+        </div>
+        <div class="screen-slide" data-idx="6">
+          <div class="app-fig"><img loading="lazy" src="assets/antseed/vpr-balance.webp" alt="VPR · balance and settlement" /></div>
+          <div class="screen-fig-cap"><span class="mono">/balance</span><span class="mono">Card · Crypto · Withdraw</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ── 05 THE SITE ── -->
+<section id="site">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">05 / The site</span>
+      <div>
+        <h2>An argument, in <em>the order it has to be made</em>.</h2>
+        <p class="lede">antseed.com is a sequence, not a feature list: cheaper, private, unownable, then compatible with what you already use. Each section answers the question the last one raised.</p>
+      </div>
+    </div>
+
+    <div class="narr reveal d1">
+      <span class="lbl mono">Structure</span>
+      <div>
+        <p>The page opens on the product, not an illustration: the VPR at the centre of a dot field that resolves into the ant mark.</p>
+        <p>Objections come in the order they occur. Price, because that is why anyone clicked. Privacy, because "peer-to-peer" raises it. Ownership, for who is in charge. Then compatibility, the argument that closes.</p>
+        <div class="pull">Every section is a rebuttal. <em>The order is the design.</em></div>
+      </div>
+    </div>
+
+    <div class="site-grid">
+      <div class="site-item wide reveal">
+        <div class="site-fig"><img loading="lazy" src="assets/antseed/site-pricing.webp" alt="AntSeed site · pricing comparison table" /></div>
+        <div class="site-cap">
+          <div class="site-cap-top"><span class="s-num">01</span><span class="s-name">The same models. A fraction of the price.</span></div>
+          <span class="s-desc">Official API price against the live market best, per model, with the saving as its own column. The table settles the headline's claim.</span>
+        </div>
+      </div>
+
+      <div class="site-item reveal">
+        <div class="site-fig"><img loading="lazy" src="assets/antseed/site-private.webp" alt="AntSeed site · private by design" /></div>
+        <div class="site-cap">
+          <div class="site-cap-top"><span class="s-num">02</span><span class="s-name">Private by design</span></div>
+          <span class="s-desc">Anonymous (no account) and private (TEE-verified hardware), kept apart because blurring them is how privacy claims stop being believed.</span>
+        </div>
+      </div>
+
+      <div class="site-item reveal d1">
+        <div class="site-fig"><img loading="lazy" src="assets/antseed/site-owned.webp" alt="AntSeed site · owned by no one" /></div>
+        <div class="site-cap">
+          <div class="site-cap-top"><span class="s-num">03</span><span class="s-name">Owned by no one</span></div>
+          <span class="s-desc">The architecture, anchored to the analogy everyone already has: BitTorrent, but for AI requests.</span>
+        </div>
+      </div>
+
+      <div class="site-item pair reveal">
+        <div class="site-fig"><img loading="lazy" src="assets/antseed/site-runs.webp" alt="AntSeed site · runs on your computer, works with every tool" /></div>
+        <div class="site-cap">
+          <div class="site-cap-top"><span class="s-num">04</span><span class="s-name">Runs on your computer</span></div>
+          <span class="s-desc">Three cards for the three doubts left: setup, compatibility and payment. Each answered in one line, with the product drawn rather than described.</span>
+        </div>
+      </div>
+
+      <div class="site-item pair reveal d1">
+        <div class="site-fig"><img loading="lazy" src="assets/antseed/site-localhost.webp" alt="AntSeed site · point your tools at localhost" /></div>
+        <div class="site-cap">
+          <div class="site-cap-top"><span class="s-num">05</span><span class="s-name">Point your tools at localhost</span></div>
+          <span class="s-desc">The only place the site goes dark. A live terminal types the real commands while the request path animates below, because this section has to be technically exact.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 BRAND ── -->
+<section id="brand">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">06 / System</span>
+      <div>
+        <h2>The bones: <em>tokens, type, parts</em>.</h2>
+        <p class="lede">One mark, five colors, two typefaces and a single primitive. The app, the site and the films all draw from the same set.</p>
+      </div>
+    </div>
+
+    <div class="ds-grid">
+
+      <!-- Color tokens -->
+      <div class="ds-card reveal">
+        <div class="ds-card-vis" style="gap:8px;padding:16px">
+          <div class="ds-pal-card" style="background:#10b981"><span class="ds-pal-hex">#10B981</span></div>
+          <div class="ds-pal-card" style="background:#24cd95"><span class="ds-pal-hex">#24CD95</span></div>
+          <div class="ds-pal-card on-dark" style="background:#001e12"><span class="ds-pal-hex">#001E12</span></div>
+          <div class="ds-pal-card" style="background:#e2fff0"><span class="ds-pal-hex">#E2FFF0</span></div>
+          <div class="ds-pal-card" style="background:#fbf9f4"><span class="ds-pal-hex">#FBF9F4</span></div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Color system</h4>
+          <p class="ds-card-desc">5 tokens: live, mint, void, tint, paper. Green is reserved for state that is actually live.</p>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="ds-card reveal d1">
+        <div class="ds-card-vis" style="flex-direction:column">
+          <div class="ds-type-big">Geist</div>
+          <div class="ds-type-weights">
+            <span class="ds-type-wlabel w-bold">Semi Bold</span>
+            <span class="ds-type-wlabel w-semi">Medium</span>
+            <span class="ds-type-wlabel">Regular</span>
+            <span class="ds-type-wlabel mono">Mono</span>
+          </div>
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Typography</h4>
+          <p class="ds-card-desc">Geist for everything the user reads. JetBrains Mono for what the protocol says: ports, prices, peer counts.</p>
+        </div>
+      </div>
+
+      <!-- Halftone mark -->
+      <div class="ds-card reveal d2">
+        <div class="ds-card-vis" style="padding:0">
+          <img loading="lazy" src="assets/antseed/dot-lattice.webp" alt="The AntSeed ant mark rendered as a halftone dot field" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Halftone mark</h4>
+          <p class="ds-card-desc">The ant broken into a dot field. It sits behind the site hero and runs through the films, so the brand reads as texture before it reads as a logo.</p>
+        </div>
+      </div>
+
+      <!-- Components -->
+      <div class="ds-card reveal">
+        <div class="ds-card-vis" style="padding:0">
+          <img loading="lazy" src="assets/antseed/components.webp?v=2" alt="AntSeed components: buttons, badges, select, slider, search field and toggles" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Components</h4>
+          <p class="ds-card-desc">Buttons, one-word badges, select, slider, search and toggles, with Disconnect kept visible in red.</p>
+        </div>
+      </div>
+
+      <!-- Iconography -->
+      <div class="ds-card reveal d1">
+        <div class="ds-card-vis" style="padding:0">
+          <img loading="lazy" src="assets/antseed/iconography.webp" alt="AntSeed sidebar icon set in its default and active states" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">Iconography</h4>
+          <p class="ds-card-desc">One outline set for the sidebar, from VPR to Settings. Ink at rest, green only on the active view.</p>
+        </div>
+      </div>
+
+      <!-- Power button -->
+      <div class="ds-card reveal d2">
+        <div class="ds-card-vis" style="padding:0">
+          <img loading="lazy" src="assets/antseed/power-button.webp" alt="The AntSeed power button set into the connected gradient" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <div class="ds-card-body">
+          <h4 class="ds-card-title">The power button</h4>
+          <p class="ds-card-desc">The product's one primitive, set into a gradient that only appears while the router is on. Everything else stays ink on paper.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 OUTCOMES ── -->
+<section id="outcomes">
+  <div class="wrap">
+    <div class="sect-label reveal">
+      <span class="num mono">07 / Outcomes</span>
+      <div>
+        <h2>What shipped, and <em>what I'd do differently</em>.</h2>
+        <p class="lede">The network is live and its numbers are its own. What I can claim is the surface people meet it through.</p>
+      </div>
+    </div>
+
+    <div class="narr reveal d1">
+      <span class="lbl mono">After ship</span>
+      <div>
+        <p>Making the power button the product paid for itself again and again. It became the sidebar icon, the favicon, three films and the site hero. When a system has one primitive, the rest of the work gets cheaper.</p>
+        <p>What I would change: I designed the model market before I saw how wide real price bands get. The same model is quoted at four prices from four machines, so that surface wants a distribution, not a single figure. It is the next thing I would rebuild.</p>
+      </div>
+    </div>
+
+    <div class="outcome reveal d2">
+      <div class="stat">
+        <span class="mono">Models</span>
+        <div class="v">610<em>+</em></div>
+        <p>Available on the open market through one local endpoint</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Providers</span>
+        <div class="v">158<em>+</em></div>
+        <p>Independent peers setting their own prices</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Product views</span>
+        <div class="v">10</div>
+        <p>Designed across the VPR desktop app and its states</p>
+      </div>
+      <div class="stat">
+        <span class="mono">Website sections</span>
+        <div class="v">16</div>
+        <p>Sequenced as one argument, from price to compatibility</p>
+      </div>
+    </div>
+
+    <p class="outcome-note reveal d3">Network figures from <a href="https://antseed.com" target="_blank" rel="noopener">antseed.com</a> and antscan.co: 82B+ tokens processed and $143K+ settled to providers as of September 2026. They measure the network, not the design.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <div class="mono" style="color:var(--fg-dim);margin-bottom:16px">Next case</div>
+        <h5>YieldShield: <em>DeFi</em> dashboard,<br>AI + data viz.</h5>
+        <a href="/YieldShield" class="next-link">View YieldShield <span class="arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span></a>
+      </div>
+      <div class="links">
+        <a href="index.html#work">All work</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+    <div class="meta">
+      <span>© 2026 Gilad Cohen</span>
+      <span class="mono">Case 02 / 05 - AntSeed · 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0, rootMargin:'0px 0px 12% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  (function(){
+    const steps  = Array.from(document.querySelectorAll('.scrolly-step'));
+    const slides = Array.from(document.querySelectorAll('.screen-slide'));
+    const fill   = document.getElementById('counterFill');
+    const num    = document.getElementById('counterNum');
+    if(!steps.length || !slides.length) return;
+    const N = slides.length;
+    function setActive(idx){
+      slides.forEach((s,i) => s.classList.toggle('active', i === idx));
+      if(fill) fill.style.width = ((idx+1)/N*100)+'%';
+      if(num)  num.textContent = String(idx+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+    }
+    const screenIO = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) setActive(parseInt(e.target.dataset.idx,10)); });
+    }, { rootMargin:'-40% 0px -40% 0px', threshold:0 });
+    steps.forEach(s => screenIO.observe(s));
+    setActive(0);
+  })();
+
+  // Play each film only while it is on screen
+  (function(){
+    const vids = Array.from(document.querySelectorAll('.motion-fig video, .cover-fig video'));
+    if(!vids.length) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      vids.forEach(v => { v.autoplay = false; v.pause(); v.controls = true; });
+      return;
+    }
+    const vio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const v = e.target;
+        if(e.isIntersecting){ v.play().catch(()=>{}); }
+        else { v.pause(); }
+      });
+    }, {threshold:0.25});
+    vids.forEach(v => vio.observe(v));
+  })();
+</script>
+
+<script src="nav.js?v=5"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
