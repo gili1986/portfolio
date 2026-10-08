@@ -209,10 +209,9 @@
   /* Glass G · sits behind the copy on the right, never takes clicks */
   .hero .wrap{z-index:1}
   .hero-logo{
+    /* position and size are set by hero-logo.js, to the room the headline leaves */
     position:absolute;z-index:0;pointer-events:none;
-    top:50%;right:max(0px,calc((100vw - 1440px) / 2));
-    width:min(46vw,680px);aspect-ratio:1;
-    translate:0 -60%;
+    top:0;left:0;width:0;height:0;
     opacity:0;transition:opacity 1.4s .5s ease;
     -webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent);
             mask-image:radial-gradient(closest-side,#000 72%,transparent);
@@ -1020,7 +1019,7 @@
 <script>
   // Glass G only loads where it's shown (desktop widths)
   if(matchMedia('(min-width:1100px)').matches){
-    const s=document.createElement('script'); s.type='module'; s.src='hero-logo.js?v=8'; document.body.appendChild(s);
+    const s=document.createElement('script'); s.type='module'; s.src='hero-logo.js?v=10'; document.body.appendChild(s);
   }
 </script>
 <script src="nav.js?v=5"></script>

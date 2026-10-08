@@ -149,6 +149,44 @@ async function init() {
   wall.receiveShadow = true;
   scene.add(wall);
 
+  /* Place · the mark lives in the free space right of the headline.
+     The headline's width depends on the viewport and the font, so the
+     mark measures where the text actually ends, takes the room left up
+     to the page's content edge, and sits right-aligned to it, centred
+     on the headline and intro. Too little room and it steps aside. */
+  const hero = host.closest('.hero');
+  const head = hero.querySelector('h1');
+  const intro = hero.querySelector('.sub');
+  const LOGO_SHARE = 0.52;     // the mark's width as a share of the canvas
+  const GAP = 56, MAX_W = 380, MIN_W = 220;
+  let fits = true;
+
+  function place() {
+    const hb = hero.getBoundingClientRect();
+    const range = document.createRange();
+    range.selectNodeContents(head);
+    const textRight = Math.max(...[...range.getClientRects()].map(r => r.right), intro.getBoundingClientRect().right);
+    // The page grid's right content edge (a 1440 .wrap with 40px gutters,
+    // where the nav clock sits). The hero's own .wrap shrinks to its copy.
+    const vw = document.documentElement.clientWidth;
+    const edge = (vw + Math.min(vw, 1440)) / 2 - 40;
+
+    const logoW = Math.min(edge - textRight - GAP, MAX_W);
+    fits = logoW >= MIN_W;
+    host.style.visibility = fits ? '' : 'hidden';
+    if (fits) {
+      const size = logoW / LOGO_SHARE;
+      const top = head.getBoundingClientRect().top, bottom = intro.getBoundingClientRect().bottom;
+      const cx = edge - logoW / 2 - hb.left;
+      const cy = top + (bottom - top) * 0.46 - hb.top;
+      Object.assign(host.style, {
+        width: `${size}px`, height: `${size}px`,
+        left: `${cx - size / 2}px`, top: `${cy - size / 2}px`,
+      });
+    }
+    sync();
+  }
+
   /* Size */
   function resize() {
     const { width, height } = host.getBoundingClientRect();
@@ -209,12 +247,15 @@ async function init() {
   }
 
   function sync() {
-    const should = onScreen && !document.hidden;
+    const should = fits && onScreen && !document.hidden;
     if (should && !running) { running = true; clock.start(); requestAnimationFrame(frame); }
     if (!should) { running = false; clock.stop(); }
   }
 
   new ResizeObserver(resize).observe(host);
+  new ResizeObserver(place).observe(hero);
+  document.fonts.ready.then(place);
+  place();
   resize();
 
   if (!still) {
