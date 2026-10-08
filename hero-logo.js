@@ -75,10 +75,10 @@ async function init() {
       // edges draw themselves. A key light sits up and to the left.
       vec3 studio(vec3 d){
         float sky = smoothstep(-0.08, 0.1, d.y);
-        vec3 c = mix(vec3(0.55, 0.55, 0.59), vec3(0.98), sky);
+        vec3 c = mix(vec3(0.65, 0.65, 0.68), vec3(0.98), sky);
         float cardL = smoothstep(-0.55, -0.75, d.x);
         float cardR = smoothstep(0.6, 0.8, d.x) * (1.0 - smoothstep(0.86, 0.9, d.x));
-        c = mix(c, vec3(0.2, 0.2, 0.24), max(cardL, cardR) * 0.5);
+        c = mix(c, vec3(0.2, 0.2, 0.24), max(cardL, cardR) * 0.35);
         float key = smoothstep(0.85, 0.95, dot(d, normalize(vec3(-0.45, 0.7, 0.55))));
         c += key * 0.6;
         return mix(c, c * mix(vec3(1.0), uInk, 0.15), 1.0 - sky);   // the floor leans toward the accent
@@ -111,7 +111,7 @@ async function init() {
 
         // a crisp, quiet line where the face turns into the bevel
         float edge = smoothstep(0.55, 0.35, ndv) * smoothstep(0.05, 0.3, ndv);
-        col = mix(col, col * 0.86, edge * 0.5);
+        col = mix(col, col * 0.9, edge * 0.35);
 
         // soft sheen across the face from the key light
         float sheen = pow(max(dot(reflect(-V, N), normalize(vec3(-0.35, 0.45, 0.82))), 0.0), 18.0);
@@ -133,7 +133,7 @@ async function init() {
   sun.position.set(-0.9, 2.4, 9);
   sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024);
-  sun.shadow.radius = 26;
+  sun.shadow.radius = 34;
   sun.shadow.blurSamples = 24;
   sun.shadow.bias = -0.0005;
   Object.assign(sun.shadow.camera, { left: -2.5, right: 2.5, top: 2.5, bottom: -2.5, near: 4, far: 14 });
@@ -141,7 +141,7 @@ async function init() {
 
   const wall = new THREE.Mesh(
     new THREE.PlaneGeometry(10, 10),
-    new THREE.ShadowMaterial({ color: 0x14122a, opacity: 0.06 })
+    new THREE.ShadowMaterial({ color: 0x14122a, opacity: 0.04 })
   );
   wall.position.z = -0.75;
   wall.receiveShadow = true;
