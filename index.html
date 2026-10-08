@@ -1052,9 +1052,9 @@
     /* ── Flow on hover ─────────────────────────────────────────────
        A signal sets off from the start of the row along the middle line,
        as if on a wire running behind the cards, so it shows in each gap it
-       crosses. When it reaches the hovered card, a pulse (a short head with
-       a fading tail) runs that card's border: in at the left middle, over
-       the top and bottom, out on the right. The links it has crossed stay
+       crosses. At the same moment the hovered card answers: a pulse (a
+       short head with a fading tail) runs its border, in at the left
+       middle, over the top and bottom, out on the right. The links it has crossed stay
        lit while the hover is on or past them. */
     if(!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const NS = 'http://www.w3.org/2000/svg';
@@ -1134,7 +1134,7 @@
       const x0 = steps[0].getBoundingClientRect().left;
       const at = x => (x - x0) / SPEED;   // when the signal's head reaches x
       for(let i = 0; i < k; i++) pulses.push(...pulseLink(i, at(steps[i].getBoundingClientRect().right)));
-      pulses.push(...pulseCard(k, at(steps[k].getBoundingClientRect().left)));
+      pulses.push(...pulseCard(k, 0));   // the hovered card answers at once, while the signal is still on its way
     }
 
     steps.forEach((step, i) => step.addEventListener('pointerenter', () => go(i)));
