@@ -158,7 +158,7 @@ async function init() {
   const head = hero.querySelector('h1');
   const intro = hero.querySelector('.sub');
   const LOGO_SHARE = 0.52;     // the mark's width as a share of the canvas
-  const GAP = 56, MAX_W = 380, MIN_W = 220;
+  const GAP = 56, MAX_W = 380, MIN_W = 180, SCALE = 0.8;   // the mark fills 80% of the room it gets
   let fits = true;
 
   function place() {
@@ -171,7 +171,7 @@ async function init() {
     const vw = document.documentElement.clientWidth;
     const edge = (vw + Math.min(vw, 1440)) / 2 - 40;
 
-    const logoW = Math.min(edge - textRight - GAP, MAX_W);
+    const logoW = Math.min(edge - textRight - GAP, MAX_W) * SCALE;
     fits = logoW >= MIN_W;
     host.style.visibility = fits ? '' : 'hidden';
     if (fits) {
