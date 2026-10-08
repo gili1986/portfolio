@@ -54,7 +54,6 @@ async function init() {
   const glass = new THREE.ShaderMaterial({
     uniforms: {
       uPaper: { value: new THREE.Vector3(0.996, 0.996, 0.992) },   // --bg, sRGB
-      uInk: { value: new THREE.Vector3(0.357, 0.239, 0.961) },     // --accent, sRGB
     },
     vertexShader: /* glsl */`
       varying vec3 vN;
@@ -66,7 +65,7 @@ async function init() {
         gl_Position = projectionMatrix * mv;
       }`,
     fragmentShader: /* glsl */`
-      uniform vec3 uPaper, uInk;
+      uniform vec3 uPaper;
       varying vec3 vN;
       varying vec3 vP;
 
@@ -75,13 +74,13 @@ async function init() {
       // edges draw themselves. A key light sits up and to the left.
       vec3 studio(vec3 d){
         float sky = smoothstep(-0.08, 0.1, d.y);
-        vec3 c = mix(vec3(0.65, 0.65, 0.68), vec3(0.98), sky);
+        vec3 c = mix(vec3(0.66), vec3(0.98), sky);
         float cardL = smoothstep(-0.55, -0.75, d.x);
         float cardR = smoothstep(0.6, 0.8, d.x) * (1.0 - smoothstep(0.86, 0.9, d.x));
-        c = mix(c, vec3(0.2, 0.2, 0.24), max(cardL, cardR) * 0.35);
+        c = mix(c, vec3(0.21), max(cardL, cardR) * 0.35);
         float key = smoothstep(0.85, 0.95, dot(d, normalize(vec3(-0.45, 0.7, 0.55))));
         c += key * 0.6;
-        return mix(c, c * mix(vec3(1.0), uInk, 0.15), 1.0 - sky);   // the floor leans toward the accent
+        return c;
       }
 
       vec3 through(vec3 V, vec3 N, float eta){
@@ -102,7 +101,7 @@ async function init() {
           through(V, N, 1.0 / 1.50).g,
           through(V, N, 1.0 / 1.54).b
         );
-        col *= vec3(0.975, 0.975, 0.99);                       // the faintest body tint
+        col *= 0.98;                                           // the faintest body density
 
         // reflection with Fresnel
         float F = 0.04 + 0.96 * pow(1.0 - ndv, 5.0);
@@ -141,7 +140,7 @@ async function init() {
 
   const wall = new THREE.Mesh(
     new THREE.PlaneGeometry(10, 10),
-    new THREE.ShadowMaterial({ color: 0x14122a, opacity: 0.04 })
+    new THREE.ShadowMaterial({ color: 0x111111, opacity: 0.04 })
   );
   wall.position.z = -0.75;
   wall.receiveShadow = true;
