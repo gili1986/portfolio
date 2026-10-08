@@ -457,10 +457,12 @@
   .ps-step::after,.ps-step::before{content:"";position:absolute;top:50%;left:calc(100% + 1px);width:16px;pointer-events:none}
   .ps-step::after{height:1px;margin-top:-.5px;background:var(--line-strong)}
   .ps-step::before{height:1.5px;margin-top:-.75px;background:var(--accent);z-index:1;transform:scaleX(0);transform-origin:left;
+    box-shadow:0 0 6px color-mix(in srgb,var(--accent) 55%,transparent);
     transition:transform var(--c-dur,.03s) linear var(--c-delay,0s)}
   .ps-step:last-child::after,.ps-step:last-child::before{display:none}
   .ps-step.flow::before{transform:scaleX(1)}
   .ps-flow{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;pointer-events:none;z-index:1}
+  .ps-flow{filter:drop-shadow(0 0 3px color-mix(in srgb,var(--accent) 35%,transparent))}
   .ps-flow path{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:1 1;stroke-dashoffset:1;
     transition:stroke-dashoffset var(--b-dur,.16s) var(--b-ease,linear) var(--b-delay,0s)}
   .ps-step.lit .ps-flow path{stroke-dashoffset:0}
@@ -1077,7 +1079,7 @@
     });
 
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const IN  = { b: 150, c: 30 }, OUT = { b: 90, c: 20 };
+    const IN  = { b: 230, c: 150 }, OUT = { b: 120, c: 70 };
     const on = [];   // per segment: lit or not
 
     function go(k){
