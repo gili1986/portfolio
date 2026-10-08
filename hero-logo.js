@@ -35,14 +35,16 @@ async function init() {
   camera.position.set(0, 0, 9);
 
   /* Mark */
-  const shapes = new SVGLoader().parse(svg).paths.flatMap(p => SVGLoader.createShapes(p));
+  const raw = new SVGLoader().parse(svg).paths.flatMap(p => SVGLoader.createShapes(p));
   // Depth and bevel are tuned against a mark 296 units tall; scale them to the SVG's real size
-  const box = new THREE.Box2().setFromPoints(shapes.flatMap(sh => sh.getPoints()));
+  const box = new THREE.Box2().setFromPoints(raw.flatMap(sh => sh.getPoints()));
   const H = box.max.y - box.min.y, u = H / 296;
+  const shapes = raw.map(sh => softenCorners(sh, 6 * u, 2 * u));
   let geo = new THREE.ExtrudeGeometry(shapes, {
     depth: 44 * u, curveSegments: 12,
-    // a negative offset insets the face so the bevel lands on the SVG outline
-    bevelEnabled: true, bevelThickness: 18 * u, bevelSize: 7 * u, bevelOffset: -7 * u, bevelSegments: 8,
+    // The bevel grows outward from the outline. Insetting it instead (a negative
+    // bevelOffset) folds the inset face across the counter's curve as a straight cut.
+    bevelEnabled: true, bevelThickness: 18 * u, bevelSize: 5 * u, bevelSegments: 8,
   });
   geo = toCreasedNormals(geo, THREE.MathUtils.degToRad(40));   // smooth curves, keep true corners
   // ...but keep the flat faces dead flat, or the long cap triangles smear the bevel's normals
@@ -268,4 +270,36 @@ async function init() {
   }
 
   requestAnimationFrame(() => host.classList.add('ready'));
+}
+
+/* Round every sharp corner of a shape (and its holes) with a small
+   radius. The bevel is built by insetting the outline, and at a sharp
+   corner the inset point shoots far inward; the front face, triangulated
+   on the true outline, then stretches across the counter as a straight
+   cut. A small round keeps every inset step short. */
+function softenCorners(shape, r, step) {
+  const { shape: outer, holes } = shape.extractPoints(12);
+  const round = pts => {
+    // thin to `step` apart, so a corner turned in tiny steps still reads as one
+    const thin = [pts[0]];
+    for (const p of pts) if (p.distanceTo(thin[thin.length - 1]) > step) thin.push(p);
+    if (thin.length > 2 && thin[thin.length - 1].distanceTo(thin[0]) < step) thin.pop();
+    pts = thin;
+    const out = [];
+    pts.forEach((p, i) => {
+      const a = pts[(i - 1 + pts.length) % pts.length], b = pts[(i + 1) % pts.length];
+      const da = a.clone().sub(p), db = b.clone().sub(p);
+      const la = da.length(), lb = db.length();
+      const turn = Math.PI - Math.acos(THREE.MathUtils.clamp(da.dot(db) / (la * lb), -1, 1));
+      if (turn < THREE.MathUtils.degToRad(22)) { out.push(p); return; }
+      const k = Math.min(r, la * 0.45, lb * 0.45);
+      const p0 = p.clone().add(da.multiplyScalar(k / la)), p2 = p.clone().add(db.multiplyScalar(k / lb));
+      const curve = new THREE.QuadraticBezierCurve(p0, p, p2);
+      out.push(...curve.getPoints(6));
+    });
+    return out;
+  };
+  const result = new THREE.Shape(round(outer));
+  result.holes = holes.map(h => new THREE.Path(round(h)));
+  return result;
 }
