@@ -160,7 +160,7 @@ async function init() {
   const head = hero.querySelector('h1');
   const intro = hero.querySelector('.sub');
   const LOGO_SHARE = 0.52;     // the mark's width as a share of the canvas
-  const GAP = 56, MAX_W = 380, MIN_W = 180, SCALE = 0.8;   // the mark fills 80% of the room it gets
+  const GAP = 56, MAX_W = 380, MIN_W = 180, SCALE = 0.84;   // the mark fills 84% of the room it gets
   let fits = true;
 
   function place() {
