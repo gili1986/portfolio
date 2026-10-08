@@ -55,7 +55,6 @@ async function init() {
     uniforms: {
       uPaper: { value: new THREE.Vector3(0.996, 0.996, 0.992) },   // --bg, sRGB
       uInk: { value: new THREE.Vector3(0.357, 0.239, 0.961) },     // --accent, sRGB
-      uSolid: { value: 0 },
     },
     vertexShader: /* glsl */`
       varying vec3 vN;
@@ -68,7 +67,6 @@ async function init() {
       }`,
     fragmentShader: /* glsl */`
       uniform vec3 uPaper, uInk;
-      uniform float uSolid;
       varying vec3 vN;
       varying vec3 vP;
 
@@ -94,7 +92,7 @@ async function init() {
 
       void main(){
         vec3 N = normalize(vN);
-        N = faceforward(N, vP, N);                            // inner walls face us too
+        N = faceforward(N, vP, N);
         vec3 V = normalize(-vP);
         float ndv = clamp(dot(N, V), 0.0, 1.0);
 
@@ -119,24 +117,14 @@ async function init() {
         float sheen = pow(max(dot(reflect(-V, N), normalize(vec3(-0.35, 0.45, 0.82))), 0.0), 18.0);
         col += sheen * 0.22;
 
-        // the face lets the inside show through; the edges stay solid
-        float a = max(mix(0.62, 1.0, smoothstep(0.85, 0.45, ndv)), uSolid);
-        gl_FragColor = vec4(min(col, 1.0), a);
+        gl_FragColor = vec4(min(col, 1.0), 1.0);
       }`,
   });
 
-  // Two passes: the inside (back faces) first, then the front laid over
-  // it part-transparent, so the inner walls read through the face.
-  glass.transparent = true;
-  const inner = new THREE.Mesh(geo, glass.clone());
-  inner.material.side = THREE.BackSide;
-  inner.material.transparent = false;
-  inner.material.uniforms.uSolid.value = 1;
   const mark = new THREE.Mesh(geo, glass);
-  mark.renderOrder = 1;
   mark.castShadow = true;
   const rig = new THREE.Group();
-  rig.add(inner, mark);
+  rig.add(mark);
   scene.add(rig);
 
   /* Shadow · a near-frontal light and a "page" just behind the mark,
