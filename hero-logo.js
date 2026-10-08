@@ -35,13 +35,14 @@ async function init() {
   camera.position.set(0, 0, 9);
 
   /* Mark */
-  const shapes = new SVGLoader().parse(svg).paths
-    .flatMap(p => SVGLoader.createShapes(p))
-    .map(sh => softenCorners(sh, 9));
+  const shapes = new SVGLoader().parse(svg).paths.flatMap(p => SVGLoader.createShapes(p));
+  // Depth and bevel are tuned against a mark 296 units tall; scale them to the SVG's real size
+  const box = new THREE.Box2().setFromPoints(shapes.flatMap(sh => sh.getPoints()));
+  const H = box.max.y - box.min.y, u = H / 296;
   let geo = new THREE.ExtrudeGeometry(shapes, {
-    depth: 44,
+    depth: 44 * u, curveSegments: 12,
     // a negative offset insets the face so the bevel lands on the SVG outline
-    bevelEnabled: true, bevelThickness: 18, bevelSize: 7, bevelOffset: -7, bevelSegments: 8,
+    bevelEnabled: true, bevelThickness: 18 * u, bevelSize: 7 * u, bevelOffset: -7 * u, bevelSegments: 8,
   });
   geo = toCreasedNormals(geo, THREE.MathUtils.degToRad(40));   // smooth curves, keep true corners
   // ...but keep the flat faces dead flat, or the long cap triangles smear the bevel's normals
@@ -50,7 +51,7 @@ async function init() {
   for (let i = cap.start; i < cap.start + cap.count; i++) nrm.setXYZ(i, 0, 0, Math.sign(nrm.getZ(i)) || 1);
   geo.center();
   geo.rotateX(Math.PI);               // SVG y runs down; rotate (not mirror) to keep winding
-  const s = 2.27 / 296;
+  const s = 2.27 / H;
   geo.scale(s, s, s);
 
   const glass = new THREE.ShaderMaterial({
@@ -223,35 +224,4 @@ async function init() {
   }
 
   requestAnimationFrame(() => host.classList.add('ready'));
-}
-
-/* Round every sharp corner of a shape (and its holes) with a small
-   radius. The bevel is built by insetting the outline; at a sharp
-   corner that inset folds over itself and leaves jagged slivers. */
-function softenCorners(shape, r) {
-  const { shape: outer, holes } = shape.extractPoints(10);
-  const round = pts => {
-    // thin to ~3 units apart: the SVG turns its corners in tiny steps,
-    // each too small to count as a corner but sharp together
-    const thin = [pts[0]];
-    for (const p of pts) if (p.distanceTo(thin[thin.length - 1]) > 3) thin.push(p);
-    if (thin.length > 2 && thin[thin.length - 1].distanceTo(thin[0]) < 3) thin.pop();
-    pts = thin;
-    const out = [];
-    pts.forEach((p, i) => {
-      const a = pts[(i - 1 + pts.length) % pts.length], b = pts[(i + 1) % pts.length];
-      const da = a.clone().sub(p), db = b.clone().sub(p);
-      const la = da.length(), lb = db.length();
-      const turn = Math.PI - Math.acos(THREE.MathUtils.clamp(da.dot(db) / (la * lb), -1, 1));
-      if (turn < THREE.MathUtils.degToRad(22)) { out.push(p); return; }
-      const k = Math.min(r, la * 0.45, lb * 0.45);
-      const p0 = p.clone().add(da.multiplyScalar(k / la)), p2 = p.clone().add(db.multiplyScalar(k / lb));
-      const curve = new THREE.QuadraticBezierCurve(p0, p, p2);
-      out.push(...curve.getPoints(6));
-    });
-    return out;
-  };
-  const result = new THREE.Shape(round(outer));
-  result.holes = holes.map(h => new THREE.Path(round(h)));
-  return result;
 }
