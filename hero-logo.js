@@ -171,13 +171,16 @@ async function init() {
     const vw = document.documentElement.clientWidth;
     const edge = (vw + Math.min(vw, 1440)) / 2 - 40;
 
-    const logoW = Math.min(edge - textRight - GAP, MAX_W) * SCALE;
+    const room = edge - textRight;
+    const logoW = Math.min(room - GAP, MAX_W) * SCALE;
     fits = logoW >= MIN_W;
     host.style.visibility = fits ? '' : 'hidden';
     if (fits) {
       const size = logoW / LOGO_SHARE;
       const top = head.getBoundingClientRect().top, bottom = intro.getBoundingClientRect().bottom;
-      const cx = edge - logoW / 2 - hb.left;
+      // a step in from the edge: 10% of the room, never closer than GAP to the copy
+      const shift = Math.max(0, Math.min(room * 0.1, room - GAP - logoW));
+      const cx = edge - shift - logoW / 2 - hb.left;
       const cy = top + (bottom - top) * 0.46 - hb.top;
       Object.assign(host.style, {
         width: `${size}px`, height: `${size}px`,
