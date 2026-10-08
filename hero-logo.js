@@ -48,7 +48,7 @@ async function init() {
   for (let i = cap.start; i < cap.start + cap.count; i++) nrm.setXYZ(i, 0, 0, Math.sign(nrm.getZ(i)) || 1);
   geo.center();
   geo.rotateX(Math.PI);               // SVG y runs down; rotate (not mirror) to keep winding
-  const s = 2.06 / 296;
+  const s = 2.27 / 296;
   geo.scale(s, s, s);
 
   const glass = new THREE.ShaderMaterial({
@@ -75,10 +75,10 @@ async function init() {
       // edges draw themselves. A key light sits up and to the left.
       vec3 studio(vec3 d){
         float sky = smoothstep(-0.08, 0.1, d.y);
-        vec3 c = mix(vec3(0.42, 0.42, 0.46), vec3(0.98), sky);
+        vec3 c = mix(vec3(0.55, 0.55, 0.59), vec3(0.98), sky);
         float cardL = smoothstep(-0.55, -0.75, d.x);
         float cardR = smoothstep(0.6, 0.8, d.x) * (1.0 - smoothstep(0.86, 0.9, d.x));
-        c = mix(c, vec3(0.2, 0.2, 0.24), max(cardL, cardR) * 0.7);
+        c = mix(c, vec3(0.2, 0.2, 0.24), max(cardL, cardR) * 0.5);
         float key = smoothstep(0.85, 0.95, dot(d, normalize(vec3(-0.45, 0.7, 0.55))));
         c += key * 0.6;
         return mix(c, c * mix(vec3(1.0), uInk, 0.15), 1.0 - sky);   // the floor leans toward the accent
@@ -141,7 +141,7 @@ async function init() {
 
   const wall = new THREE.Mesh(
     new THREE.PlaneGeometry(10, 10),
-    new THREE.ShadowMaterial({ color: 0x14122a, opacity: 0.09 })
+    new THREE.ShadowMaterial({ color: 0x14122a, opacity: 0.06 })
   );
   wall.position.z = -0.75;
   wall.receiveShadow = true;
