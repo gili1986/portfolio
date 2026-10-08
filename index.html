@@ -1047,9 +1047,11 @@
     }, {threshold: 0, rootMargin: '0px 0px 12% 0px'}).observe(container);
 
     /* ── Flow on hover ─────────────────────────────────────────────
-       A signal comes in along the link on the hovered card's left, then a
-       pulse (a short head with a fading tail) runs its border: in at the
-       left middle, over the top and bottom, out on the right. */
+       A signal sets off from the start of the row along the middle line,
+       as if on a wire running behind the cards, so it shows in each gap it
+       crosses. When it reaches the hovered card, a pulse (a short head with
+       a fading tail) runs that card's border: in at the left middle, over
+       the top and bottom, out on the right. */
     if(!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const NS = 'http://www.w3.org/2000/svg';
     const R = 12, O = .75;   // card radius, half the stroke
@@ -1057,7 +1059,7 @@
     // fuller middle, solid head; heads aligned
     const LAYERS = [{ len: .24, w: 1.5, o: .22 }, { len: .12, w: 1.5, o: .55 }, { len: .05, w: 1.75, o: 1 }];
     const TAIL = LAYERS[0].len;
-    const CARD = 560, LINK = 120;   // ms for a card's pulse, for the signal along a link
+    const CARD = 560, SPEED = .8, SPARK = 28;   // ms for a card's pulse; signal speed in px/ms; its length in px
 
     const parts = [...steps].map((step, i) => {
       const svg = document.createElementNS(NS, 'svg');
@@ -1103,12 +1105,13 @@
         { duration: CARD * (1 + TAIL), delay, easing: 'linear' }
       ));
     }
+    // The signal crossing the gap after card i; its head enters the gap at `delay`
     function pulseLink(i, delay){
-      const el = parts[i].spark;
-      return el ? [el.animate(
-        [{ transform: 'translateX(-28px)', opacity: 1 }, { transform: 'translateX(16px)', opacity: 1 }],
-        { duration: LINK, delay, easing: 'linear' }
-      )] : [];
+      const el = parts[i].spark, gap = el.parentElement.offsetWidth;
+      return [el.animate(
+        [{ transform: `translateX(-${SPARK}px)`, opacity: 1 }, { transform: `translateX(${gap}px)`, opacity: 1 }],
+        { duration: (SPARK + gap) / SPEED, delay, easing: 'linear' }
+      )];
     }
 
     let pulses = [];
@@ -1118,9 +1121,10 @@
       pulses.forEach(a => a.cancel());
       pulses = [];
       if(k < 0) return;
-      const lead = k > 0 ? LINK * 16 / 44 : 0;   // the card picks up as the signal's head arrives
-      if(k > 0) pulses.push(...pulseLink(k - 1, 0));
-      pulses.push(...pulseCard(k, lead));
+      const x0 = steps[0].getBoundingClientRect().left;
+      const at = x => (x - x0) / SPEED;   // when the signal's head reaches x
+      for(let i = 0; i < k; i++) pulses.push(...pulseLink(i, at(steps[i].getBoundingClientRect().right)));
+      pulses.push(...pulseCard(k, at(steps[k].getBoundingClientRect().left)));
     }
 
     steps.forEach((step, i) => step.addEventListener('pointerenter', () => go(i)));
