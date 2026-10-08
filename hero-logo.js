@@ -1,17 +1,19 @@
 /* ── Hero · glass G ──────────────────────────────────────────────────
    The logo mark extruded from assets/brand/glogo.svg and rendered as
    clear glass. It leans toward the cursor, drifts a little when left
-   alone, and casts a faint shadow on the page behind it.
+   alone, and sits a hair off the page with a soft shadow.
 
-   Clear glass on a near-white page has nothing to bend, so it would
-   read as white plastic. A backdrop plane sits behind the mark with a
-   studio horizon (light above, a fine dark line, grey below) and a
-   faint wash of the accent. It is drawn only into three's transmission
-   pass, the image the glass samples, and discarded on the visible
-   pass: the page never shows it, only the glass does. Tilting the mark
-   slides the horizon through it, which is what sells the glass. */
+   The glass is a small custom shader rather than three's physical
+   transmission: on a near-white page there is nothing for real
+   refraction to bend, so it reads as plastic. Here the face looks
+   straight through to the page colour, and the bevels and side walls,
+   where light bends hardest, pick up a quiet grey studio with two
+   soft boxes, split slightly by colour. Reflections ride on top with
+   a Fresnel falloff. The studio lives in view space, so when the mark
+   tilts the highlights glide across it. */
 import * as THREE from 'three';
 import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const host = document.querySelector('.hero-logo');
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -22,128 +24,153 @@ async function init() {
   const svg = await fetch('/assets/brand/glogo.svg').then(r => r.text());
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
-  renderer.toneMapping = THREE.NeutralToneMapping;
-  renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.VSMShadowMap;
   host.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(studio(), 0.02).texture;
-
   const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 50);
   camera.position.set(0, 0, 9);
 
   /* Mark */
   const shapes = new SVGLoader().parse(svg).paths.flatMap(p => SVGLoader.createShapes(p));
-  const geo = new THREE.ExtrudeGeometry(shapes, {
-    depth: 46, curveSegments: 7,
+  let geo = new THREE.ExtrudeGeometry(shapes, {
+    depth: 44, curveSegments: 10,
     // a negative offset insets the face so the bevel lands on the SVG outline
-    bevelEnabled: true, bevelThickness: 16, bevelSize: 6, bevelOffset: -6, bevelSegments: 10,
+    bevelEnabled: true, bevelThickness: 18, bevelSize: 7, bevelOffset: -7, bevelSegments: 8,
   });
+  geo = toCreasedNormals(geo, THREE.MathUtils.degToRad(40));   // smooth curves, keep true corners
+  // ...but keep the flat faces dead flat, or the long cap triangles smear the bevel's normals
+  const cap = geo.groups.find(g => g.materialIndex === 0);
+  const nrm = geo.attributes.normal;
+  for (let i = cap.start; i < cap.start + cap.count; i++) nrm.setXYZ(i, 0, 0, Math.sign(nrm.getZ(i)) || 1);
   geo.center();
   geo.rotateX(Math.PI);               // SVG y runs down; rotate (not mirror) to keep winding
-  const s = 1.72 / 296;
+  const s = 2.06 / 296;
   geo.scale(s, s, s);
 
-  const glass = new THREE.MeshPhysicalMaterial({
-    color: 0xffffff,
-    metalness: 0,
-    roughness: 0.03,
-    transmission: 1,
-    thickness: 1.6,
-    ior: 1.6,
-    dispersion: 4,
-    specularIntensity: 1,
-    clearcoat: 1,
-    clearcoatRoughness: 0.04,
-    iridescence: 0.1,
-    iridescenceIOR: 1.3,
-    envMapIntensity: 1.1,
+  const glass = new THREE.ShaderMaterial({
+    uniforms: {
+      uPaper: { value: new THREE.Vector3(0.996, 0.996, 0.992) },   // --bg, sRGB
+      uInk: { value: new THREE.Vector3(0.357, 0.239, 0.961) },     // --accent, sRGB
+      uSolid: { value: 0 },
+    },
+    vertexShader: /* glsl */`
+      varying vec3 vN;
+      varying vec3 vP;
+      void main(){
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        vP = mv.xyz;
+        vN = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: /* glsl */`
+      uniform vec3 uPaper, uInk;
+      uniform float uSolid;
+      varying vec3 vN;
+      varying vec3 vP;
+
+      // View-space studio, lit the way glass is photographed: a white
+      // sweep above, a grey floor, and dark cards at the sides so the
+      // edges draw themselves. A key light sits up and to the left.
+      vec3 studio(vec3 d){
+        float sky = smoothstep(-0.08, 0.1, d.y);
+        vec3 c = mix(vec3(0.42, 0.42, 0.46), vec3(0.98), sky);
+        float cardL = smoothstep(-0.55, -0.75, d.x);
+        float cardR = smoothstep(0.6, 0.8, d.x) * (1.0 - smoothstep(0.86, 0.9, d.x));
+        c = mix(c, vec3(0.2, 0.2, 0.24), max(cardL, cardR) * 0.7);
+        float key = smoothstep(0.85, 0.95, dot(d, normalize(vec3(-0.45, 0.7, 0.55))));
+        c += key * 0.6;
+        return mix(c, c * mix(vec3(1.0), uInk, 0.15), 1.0 - sky);   // the floor leans toward the accent
+      }
+
+      vec3 through(vec3 V, vec3 N, float eta){
+        vec3 R = refract(-V, N, eta);
+        float bend = smoothstep(0.08, 0.55, length(R.xy));    // face: straight through · bevel: bent
+        return mix(uPaper, studio(normalize(R)), bend);
+      }
+
+      void main(){
+        vec3 N = normalize(vN);
+        N = faceforward(N, vP, N);                            // inner walls face us too
+        vec3 V = normalize(-vP);
+        float ndv = clamp(dot(N, V), 0.0, 1.0);
+
+        // refraction, each channel bent a touch differently
+        vec3 col = vec3(
+          through(V, N, 1.0 / 1.47).r,
+          through(V, N, 1.0 / 1.50).g,
+          through(V, N, 1.0 / 1.54).b
+        );
+        col *= vec3(0.975, 0.975, 0.99);                       // the faintest body tint
+
+        // reflection with Fresnel
+        float F = 0.04 + 0.96 * pow(1.0 - ndv, 5.0);
+        vec3 refl = studio(reflect(-V, N));
+        col = mix(col, refl, F * 0.9);
+
+        // a crisp, quiet line where the face turns into the bevel
+        float edge = smoothstep(0.55, 0.35, ndv) * smoothstep(0.05, 0.3, ndv);
+        col = mix(col, col * 0.86, edge * 0.5);
+
+        // soft sheen across the face from the key light
+        float sheen = pow(max(dot(reflect(-V, N), normalize(vec3(-0.35, 0.45, 0.82))), 0.0), 18.0);
+        col += sheen * 0.22;
+
+        // the face lets the inside show through; the edges stay solid
+        float a = max(mix(0.62, 1.0, smoothstep(0.85, 0.45, ndv)), uSolid);
+        gl_FragColor = vec4(min(col, 1.0), a);
+      }`,
   });
 
+  // Two passes: the inside (back faces) first, then the front laid over
+  // it part-transparent, so the inner walls read through the face.
+  glass.transparent = true;
+  const inner = new THREE.Mesh(geo, glass.clone());
+  inner.material.side = THREE.BackSide;
+  inner.material.transparent = false;
+  inner.material.uniforms.uSolid.value = 1;
   const mark = new THREE.Mesh(geo, glass);
+  mark.renderOrder = 1;
   mark.castShadow = true;
   const rig = new THREE.Group();
-  rig.add(mark);
+  rig.add(inner, mark);
   scene.add(rig);
 
-  /* Light + shadow catcher (the "page" the mark floats above) */
-  const sun = new THREE.DirectionalLight(0xffffff, 1.4);
-  sun.position.set(-3, 4, 6);
+  /* Shadow · a near-frontal light and a "page" just behind the mark,
+     so the shadow stays close and soft instead of sliding away */
+  const sun = new THREE.DirectionalLight(0xffffff, 1);
+  sun.position.set(-0.9, 2.4, 9);
   sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024);
-  sun.shadow.radius = 18;
-  sun.shadow.blurSamples = 20;
-  sun.shadow.bias = -0.0004;
-  Object.assign(sun.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: 1, far: 20 });
+  sun.shadow.radius = 26;
+  sun.shadow.blurSamples = 24;
+  sun.shadow.bias = -0.0005;
+  Object.assign(sun.shadow.camera, { left: -2.5, right: 2.5, top: 2.5, bottom: -2.5, near: 4, far: 14 });
   scene.add(sun);
 
-  const WALL_Z = -1.3;
   const wall = new THREE.Mesh(
-    new THREE.PlaneGeometry(14, 14),
-    new THREE.ShadowMaterial({ color: 0x1a1830, opacity: 0.06 })
+    new THREE.PlaneGeometry(10, 10),
+    new THREE.ShadowMaterial({ color: 0x14122a, opacity: 0.09 })
   );
-  wall.position.z = WALL_Z;
+  wall.position.z = -0.75;
   wall.receiveShadow = true;
   scene.add(wall);
 
-  /* Backdrop · seen only through the glass */
-  const backdrop = new THREE.Mesh(
-    new THREE.PlaneGeometry(1, 1),
-    new THREE.ShaderMaterial({
-      uniforms: {
-        uShow: { value: 0 },
-        uTime: { value: 0 },
-        uInk: { value: new THREE.Color('#5b3df5') },
-      },
-      vertexShader: /* glsl */`
-        varying vec2 vUv;
-        void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-      fragmentShader: /* glsl */`
-        uniform float uShow, uTime;
-        uniform vec3 uInk;
-        varying vec2 vUv;
-        void main(){
-          if (uShow < 0.5) discard;
-          vec2 p = vUv - 0.5;
-          float y = p.y + p.x * 0.12;
-          // paper above, grey floor below, a fine dark horizon between
-          vec3 c = mix(vec3(0.7, 0.695, 0.735), vec3(0.99, 0.988, 0.984), smoothstep(-0.1, 0.03, y));
-          c = mix(c, vec3(0.36, 0.35, 0.42), exp(-pow((y + 0.03) / 0.005, 2.0)) * 0.75);
-          c = mix(c, vec3(0.5, 0.49, 0.55), smoothstep(-0.08, -0.45, y) * 0.55);
-          // a soft window of light on the left
-          c = mix(c, vec3(1.0), exp(-pow((p.x + 0.18) / 0.02, 2.0)) * smoothstep(-0.02, 0.2, y) * 0.9);
-          // a slow breath of the accent
-          vec2 o = vec2(-0.06 + 0.03 * sin(uTime * 0.3), 0.16 + 0.02 * cos(uTime * 0.23));
-          c = mix(c, uInk, smoothstep(0.34, 0.0, length(p - o)) * 0.16);
-          gl_FragColor = vec4(c, 1.0);
-          #include <colorspace_fragment>
-        }`,
-    })
-  );
-  backdrop.position.z = WALL_Z + 0.01;
-  // getRenderTarget() is the transmission target during that pass, null on the visible one
-  backdrop.onBeforeRender = r => { backdrop.material.uniforms.uShow.value = r.getRenderTarget() ? 1 : 0; };
-  scene.add(backdrop);
-
-  /* Size · the backdrop always fills the frame */
+  /* Size */
   function resize() {
     const { width, height } = host.getBoundingClientRect();
     if (!width || !height) return;
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    const h = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * (camera.position.z - backdrop.position.z);
-    backdrop.scale.set(h * camera.aspect, h, 1);
     if (still) draw(0);
   }
 
   /* Pointer · aim is -1..1 around the mark, eased in the loop */
-  const REST = { x: 0.08, y: -0.24 };
+  const REST = { x: 0.06, y: -0.2 };
   const aim = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
   let lastMove = 0;
   if (!still) {
@@ -171,13 +198,12 @@ async function init() {
     // Entrance: swing in from a deeper angle over ~1.6s
     const ease = still ? 1 : 1 - Math.pow(1 - Math.min((now - born) / 1600, 1), 3);
 
-    rig.rotation.y = REST.y + cur.x * 0.5 + Math.sin(t * 0.45) * 0.05 - (1 - ease) * 0.9;
-    rig.rotation.x = REST.x + cur.y * 0.32 + Math.cos(t * 0.38) * 0.03;
-    rig.rotation.z = -cur.x * 0.04;
-    rig.position.y = Math.sin(t * 0.6) * 0.045;
-    rig.scale.setScalar(0.92 + 0.08 * ease);
+    rig.rotation.y = REST.y + cur.x * 0.42 + Math.sin(t * 0.45) * 0.04 - (1 - ease) * 0.8;
+    rig.rotation.x = REST.x + cur.y * 0.26 + Math.cos(t * 0.38) * 0.025;
+    rig.rotation.z = -cur.x * 0.03;
+    rig.position.y = Math.sin(t * 0.6) * 0.035;
+    rig.scale.setScalar(0.94 + 0.06 * ease);
 
-    backdrop.material.uniforms.uTime.value = t;
     renderer.render(scene, camera);
   }
 
@@ -208,30 +234,4 @@ async function init() {
   }
 
   requestAnimationFrame(() => host.classList.add('ready'));
-}
-
-/* A grey studio with a few soft boxes for the mark to reflect */
-function studio() {
-  const env = new THREE.Scene();
-  env.add(new THREE.Mesh(
-    new THREE.SphereGeometry(10, 32, 16),
-    new THREE.ShaderMaterial({
-      side: THREE.BackSide,
-      vertexShader: `varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-      fragmentShader: `varying vec3 vP; void main(){
-        vec3 c = mix(vec3(0.16, 0.16, 0.19), vec3(0.62, 0.62, 0.66), smoothstep(-0.6, 0.9, normalize(vP).y));
-        gl_FragColor = vec4(c, 1.0); }`,
-    })
-  ));
-  const box = (w, h, pos, k) => {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(k, k, k), side: THREE.DoubleSide }));
-    m.position.set(...pos);
-    m.lookAt(0, 0, 0);
-    env.add(m);
-  };
-  box(6, 1.2, [-4, 5, 5], 6);     // key strip, top left
-  box(1.4, 7, [7, 1, 2], 3.2);    // tall rim, right
-  box(5, 5, [0, 2, -8], 1.6);     // back fill
-  box(3, 1, [-6, -2, 4], 1.2);    // low kicker
-  return env;
 }
