@@ -1047,9 +1047,9 @@
     }, {threshold: 0, rootMargin: '0px 0px 12% 0px'}).observe(container);
 
     /* ── Flow on hover ─────────────────────────────────────────────
-       A pulse (a short head with a fading tail) runs from the first card to
-       the hovered one at a steady speed: card 0, link 0, card 1, ... Moving
-       further along continues from where it got to; leaving resets it. */
+       A signal comes in along the link on the hovered card's left, then a
+       pulse (a short head with a fading tail) runs its border: in at the
+       left middle, over the top and bottom, out on the right. */
     if(!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const NS = 'http://www.w3.org/2000/svg';
     const R = 12, O = .75;   // card radius, half the stroke
@@ -1057,7 +1057,7 @@
     // fuller middle, solid head; heads aligned
     const LAYERS = [{ len: .24, w: 1.5, o: .22 }, { len: .12, w: 1.5, o: .55 }, { len: .05, w: 1.75, o: 1 }];
     const TAIL = LAYERS[0].len;
-    const CARD = 560, LINK = 16;   // ms per card, per link: one speed throughout
+    const CARD = 560, LINK = 120;   // ms for a card's pulse, for the signal along a link
 
     const parts = [...steps].map((step, i) => {
       const svg = document.createElementNS(NS, 'svg');
@@ -1107,25 +1107,20 @@
       const el = parts[i].spark;
       return el ? [el.animate(
         [{ transform: 'translateX(-28px)', opacity: 1 }, { transform: 'translateX(16px)', opacity: 1 }],
-        { duration: LINK * (44 / 16), delay: delay - LINK * (28 / 16), easing: 'linear' }
+        { duration: LINK, delay, easing: 'linear' }
       )] : [];
     }
 
-    let reached = -1, frontAt = 0, pulses = [];   // last segment the pulse is sent to, when it gets there
+    let pulses = [];
 
     function go(k){
       steps.forEach((st, i) => st.classList.toggle('current', i === k));
-      if(k < 0){ pulses.forEach(a => a.cancel()); pulses = []; reached = -1; return; }
-      const target = 2 * k, now = performance.now();
-      if(target <= reached) return;
-      let t = Math.max(0, frontAt - now);
-      for(let s = reached + 1; s <= target; s++){
-        pulses.push(...(s & 1 ? pulseLink(s >> 1, t) : pulseCard(s >> 1, t)));
-        t += s & 1 ? LINK : CARD;
-      }
-      reached = target;
-      frontAt = now + t;
-      pulses = pulses.filter(a => a.playState !== 'finished');
+      pulses.forEach(a => a.cancel());
+      pulses = [];
+      if(k < 0) return;
+      const lead = k > 0 ? LINK * 16 / 44 : 0;   // the card picks up as the signal's head arrives
+      if(k > 0) pulses.push(...pulseLink(k - 1, 0));
+      pulses.push(...pulseCard(k, lead));
     }
 
     steps.forEach((step, i) => step.addEventListener('pointerenter', () => go(i)));
