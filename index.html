@@ -460,6 +460,9 @@
   .ps-flow path{fill:none;stroke:var(--accent)}
   .ps-spark{position:absolute;top:50%;left:calc(100% + 1px);width:16px;height:1.5px;margin-top:-.75px;z-index:2;pointer-events:none;overflow:hidden}
   .ps-spark i{position:absolute;inset:0 auto 0 0;width:28px;opacity:0;background:linear-gradient(90deg,transparent,var(--accent))}
+  /* the link stays lit once the signal has crossed it, until the hover moves back or leaves */
+  .ps-spark b{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+  .ps-spark.on b{transform:scaleX(1);transition:transform var(--fill,.06s) linear var(--at,0s)}
   .ps-step .ps-icon{width:46px;height:46px;padding:12px;border-radius:13px;color:var(--accent);background:transparent;border:1px solid var(--accent);margin-bottom:26px;flex-shrink:0;transition:background-color .3s ease}
   .ps-step.current .ps-icon{background:color-mix(in srgb,var(--accent) 7%,transparent)}
   .ps-step .ps-num{color:var(--accent);font-family:'DM Sans',sans-serif;font-size:12px;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
@@ -1051,7 +1054,8 @@
        as if on a wire running behind the cards, so it shows in each gap it
        crosses. When it reaches the hovered card, a pulse (a short head with
        a fading tail) runs that card's border: in at the left middle, over
-       the top and bottom, out on the right. */
+       the top and bottom, out on the right. The links it has crossed stay
+       lit while the hover is on or past them. */
     if(!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const NS = 'http://www.w3.org/2000/svg';
     const R = 12, O = .75;   // card radius, half the stroke
@@ -1059,7 +1063,7 @@
     // fuller middle, solid head; heads aligned
     const LAYERS = [{ len: .24, w: 1.5, o: .22 }, { len: .12, w: 1.5, o: .55 }, { len: .05, w: 1.75, o: 1 }];
     const TAIL = LAYERS[0].len;
-    const CARD = 560, SPEED = .8, SPARK = 28;   // ms for a card's pulse; signal speed in px/ms; its length in px
+    const CARD = 645, SPEED = .68, SPARK = 28;   // ms for a card's pulse; signal speed in px/ms; its length in px
 
     const parts = [...steps].map((step, i) => {
       const svg = document.createElementNS(NS, 'svg');
@@ -1082,7 +1086,7 @@
         spark = document.createElement('span');
         spark.className = 'ps-spark';
         spark.setAttribute('aria-hidden', 'true');
-        spark.appendChild(document.createElement('i'));
+        spark.append(document.createElement('i'), document.createElement('b'));
         step.appendChild(spark);
       }
 
@@ -1095,7 +1099,7 @@
       };
       draw();
       new ResizeObserver(draw).observe(step);
-      return { comets, spark: spark && spark.firstChild };
+      return { comets, spark: spark && spark.firstChild, link: spark };
     });
 
     // Each layer's head runs 0 → 1, then on until its tail clears the end
@@ -1107,7 +1111,12 @@
     }
     // The signal crossing the gap after card i; its head enters the gap at `delay`
     function pulseLink(i, delay){
-      const el = parts[i].spark, gap = el.parentElement.offsetWidth;
+      const el = parts[i].spark, link = parts[i].link, gap = link.offsetWidth;
+      if(!link.classList.contains('on')){
+        link.style.setProperty('--at', delay + 'ms');
+        link.style.setProperty('--fill', gap / SPEED + 'ms');
+        link.classList.add('on');
+      }
       return [el.animate(
         [{ transform: `translateX(-${SPARK}px)`, opacity: 1 }, { transform: `translateX(${gap}px)`, opacity: 1 }],
         { duration: (SPARK + gap) / SPEED, delay, easing: 'linear' }
@@ -1120,6 +1129,7 @@
       steps.forEach((st, i) => st.classList.toggle('current', i === k));
       pulses.forEach(a => a.cancel());
       pulses = [];
+      parts.forEach((p, i) => p.link && i >= k && p.link.classList.remove('on'));
       if(k < 0) return;
       const x0 = steps[0].getBoundingClientRect().left;
       const at = x => (x - x0) / SPEED;   // when the signal's head reaches x
