@@ -450,22 +450,30 @@
   .ps-step{position:relative;background:var(--bg);border:1px solid var(--line-strong);border-radius:12px;padding:36px 28px 32px;display:flex;flex-direction:column;transition:opacity .35s cubic-bezier(.22,.61,.36,1),transform .35s cubic-bezier(.22,.61,.36,1);opacity:0;transform:translateY(12px) scale(0.98)}
   .ps-step.in{opacity:1;transform:translateY(0) scale(1)}
 
-  /* Process flow · hovering a step draws the accent through every step up
-     to it: in at a card's left middle, split over its top and bottom edges,
-     back together on the right, then across the connector to the next.
-     Timing per segment is set from the script below (--b-* card, --c-* link). */
+  /* Process flow · hovering a step sends a pulse of light through every
+     step up to it, the way current runs down a wire: in at a card's left
+     middle, split over its top and bottom edges, back together on the
+     right, across the link to the next card. Behind the pulse the path
+     stays lit, softer. Timing comes from the script below. */
   .ps-step::after,.ps-step::before{content:"";position:absolute;top:50%;left:calc(100% + 1px);width:16px;pointer-events:none}
   .ps-step::after{height:1px;margin-top:-.5px;background:var(--line-strong)}
-  .ps-step::before{height:1.5px;margin-top:-.75px;background:var(--accent);z-index:1;transform:scaleX(0);transform-origin:left;
-    box-shadow:0 0 6px color-mix(in srgb,var(--accent) 55%,transparent);
+  .ps-step::before{height:1.5px;margin-top:-.75px;background:var(--trail);z-index:1;transform:scaleX(0);transform-origin:left;
     transition:transform var(--c-dur,.03s) linear var(--c-delay,0s)}
   .ps-step:last-child::after,.ps-step:last-child::before{display:none}
   .ps-step.flow::before{transform:scaleX(1)}
+  .process-steps{--trail:color-mix(in srgb,var(--accent) 55%,transparent);--spark:color-mix(in srgb,var(--accent) 45%,#fff)}
   .ps-flow{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;pointer-events:none;z-index:1}
-  .ps-flow{filter:drop-shadow(0 0 3px color-mix(in srgb,var(--accent) 35%,transparent))}
-  .ps-flow path{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:1 1;stroke-dashoffset:1;
+  .ps-flow path{fill:none}
+  .ps-flow .trail{stroke:var(--trail);stroke-width:1.5;stroke-dasharray:1 1;stroke-dashoffset:1;
     transition:stroke-dashoffset var(--b-dur,.16s) var(--b-ease,linear) var(--b-delay,0s)}
-  .ps-step.lit .ps-flow path{stroke-dashoffset:0}
+  .ps-step.lit .ps-flow .trail{stroke-dashoffset:0}
+  .ps-flow .comet{filter:drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 8px color-mix(in srgb,var(--accent) 60%,transparent))}
+  .ps-flow .comet path{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:0 3;stroke-dashoffset:1}
+  .ps-flow .comet path.core{stroke:var(--spark)}
+  .ps-spark{position:absolute;top:50%;left:calc(100% + 1px);width:16px;height:2px;margin-top:-1px;z-index:2;pointer-events:none;clip-path:inset(-10px 0)}
+  .ps-spark i{position:absolute;inset:0 auto 0 0;width:28px;opacity:0;border-radius:2px;
+    background:linear-gradient(90deg,transparent,var(--accent) 70%,var(--spark));
+    box-shadow:0 0 6px var(--accent),0 0 12px color-mix(in srgb,var(--accent) 50%,transparent)}
   .ps-step .ps-icon{width:46px;height:46px;padding:12px;border-radius:13px;color:var(--accent);background:transparent;border:1px solid var(--accent);margin-bottom:26px;flex-shrink:0;transition:background-color .3s ease}
   .ps-step.current .ps-icon{background:color-mix(in srgb,var(--accent) 7%,transparent)}
   .ps-step .ps-num{color:var(--accent);font-family:'DM Sans',sans-serif;font-size:12px;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
@@ -476,7 +484,7 @@
     .process-strip .ps-header{flex-direction:column;gap:8px}
     .process-strip .ps-header p{text-align:left}
     .process-steps{grid-template-columns:repeat(3,1fr)}
-    .ps-step::after,.ps-step::before{display:none}   /* rows wrap; links would point at nothing */
+    .ps-step::after,.ps-step::before,.ps-spark{display:none}   /* rows wrap; links would point at nothing */
   }
   @media (max-width:720px){
     .process-strip{padding:56px 0}
@@ -1054,59 +1062,131 @@
 
     /* ── Flow on hover ─────────────────────────────────────────────
        Segments run in order: card 0, link 0, card 1, link 1, ... Hovering
-       step k lights every segment up to card k, each starting as the one
-       before it ends, so the accent travels as one stroke. Leaving, or
-       moving back, unwinds from the far end, quicker than it came. */
+       step k lights every segment up to card k. A pulse (a short glowing
+       head with a fading tail) rides the front of the trail at a steady
+       speed, picking up where the previous segment left off. Leaving, or
+       moving back, unwinds the trail from the far end, quicker, no pulse. */
     if(!matchMedia('(hover:hover)').matches) return;
     const NS = 'http://www.w3.org/2000/svg';
     const R = 12, O = .75;   // card radius, half the stroke
+    // pulse layers along a half outline (lengths are shares of it): faint long
+    // tail, brighter middle, a short white-hot core, heads aligned
+    const LAYERS = [{ len: .26, w: 1.5, o: .3 }, { len: .13, w: 1.75, o: .7 }, { len: .045, w: 2, o: 1, core: true }];
+    const TAIL = LAYERS[0].len;
 
-    steps.forEach(step => {
+    const parts = [...steps].map((step, i) => {
       const svg = document.createElementNS(NS, 'svg');
       svg.classList.add('ps-flow');
       svg.setAttribute('aria-hidden', 'true');
-      const top = document.createElementNS(NS, 'path'), bot = document.createElementNS(NS, 'path');
-      [top, bot].forEach(p => { p.setAttribute('pathLength', '1'); svg.appendChild(p); });
+      const mk = (cls, parent) => {
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('pathLength', '1');
+        if(cls) p.setAttribute('class', cls);
+        parent.appendChild(p);
+        return p;
+      };
+      const trails = [mk('trail', svg), mk('trail', svg)];
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'comet');
+      svg.appendChild(g);
+      const comets = [0, 1].flatMap(() => LAYERS.map(L => {
+        const p = mk(L.core ? 'core' : '', g);
+        p.style.strokeWidth = L.w;
+        p.style.opacity = L.o;
+        return { p, L };
+      }));
       step.prepend(svg);
+
+      let spark = null;
+      if(i < steps.length - 1){
+        spark = document.createElement('span');
+        spark.className = 'ps-spark';
+        spark.setAttribute('aria-hidden', 'true');
+        spark.appendChild(document.createElement('i'));
+        step.appendChild(spark);
+      }
+
       const draw = () => {
         const w = step.offsetWidth, h = step.offsetHeight, r = R - O, m = h / 2;
+        const top = `M${O} ${m}V${R}A${r} ${r} 0 0 1 ${R} ${O}H${w - R}A${r} ${r} 0 0 1 ${w - O} ${R}V${m}`;
+        const bot = `M${O} ${m}V${h - R}A${r} ${r} 0 0 0 ${R} ${h - O}H${w - R}A${r} ${r} 0 0 0 ${w - O} ${h - R}V${m}`;
         svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-        top.setAttribute('d', `M${O} ${m}V${R}A${r} ${r} 0 0 1 ${R} ${O}H${w - R}A${r} ${r} 0 0 1 ${w - O} ${R}V${m}`);
-        bot.setAttribute('d', `M${O} ${m}V${h - R}A${r} ${r} 0 0 0 ${R} ${h - O}H${w - R}A${r} ${r} 0 0 0 ${w - O} ${h - R}V${m}`);
+        trails[0].setAttribute('d', top); trails[1].setAttribute('d', bot);
+        comets.forEach((c, n) => c.p.setAttribute('d', n < LAYERS.length ? top : bot));
       };
       draw();
       new ResizeObserver(draw).observe(step);
+      return { comets, spark: spark && spark.firstChild };
     });
 
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const IN  = { b: 230, c: 150 }, OUT = { b: 120, c: 70 };
-    const on = [];   // per segment: lit or not
+    const IN  = { b: 300, c: 14 }, OUT = { b: 120, c: 40 };
+    const on = [], ends = [];   // per segment: lit, and when its draw finishes
+    let pulses = [];
+
+    // A pulse across card i: each layer's head runs 0 → 1, then on until its tail clears
+    function pulseCard(i, delay, ms){
+      parts[i].comets.forEach(({ p, L }) => {
+        p.style.strokeDasharray = `${L.len} 3`;
+        pulses.push(p.animate(
+          [{ strokeDashoffset: L.len }, { strokeDashoffset: L.len - 1 - TAIL }],
+          { duration: ms * (1 + TAIL), delay, easing: 'linear', fill: 'both' }
+        ));
+      });
+    }
+    // ...and across the link after card i, at the same speed
+    function pulseLink(i, delay, ms){
+      const el = parts[i].spark;
+      if(!el) return;
+      pulses.push(el.animate(
+        [{ transform: 'translateX(-28px)', opacity: 1 }, { transform: 'translateX(16px)', opacity: 1 }],
+        { duration: ms * (44 / 16), delay: delay - ms * (28 / 16), easing: 'linear', fill: 'none' }
+      ));
+    }
 
     function go(k){
       const want = s => s <= 2 * k;
       const total = steps.length * 2 - 1;
-      let t = 0;
-      const set = (s, lit, ms, ease) => {
+      const now = performance.now();
+      const set = (s, lit, t, ms, ease) => {
         const step = steps[s >> 1], isCard = !(s & 1);
-        const d = still ? 0 : ms;
+        const d = still ? 0 : ms, at = still ? 0 : t;
         if(isCard){
           step.style.setProperty('--b-dur', d + 'ms');
-          step.style.setProperty('--b-delay', (still ? 0 : t) + 'ms');
+          step.style.setProperty('--b-delay', at + 'ms');
           step.style.setProperty('--b-ease', ease);
           step.classList.toggle('lit', lit);
         } else {
           step.style.setProperty('--c-dur', d + 'ms');
-          step.style.setProperty('--c-delay', (still ? 0 : t) + 'ms');
+          step.style.setProperty('--c-delay', at + 'ms');
           step.classList.toggle('flow', lit);
         }
         on[s] = lit;
-        t += ms;
+        ends[s] = now + at + d;
       };
-      for(let s = 0; s < total; s++) if(want(s) && !on[s])
-        set(s, true, s & 1 ? IN.c : IN.b, s === 2 * k ? 'cubic-bezier(.2,.7,.3,1)' : 'linear');
-      t = 0;
-      for(let s = total - 1; s >= 0; s--) if(!want(s) && on[s])
-        set(s, false, s & 1 ? OUT.c : OUT.b, 'linear');
+
+      // Growing: each new segment starts where the trail's front will be
+      let grow = false;
+      for(let s = 0; s < total; s++) if(want(s) && !on[s]){
+        grow = true;
+        const t = Math.max(0, (s > 0 ? ends[s - 1] : now) - now);
+        const ms = s & 1 ? IN.c : IN.b;
+        set(s, true, t, ms, 'linear');   // linear, so the pulse and the trail's front stay together
+        if(!still) (s & 1) ? pulseLink(s >> 1, t, ms) : pulseCard(s >> 1, t, ms);
+      }
+
+      // Shrinking: unwind from the far end, no pulse
+      if(!grow){
+        pulses.forEach(a => a.cancel());
+        pulses = [];
+        let t = 0;
+        for(let s = total - 1; s >= 0; s--) if(!want(s) && on[s]){
+          const ms = s & 1 ? OUT.c : OUT.b;
+          set(s, false, t, ms, 'linear');
+          t += ms;
+        }
+      }
+      pulses = pulses.filter(a => a.playState !== 'finished');
       steps.forEach((st, i) => st.classList.toggle('current', i === k));
     }
 
