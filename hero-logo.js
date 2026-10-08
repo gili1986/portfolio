@@ -58,7 +58,7 @@ async function init() {
 
   const glass = new THREE.ShaderMaterial({
     uniforms: {
-      uPaper: { value: new THREE.Vector3(0.996, 0.996, 0.992) },   // --bg, sRGB
+      uPaper: { value: new THREE.Vector3(0.996, 0.996, 0.996) },   // --bg, sRGB
     },
     vertexShader: /* glsl */`
       varying vec3 vN;
