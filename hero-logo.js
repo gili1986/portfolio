@@ -154,13 +154,12 @@ async function init() {
   /* Place · the mark lives in the free space right of the headline.
      The headline's width depends on the viewport and the font, so the
      mark measures where the text actually ends, takes the room left up
-     to the page's content edge, and sits right-aligned to it, its foot
-     level with the intro's last line. Too little room and it steps aside. */
+     to the page's content edge, and sits right-aligned to it, centred
+     on the headline and intro. Too little room and it steps aside. */
   const hero = host.closest('.hero');
   const head = hero.querySelector('h1');
   const intro = hero.querySelector('.sub');
   const LOGO_SHARE = 0.52;     // the mark's width as a share of the canvas
-  const LOGO_TALL = 2.27 / (2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));   // its height, likewise
   const GAP = 56, MAX_W = 380, MIN_W = 180, SCALE = 0.815;   // the mark fills 81.5% of the room it gets
   let fits = true;
 
@@ -180,13 +179,11 @@ async function init() {
     host.style.visibility = fits ? '' : 'hidden';
     if (fits) {
       const size = logoW / LOGO_SHARE;
-      // the intro's box runs past its last line by half the leading; take the text's foot
-      const ib = intro.getBoundingClientRect(), cs = getComputedStyle(intro);
-      const foot = ib.bottom - (parseFloat(cs.lineHeight) - parseFloat(cs.fontSize)) / 2;
+      const top = head.getBoundingClientRect().top, bottom = intro.getBoundingClientRect().bottom;
       // a step in from the edge: 10% of the room, never closer than GAP to the copy
       const shift = Math.max(0, Math.min(room * 0.1, room - GAP - logoW));
       const cx = edge - shift - logoW / 2 - hb.left;
-      const cy = foot - size * LOGO_TALL / 2 - hb.top;
+      const cy = top + (bottom - top) * 0.46 - hb.top;
       Object.assign(host.style, {
         width: `${size}px`, height: `${size}px`,
         left: `${cx - size / 2}px`, top: `${cy - size / 2}px`,
